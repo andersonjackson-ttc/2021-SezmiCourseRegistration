@@ -1,10 +1,10 @@
-package Sezmi.TridentCourseRegistration;
+package Sezmi.TridentTechCourseRegistration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TridentCourseRegistrationApplicationTests {
+class TridentTechCourseRegistrationApplicationTests {
 
 	@Test
 	void contextLoads() {
