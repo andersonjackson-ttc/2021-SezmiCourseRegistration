@@ -1,27 +1,33 @@
-#header{
+#header
+{
     margin: 3px;
     text-align: center;
     
 }
-#logoLine{
+#logoLine
+{
     text-align: center;
     background-color: #023570;
 }
 
-#title{
+#title
+{
     text-align: center;
     font-size: 0.95em;
     font-family: 
 }
-#sezmi{
+#sezmi
+{
     font-family: cursive;
     font-size: 0.75em;
     text-align: center;
 }
-#combobox{
+#combobox
+{
     text-align: center;
 }
-#address{
+#address
+{
     background-color: #5e7c00; 
     color:white;
     clear: both;
@@ -35,16 +41,17 @@
 }
 #footerLogo
 {
-    width: 50%;
+    width: 150px;
     margin: 15px 0px 10px 0px;
 }
-#mailingAddress{
+#mailingAddress
+{
     margin: 0px 0px 10px 10px;
 }
-footer {
+footer 
+{
         font-size: 0.75em;
         background-color: #cfde46;
-        color:white;
         clear: both;
         text-align: center;
         width: 100%;
@@ -52,66 +59,83 @@ footer {
         bottom: 0px;
 }
 
-@media screen and (min-width: 650px){
-	#header{
-    margin: 3px;
-    text-align: center;
+@media screen and (min-width: 900px)
+{
+	#header
+    {
+        margin: 5px 0px 0px 0px;
+        text-align: center;
         background-color: #023570;
-}
+    }
+    
 /*
-    #backgroundPicture {
-  text-align: center;
-  color: white;
+    #backgroundPicture 
+    {
+        text-align: center;
+        color: white;
         width: 100%;
         margin-top: -12px;
-}
+    }
 */
-#logoLine{
-    text-align: center;
-    background-color: #023570;
-    margin: 0px 10px 0px 0px;
-    position: fixed;
-}
+    
+    #logoLine
+    {
+        text-align: center;
+        background-color: clear;
+        margin: 0px 10px 0px 10px;
+        position: fixed;
+    }
 
-#title{
-    text-align: center;
-    margin: -5px 0px -3px 250px;
-    font-size: 30px;
-    font-weight: normal;
-    color: white;
-}
-#sezmi{
-    font-family:helvetica;
-    font-weight: 50;
-    font-size: 0.75em;
-    color: white;
-    text-align: center;
-}
-#combobox{
-    text-align: center;
-/*    max-width: 400px;*/
-}
-#address{
-    background-color: #5e7c00; 
-    color:white;
-    clear: both;
-    text-align: left;
-    width: 100%;
-    position: fixed;
-    bottom: 0px;
-    margin: 15px 10px 10px 0px;
-    font-family: Helvetica;
-    font-weight: lighter;
-}
-#footerLogo
-{
-    width: 270px;
-    margin: 15px 0px 10px 0px;
-}
-#mailingAddress{
-    margin: 0px 0px 10px 10px;
-}
-footer {
+    #title
+    {
+        text-align: center;
+        margin: -5px 0px -3px 0px;
+        font-size: 30px;
+        font-weight: normal;
+        color: white;
+    }
+    
+    #sezmi
+    {
+        font-family:helvetica;
+        font-weight: 50;
+        font-size: 0.75em;
+        color: white;
+        text-align: center;
+    }
+
+    #combobox
+    {
+        text-align: center;
+/*        max-width: 400px;*/
+    }
+
+    #address
+    {
+        background-color: #5e7c00; 
+        color:white;
+        clear: both;
+        text-align: left;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+        margin: 15px 10px 10px 0px;
+        font-family: Helvetica;
+        font-weight: lighter;
+    }
+
+    #footerLogo
+    {
+        width: 270px;
+        margin: 15px 0px 10px 0px;
+    }
+    
+    #mailingAddress
+    {  
+        margin: 0px 0px 10px 10px;
+    }
+    footer 
+    {
 /*        font-size: 0.5em;*/
 /*        font-family: helvetica;*/
         background-color: #cfde46;
@@ -121,11 +145,13 @@ footer {
         width: 100%;
         position: fixed;
         bottom: 0px;
-}
-#sezmiFooter {
+    }
+    
+    #sezmiFooter 
+    {
         font-family: helvetica;
-    font-size: 1em;
-    color: #5e7c00;
-    width: 100%;
-}
-}
+        font-size: 1em;
+        color: #5e7c00;
+        width: 100%;
+    }
+} <!-- MediaQuery -->
