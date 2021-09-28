@@ -1,6 +1,6 @@
 //Jeremy Hunton
 //Team Sezmi
-//9/27/21
+//9/28/21
 //The Major class is responsible for creating the framework for Major objects to be created into beans by Spring Data JPA. 
 package TridentTechCourseRegistration.major;
 
