@@ -27,7 +27,7 @@ public class CourseController
 	}//end RESTful API retrieval operation
 
 	//This method is responsible for getting a course by the course code and posting it to localhost:8080/courses/{id}
-	@GetMapping("/courses/{id}")
+	@GetMapping("/courses/{courseID}")
 	public ResponseEntity<Course> get(@PathVariable String courseID)
 	{
 		//try to find the course code
@@ -52,7 +52,7 @@ public class CourseController
 	}//end RESTful API create function. 
 
 	//This method is responsible for allowing an admin to update the information by course code in the course list on the server.
-	@PutMapping("/courses/{id}")											//@PutMapping allows PUT API requests.
+	@PutMapping("/courses/{courseID}")											//@PutMapping allows PUT API requests.
 	public ResponseEntity<?> update(@RequestBody Course course, @PathVariable String courseID)
 	{
 		try 
@@ -69,7 +69,7 @@ public class CourseController
 	}//end PUT method for editing a course.
 
 	//RESTful API for Delete Function. This allows the user to issue a DELETE request to remove the course by the course code. 
-	@DeleteMapping("/courses/{id}")
+	@DeleteMapping("/courses/{courseID}")
 	public void delete(@PathVariable String courseID)
 	{
 		service.delete(courseID);				//call the delete function from the service to issue the delete command through the pipeline back to the server
