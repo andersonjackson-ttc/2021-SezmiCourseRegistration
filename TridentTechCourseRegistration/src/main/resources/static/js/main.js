@@ -1,54 +1,92 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
-var text;
+var majorId;
 
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
     init();
-//    alert("Application Running");
-    
 };
 
 //Initialize all Event Listeners
 function init()
 {
-	//Make a new API Request
-    xmlhttp = new XMLHttpRequest();
     loadMajors();
-//    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
-    
-//    document.getElementById('btnSubmit').addEventListener('click', showMajor, false);
+    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+}
+
+//Template Literal to Return Major Name and Major ID
+function majorTemplate(major) 
+{
+    return `<option value=${major.majorId}>${major.major}</option>`
+}
+
+//Template Literal to Return Course Name
+function courseTemplate(major) 
+{
+    return `<tr><td>${major.major}</td></tr>`
 }
 
 //Load Drop Down ComboBox with a List of Majors
 function loadMajors() 
 {
-    //For Loop for every Major
-    for (let i = 0; i < 10; i++)
-        {
             //Make a new API Request
             xmlhttp = new XMLHttpRequest();
             
             //Get Status
-            xmlhttp.onreadystatechange = function() 
+             xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
                 if (this.readyState == 4 && this.status == 200) 
                 {
-                    var json = jQuery.parseJSON(xmlhttp.responseText);
-                    text = json.value.name;
-                    var output = "<option value='";
-                    output += i + "'>" + text + "</option>";
-                    document.getElementById('combo').innerHTML += output;
+                    //Parse into JSON
+                    const majors = jQuery.parseJSON(xmlhttp.responseText);
+                    
+                    //Template Literal to Add all Majors into HTML Dynamically
+                    document.getElementById('combo').innerHTML = `<option>Select a Major</option>${majors.map(majorTemplate).join('')}`
                 }
             };
             
             //Create API Call
-//            xmlhttp.open("GET", 'http://api.icndb.com/jokes/random/', false);
-            xmlhttp.open("GET", 'https://localhost:8080/products');
+            xmlhttp.open("GET", 'http://localhost:8080/majors');
             
             //Send API Call
             xmlhttp.send();
-        }
+}
+
+//Load Table with Required Courses
+function loadCourses() 
+{
+            //Make a new API Request
+            xmlhttp = new XMLHttpRequest();
+            
+            //Get Status
+             xmlhttp.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status == 200) 
+                {
+                    //Parse into JSON
+                    const majors = jQuery.parseJSON(xmlhttp.responseText);
+                    
+                    //Template Literal to Add all Courses into HTML Dynamically
+                    document.getElementById('courses').innerHTML = `
+<tr><th>Required Courses</th></tr>
+${majors.map(courseTemplate).join('')}`
+                }
+            };
+            
+            //Create API Call
+            xmlhttp.open("GET", 'http://localhost:8080/majors');
+            
+            //Send API Call
+            xmlhttp.send();
+}
+
+//Get Major Selection and Store as a Variable
+function selectMajor()
+{
+    var majorSelection = document.querySelector('#combo');
+    majorId = majorSelection.value;
+    loadCourses();
 }

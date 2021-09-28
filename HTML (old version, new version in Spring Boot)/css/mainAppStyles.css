@@ -1,31 +1,77 @@
+#bigPic
+    {
+        display: none;
+    }
+
 #header
 {
-    margin: 3px;
+/*    margin: 150px 0px 0px 0px;*/
     text-align: center;
     
 }
 #logoLine
 {
+    margin: -70px 0px 0px 0px;
+    width: 100%;
     text-align: center;
     background-color: #023570;
+    position: fixed;
 }
 
 #title
 {
+    margin: 70px 0px 0px 0px;
     text-align: center;
     font-size: 0.95em;
-    font-family: 
 }
+
 #sezmi
 {
     font-family: cursive;
     font-size: 0.75em;
     text-align: center;
 }
-#combobox
+
+#selectLabel
 {
     text-align: center;
 }
+
+#btnSubmit
+{
+    width: 100%;
+    text-align: center;
+}
+
+#combo
+{
+    width: 100%;
+    text-align: center; 
+}
+
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px 160px 0px;
+}
+
+th
+{
+    background-color: #023570;
+    color: white;
+    font-weight: 30;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+tr
+{
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+
 #address
 {
     background-color: #5e7c00; 
@@ -61,29 +107,39 @@ footer
 
 @media screen and (min-width: 900px)
 {
-	#header
+	#bigPic
     {
-        margin: 5px 0px 0px 0px;
-        text-align: center;
-        background-color: #023570;
+        display: block;
+        margin: -100px;
+        position: fixed;
     }
     
-/*
-    #backgroundPicture 
+    #blueLine
     {
-        text-align: center;
-        color: white;
+        background-color: #023570;
         width: 100%;
-        margin-top: -12px;
+        margin: 0px 0px 0px 0px;
+        height: 70px;
+        position: fixed;
     }
-*/
     
     #logoLine
     {
-        text-align: center;
-        background-color: clear;
-        margin: 0px 10px 0px 10px;
+        width: 300px;
+        margin: 2px 0px 0px 5px;
         position: fixed;
+        text-align: center;
+        background-color: #023570;
+        z-index:99999;
+    }
+    
+     #header
+    {
+        text-align: center;
+        margin: 0px 0px 0px 0px;
+        background-color: clear;
+        width: 100%;
+        position:fixed;
     }
 
     #title
@@ -98,8 +154,8 @@ footer
     #sezmi
     {
         font-family:helvetica;
-        font-weight: 50;
-        font-size: 0.75em;
+        font-weight:lighter;
+        font-size: 0.85em;
         color: white;
         text-align: center;
     }
@@ -107,7 +163,40 @@ footer
     #combobox
     {
         text-align: center;
+        margin: 100px;
 /*        max-width: 400px;*/
+    }
+    
+    #combo
+    {
+        width: auto;
+    }
+    
+    #btnSubmit
+    {
+        width: auto;
+        text-align: center;
+    }
+    
+    table
+    {
+        border-collapse: collapse;
+        margin-bottom: 5.35em;
+        margin: 20px 0px 190px 0px;
+    }
+
+    th
+    {
+        background-color: #023570;
+        color: white;
+        padding: 5px;
+        border: 1px solid black;
+    }
+    
+    tr
+    {
+        padding: 5px;
+        border: 1px solid black;
     }
 
     #address
@@ -126,7 +215,7 @@ footer
 
     #footerLogo
     {
-        width: 270px;
+        width: 150px;
         margin: 15px 0px 10px 0px;
     }
     

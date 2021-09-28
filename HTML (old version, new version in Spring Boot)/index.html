@@ -18,33 +18,27 @@
 </head>
 
 <body>
-    <div id="logoLine">
-        <a href="www.google.com">
-            <img id="logoLine" alt="Trident Logo" src="img/TTCLogo.png">
-        </a>
-    </div>
-    <div id="header">
-        <h1 id="title">Course Registration</h1>
-        <h3 id="sezmi">made easy by ©Sezmi</h3>
-    </div><!-- header -->
+<!--    <img id="bigPic" src="img/TTCBackground.jpg">-->
+    <div id="blueLine">
+        <div id="logoLine">
+            <a href="https://www.tridenttech.edu/">
+                <img id="logo" alt="Trident Logo" src="img/TTCLogo.png">
+            </a>
+        </div>
+        <div id="header">
+            <h1 id="title">Course Registration</h1>
+            <h3 id="sezmi">made easy by ©Sezmi</h3>
+        </div><!-- header -->
+    </div><!-- blueLine -->
     <div id="combobox">
-<!--        <img id="backgroundPicture" alt="Trident Student" src="img/TTCBackground.jpg" width:100%;>-->
-        <label for="majors">Select a Major/Certificate</label>
+        <label for="majors" id="selectLabel">Select a Major/Certificate</label>
         <select id="combo" name="majors" data-role="none">
-<!--
-            <optgroup label="Hard Majors">
-                <option value="computer programming">Computer Programming</option>
-                <option value="business administration">Business Administration</option>
-            </optgroup>
-            <optgroup label="Easy Majors">
-                <option value="accounting">Accounting</option>
-                <option value="baking">Baking</option>
-                <option>etc...</option>
-            </optgroup>
--->
         </select>
-        <input type="submit" value="Submit" data-role="none">
+        <button id="btnSubmit" data-role="none">Submit</button>
+        <table id="courses">
+        </table>
     </div>
+<!--    <img id="bigPic" src="img/TTCBackground.jpg">-->
     
 </body>
 <div id="address">
