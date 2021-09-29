@@ -18,13 +18,13 @@ function init()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value=${major.courseID}>${major.courseName}</option>`
+    return `<option value=${major.majorId}>${major.major}</option>`
 }
 
 //Template Literal to Return Course Name
-function courseTemplate(major) 
+function courseTemplate(course) 
 {
-    return `<tr><td>${major.prereqs}</td></tr>`
+    return `<tr><td>${course.courseId}</td></tr>`
 }
 
 //Load Drop Down ComboBox with a List of Majors
@@ -37,7 +37,7 @@ function loadMajors()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4) 
+                if (this.readyState == 4 this.status==200) 
                 {
                     //Parse into JSON
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
@@ -48,7 +48,7 @@ function loadMajors()
             };
             
             //Create API Call
-            xmlhttp.open("GET", 'http://localhost:8080/courses');
+            xmlhttp.open("GET", 'http://localhost:8080/majors');
             
             //Send API Call
             xmlhttp.send();
@@ -64,15 +64,15 @@ function loadCourses()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4) 
+                if (this.readyState == 4 this.status==200) 
                 {
                     //Parse into JSON
-                    const majors = jQuery.parseJSON(xmlhttp.responseText);
+                    const courses = jQuery.parseJSON(xmlhttp.responseText);
                     
                     //Template Literal to Add all Courses into HTML Dynamically
                     document.getElementById('courses').innerHTML = `
 <tr><th>Required Courses</th></tr>
-${majors.map(courseTemplate).join('')}`
+${courses.map(courseTemplate).join('')}`
                 }
             };
             
