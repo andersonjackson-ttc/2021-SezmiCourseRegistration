@@ -26,13 +26,13 @@ public class MajorRequirementsController
 	}
 
 	//the get method maps the individual major to localhost:8080/majors/{id}
-	@GetMapping("/majors/{majorId}")
-	public ResponseEntity<MajorRequirements> get(@PathVariable String majorId)
+	@GetMapping("/majors/{majorid}")
+	public ResponseEntity<MajorRequirements> get(@PathVariable String majorid)
 	{
 		//try to find the major code
 		try 
 		{
-			MajorRequirements majorRequirements = service.get(majorId);			
+			MajorRequirements majorRequirements = service.get(majorid);			
 			return new ResponseEntity<MajorRequirements>(majorRequirements, HttpStatus.OK);		//return the course found and HTTP status as OK.	 
 		}//end try block													
 		//catch that we cannot find the product
@@ -50,12 +50,12 @@ public class MajorRequirementsController
 	}//end RESTful API create function. 
 
 	//This method is responsible for allowing an admin to update the information by major id in the major table on the server.
-	@PutMapping("/majors/{majorId}")											//@PutMapping allows PUT API requests.
-	public ResponseEntity<?> update(@RequestBody MajorRequirements majorRequirements, @PathVariable String majorId)
+	@PutMapping("/majors/{majorid}")											//@PutMapping allows PUT API requests.
+	public ResponseEntity<?> update(@RequestBody MajorRequirements majorRequirements, @PathVariable String majorid)
 	{
 		try 
 		{
-			MajorRequirements existMajor = service.get(majorId);		//find the existing course by the id and save the new product over it
+			MajorRequirements existMajor = service.get(majorid);		//find the existing course by the id and save the new product over it
 			service.save(majorRequirements);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}//end try
@@ -68,8 +68,8 @@ public class MajorRequirementsController
 
 	//RESTful API for Delete Function. This allows the user to issue a DELETE request to remove a major from the server. 
 	@DeleteMapping("/majors/{majorId}")
-	public void delete(@PathVariable String majorId)
+	public void delete(@PathVariable String majorid)
 	{
-		service.delete(majorId);				//call the delete function from the service to issue the delete command through the pipeline back to the server
+		service.delete(majorid);				//call the delete function from the service to issue the delete command through the pipeline back to the server
 	}
 }
