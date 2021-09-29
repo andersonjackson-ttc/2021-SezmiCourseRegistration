@@ -18,13 +18,13 @@ function init()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value=${major.majorId}>${major.major}</option>`
+    return `<option value=${major.majorId}>${major.major_name}</option>`
 }
 
 //Template Literal to Return Course Name
 function courseTemplate(course) 
 {
-    return `<tr><td>${course.courseId}</td></tr>`
+    return `<tr><td>${course.coursename}</td></tr>`
 }
 
 //Load Drop Down ComboBox with a List of Majors
