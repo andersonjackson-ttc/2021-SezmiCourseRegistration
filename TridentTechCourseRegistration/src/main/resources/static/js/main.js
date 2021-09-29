@@ -18,13 +18,13 @@ function init()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value=${major.majorId}>${major.major}</option>`
+    return `<option value=${major.courseID}>${major.courseName}</option>`
 }
 
 //Template Literal to Return Course Name
 function courseTemplate(major) 
 {
-    return `<tr><td>${major.major}</td></tr>`
+    return `<tr><td>${major.prereqs}</td></tr>`
 }
 
 //Load Drop Down ComboBox with a List of Majors
@@ -37,7 +37,7 @@ function loadMajors()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4 && this.status == 200) 
+                if (this.readyState == 4) 
                 {
                     //Parse into JSON
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
@@ -48,7 +48,7 @@ function loadMajors()
             };
             
             //Create API Call
-            xmlhttp.open("GET", 'http://localhost:8080/majors');
+            xmlhttp.open("GET", 'http://localhost:8080/courses');
             
             //Send API Call
             xmlhttp.send();
@@ -64,7 +64,7 @@ function loadCourses()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4 && this.status == 200) 
+                if (this.readyState == 4) 
                 {
                     //Parse into JSON
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
@@ -77,7 +77,7 @@ ${majors.map(courseTemplate).join('')}`
             };
             
             //Create API Call
-            xmlhttp.open("GET", 'http://localhost:8080/majors');
+            xmlhttp.open("GET", 'http://localhost:8080/courses');
             
             //Send API Call
             xmlhttp.send();
