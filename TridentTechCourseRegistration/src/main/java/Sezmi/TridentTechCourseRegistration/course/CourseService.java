@@ -20,19 +20,19 @@ public class CourseService
 	private CourseRepository repository;
 	
 	//the ListAll method displays the entire list of courses
-	public List<Course> listAll()
+	public List<Courses> listAll()
 	{
 		return repository.findAll();
 	}
 	
 	//the save method allows for courses to be saved to the repository
-	public void save(Course course)
+	public void save(Courses courses)
 	{
-		repository.save(course);
+		repository.save(courses);
 	}
 	
 	//the get method allows for a course to be pulled from the list based upon the course code matching the search
-	public Course get(String courseID)
+	public Courses get(String courseID)
 	{
 		return repository.findById(courseID).get();
 	}

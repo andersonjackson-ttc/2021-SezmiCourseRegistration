@@ -13,7 +13,7 @@ import javax.persistence.Id;
 
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
-public class Course 
+public class Courses 
 {
 	//declare variables
 	private String courseID;
@@ -21,10 +21,10 @@ public class Course
 	private String prereqs;
 	
 	//declare constructors with no args, and all args
-	public Course()
+	public Courses()
 	{}
 	
-	public Course(String courseID, String courseName, String prereqs)
+	public Courses(String courseID, String courseName, String prereqs)
 	{
 		this.courseID = courseID;
 		this.courseName = courseName;

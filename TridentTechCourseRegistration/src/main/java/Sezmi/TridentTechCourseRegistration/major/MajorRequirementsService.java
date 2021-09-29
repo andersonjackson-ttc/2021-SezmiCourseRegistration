@@ -2,7 +2,7 @@
 //Team Sezmi
 //9/28/21
 //the MajorService implements the MajorRepository to communicate with the Major table and create beans for the Major web controller. 
-package TridentTechCourseRegistration.major;
+package Sezmi.TridentTechCourseRegistration.major;
 
 import javax.transaction.Transactional;
 
@@ -13,25 +13,25 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MajorService 
+public class MajorRequirementsService 
 {
 	@Autowired			//autowired to inject MajorRepository into service layer beans.
-	private MajorRepository repository;
+	private MajorRequirementsRepository repository;
 	
 	//the listAll method displays all of the Majors within the major database table
-	public List<Major> listAll()
+	public List<MajorRequirements> listAll()
 	{
 		return repository.findAll();
 	}
 	
 	//the save method allows for Majors to be saved to the major database table
-	public void save(Major major)
+	public void save(MajorRequirements majorRequirements)
 	{
-		repository.save(major);
+		repository.save(majorRequirements);
 	}
 	
 	//the get method allows for a Major to be pulled from the major database table based upon its MajorId.
-	public Major get(String majorId)
+	public MajorRequirements get(String majorId)
 	{
 		return repository.findById(majorId).get();
 	}

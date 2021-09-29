@@ -2,7 +2,7 @@
 //Team Sezmi
 //9/28/21
 //the MajorController will handle RESTful services, API requests, and CRUD services for Major objects. 
-package TridentTechCourseRegistration.major;
+package Sezmi.TridentTechCourseRegistration.major;
 
 import java.util.*;
 
@@ -10,54 +10,53 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 @RestController					//tag as Rest controller
-public class MajorController
+public class MajorRequirementsController
 {
 	//autowire the Major Service layer to inject in to controller
 	@Autowired
-	private MajorService service;
+	private MajorRequirementsService service;
 
 	//the list method maps all of the Majors to localhost:8080/majors 
 	@GetMapping("/majors")
-	public List<Major> list()
+	public List<MajorRequirements> list()
 	{
 		return service.listAll();
 	}
 
 	//the get method maps the individual major to localhost:8080/majors/{id}
 	@GetMapping("/majors/{majorId}")
-	public ResponseEntity<Major> get(@PathVariable String majorId)
+	public ResponseEntity<MajorRequirements> get(@PathVariable String majorId)
 	{
 		//try to find the major code
 		try 
 		{
-			Major major = service.get(majorId);			
-			return new ResponseEntity<Major>(major, HttpStatus.OK);		//return the course found and HTTP status as OK.	 
+			MajorRequirements majorRequirements = service.get(majorId);			
+			return new ResponseEntity<MajorRequirements>(majorRequirements, HttpStatus.OK);		//return the course found and HTTP status as OK.	 
 		}//end try block													
 		//catch that we cannot find the product
 		catch (NoSuchElementException notFound) 		
 		{
-			return new ResponseEntity<Major>(HttpStatus.NOT_FOUND);		//respond that the product was not found and set the HTTP to not found.
+			return new ResponseEntity<MajorRequirements>(HttpStatus.NOT_FOUND);		//respond that the product was not found and set the HTTP to not found.
 		}//end catch no element found
 	}
 
 	//This method is responsible for allowing an admin to add a major to the major list.
 	@PostMapping("/majors")												//@PostMapping assigns the URL link for the POST annotation to the web/server. 
-	public void add(@RequestBody Major major)
+	public void add(@RequestBody MajorRequirements majorRequirements)
 	{
-		service.save(major); 												//call the API service method to save the product to the server. 
+		service.save(majorRequirements); 												//call the API service method to save the product to the server. 
 	}//end RESTful API create function. 
 
 	//This method is responsible for allowing an admin to update the information by major id in the major table on the server.
 	@PutMapping("/majors/{majorId}")											//@PutMapping allows PUT API requests.
-	public ResponseEntity<?> update(@RequestBody Major major, @PathVariable String majorId)
+	public ResponseEntity<?> update(@RequestBody MajorRequirements majorRequirements, @PathVariable String majorId)
 	{
 		try 
 		{
-			Major existMajor = service.get(majorId);					//find the existing course by the id and save the new product over it
-			service.save(major);
+			MajorRequirements existMajor = service.get(majorId);		//find the existing course by the id and save the new product over it
+			service.save(majorRequirements);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}//end try
 

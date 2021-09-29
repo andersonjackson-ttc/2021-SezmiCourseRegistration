@@ -21,44 +21,44 @@ public class CourseController
 
 	//This method is responsible for getting all the courses in the CourseRepository posted to localhost:8080/courses
 	@GetMapping("/courses")
-	public List<Course> list()
+	public List<Courses> list()
 	{
 		return service.listAll();
 	}//end RESTful API retrieval operation
 
 	//This method is responsible for getting a course by the course code and posting it to localhost:8080/courses/{id}
 	@GetMapping("/courses/{courseID}")
-	public ResponseEntity<Course> get(@PathVariable String courseID)
+	public ResponseEntity<Courses> get(@PathVariable String courseID)
 	{
 		//try to find the course code
 		try 
 		{
-			Course course = service.get(courseID);			
-			return new ResponseEntity<Course>(course, HttpStatus.OK);		//return the course found and HTTP status as OK.	 
+			Courses courses = service.get(courseID);			
+			return new ResponseEntity<Courses>(courses, HttpStatus.OK);		//return the course found and HTTP status as OK.	 
 		}//end try block													
 		//catch that we cannot find the product
 		catch (NoSuchElementException notFound) 		
 		{
-			return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);		//respond that the product was not found and set the HTTP to not found.
+			return new ResponseEntity<Courses>(HttpStatus.NOT_FOUND);		//respond that the product was not found and set the HTTP to not found.
 		}//end catch no element found
 
 	}//end find course by course code. 
 
 	//This method is responsible for allowing an admin to add a course to the course list.
 	@PostMapping("/courses")												//@PostMapping assigns the URL link for the POST annotation to the web/server. 
-	public void add(@RequestBody Course course)
+	public void add(@RequestBody Courses courses)
 	{
-		service.save(course); 												//call the API service method to save the product to the server. 
+		service.save(courses); 												//call the API service method to save the product to the server. 
 	}//end RESTful API create function. 
 
 	//This method is responsible for allowing an admin to update the information by course code in the course list on the server.
 	@PutMapping("/courses/{courseID}")											//@PutMapping allows PUT API requests.
-	public ResponseEntity<?> update(@RequestBody Course course, @PathVariable String courseID)
+	public ResponseEntity<?> update(@RequestBody Courses courses, @PathVariable String courseID)
 	{
 		try 
 		{
-			Course existCourse = service.get(courseID);					//find the existing course by the id and save the new product over it
-			service.save(course);
+			Courses existCourse = service.get(courseID);					//find the existing course by the id and save the new product over it
+			service.save(courses);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}//end try
 
