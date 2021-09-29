@@ -18,13 +18,13 @@ function init()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value=${major.majorId}>${major.major_name}</option>`
+    return `<option value=${major.majorId}>${major.majorName}</option>`
 }
 
 //Template Literal to Return Course Name
 function courseTemplate(course) 
 {
-    return `<tr><td>${course.coursename}</td></tr>`
+    return `<tr><td>${course.courseName}</td></tr>`
 }
 
 //Load Drop Down ComboBox with a List of Majors
@@ -37,7 +37,7 @@ function loadMajors()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4 this.status==200) 
+                if (this.readyState == 4 && this.status==200) 
                 {
                     //Parse into JSON
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
@@ -64,7 +64,7 @@ function loadCourses()
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
-                if (this.readyState == 4 this.status==200) 
+                if (this.readyState == 4 && this.status==200) 
                 {
                     //Parse into JSON
                     const courses = jQuery.parseJSON(xmlhttp.responseText);
