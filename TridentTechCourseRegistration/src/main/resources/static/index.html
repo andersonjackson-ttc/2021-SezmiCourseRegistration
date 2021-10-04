@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' data:; style-src * 'self' 'unsafe-inline'; media-src *" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/mainAppStyles.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/main.js"></script>
+    <title>Trident Tech Course Regestration</title>
+</head>
+
+<body>
+    <img id="bigPic" src="img/TTCBackground.jpg">
+    <div id="blueLine">
+        <div id="logoLine">
+            <a href="https://www.tridenttech.edu/">
+                <img id="logo" alt="Trident Logo" src="img/TTCLogo.png">
+            </a>
+        </div>
+        <div id="header">
+            <h1 id="title">Course Registration</h1>
+            <h3 id="sezmi">made easy by ©Sezmi</h3>
+        </div><!-- header -->
+    </div><!-- blueLine -->
+    <div id="combobox">
+        <label for="majors" id="selectLabel">Select a Major/Certificate</label>
+        <select id="combo" name="majors" data-role="none">
+        </select>
+        <button id="btnSubmit" data-role="none">Submit</button>
+        <table id="courses">
+        </table>
+    </div>
+<!--    <img id="bigPic" src="img/TTCBackground.jpg">-->
+    
+</body>
+<div id="address">
+    <p id="mailingAddress">
+        <img id="footerLogo" alt="Trident Logo" src="img/TTCLogo.svg">
+        <br>PO Box 118067
+        <br>Charleston, SC 29423
+        <br>Info: 843-574-6111
+        <br>Toll Free: 877-349-7184
+    </p>
+</div>
+<footer>
+    <p id="sezmiFooter">
+        powered by ©Sezmi 
+    </p>
+</footer>
+</html>

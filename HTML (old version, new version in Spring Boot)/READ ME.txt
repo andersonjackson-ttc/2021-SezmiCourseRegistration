@@ -1,0 +1,10 @@
+Hey everyone! 
+
+I moved the index.html and the corresponding CSS/JS
+files into the Spring Boot
+TridentTechCourseRegistration\src\main\resources\static
+folder. This folder contains duplicate copies incase I 
+goof anything up. The updated files should be in 
+TridentTechCourseRegistration\src\main\resources\static.
+
+~Jeremy
