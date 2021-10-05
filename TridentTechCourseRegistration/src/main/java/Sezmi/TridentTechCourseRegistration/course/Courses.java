@@ -18,16 +18,18 @@ public class Courses
 	//declare variables
 	private String courseID;
 	private String courseName;
+	private String courseType;
 	private String prereqs;
 	
 	//declare constructors with no args, and all args
 	public Courses()
 	{}
 	
-	public Courses(String courseID, String courseName, String prereqs)
+	public Courses(String courseID, String courseName, String courseType, String prereqs)
 	{
 		this.courseID = courseID;
 		this.courseName = courseName;
+		this.courseType = courseType;
 		this.prereqs = prereqs;
 	}
 	
@@ -58,6 +60,14 @@ public class Courses
 
 	public void setCourseID(String courseID) {
 		this.courseID = courseID;
+	}
+
+	public String getCourseType() {
+		return courseType;
+	}
+
+	public void setCourseType(String courseType) {
+		this.courseType = courseType;
 	}
 	
 	//auto generated setters/getters
