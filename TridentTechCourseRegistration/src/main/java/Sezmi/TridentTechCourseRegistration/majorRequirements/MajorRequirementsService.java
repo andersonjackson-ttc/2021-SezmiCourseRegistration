@@ -2,7 +2,7 @@
 //Team Sezmi
 //9/28/21
 //the MajorService implements the MajorRepository to communicate with the Major table and create beans for the Major web controller. 
-package Sezmi.TridentTechCourseRegistration.major;
+package Sezmi.TridentTechCourseRegistration.majorRequirements;
 
 import javax.transaction.Transactional;
 
