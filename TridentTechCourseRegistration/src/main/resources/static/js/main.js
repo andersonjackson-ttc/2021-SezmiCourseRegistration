@@ -22,7 +22,7 @@ function majorTemplate(major)
 }
 
 //Template Literal to Return Course Name
-function courseTemplate(majorRequirements) 
+function courseTemplate(major_requirements) 
 {
     //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
     if ((majorRequirements.majorId).includes(majorId))

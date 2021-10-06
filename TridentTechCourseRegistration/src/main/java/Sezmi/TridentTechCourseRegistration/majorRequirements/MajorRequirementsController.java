@@ -18,7 +18,7 @@ public class MajorRequirementsController
 	@Autowired
 	private MajorRequirementsService service;
 
-	//the list method maps all of the Majors to localhost:8080/majors 
+	//the list method maps all of the Majors to localhost:8080/major_requirements
 	@GetMapping("/major_requirements")
 	public List<MajorRequirements> list()
 	{
@@ -42,11 +42,11 @@ public class MajorRequirementsController
 		}//end catch no element found
 	}
 
-	//This method is responsible for allowing an admin to add a major to the major list.
+	//This method is responsible for allowing an admin to add major requirements to the major requirements table.
 	@PostMapping("/major_requirements")												//@PostMapping assigns the URL link for the POST annotation to the web/server. 
 	public void add(@RequestBody MajorRequirements majorRequirements)
 	{
-		service.save(majorRequirements); 												//call the API service method to save the product to the server. 
+		service.save(majorRequirements); 									//call the API service method to save the product to the server. 
 	}//end RESTful API create function. 
 
 	//This method is responsible for allowing an admin to update the information by major id in the major table on the server.
