@@ -30,13 +30,13 @@ public class Major
 	//Create the primary key within the database using the @ID tag.
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "major_id", nullable = false, updatable = false)
+	@Column(name = "MajorID", nullable = false, updatable = false)
 	public String getMajor_id()
 	{
 		return major_id;
 	}
 
-	@Column(name = "major", nullable = false, updatable = false)
+	@Column(name = "MajorName", nullable = false, updatable = false)
 	public String getMajor() {
 		return major;
 	}

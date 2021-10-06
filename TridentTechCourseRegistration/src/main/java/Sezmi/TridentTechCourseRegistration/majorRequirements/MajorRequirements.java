@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "major_requirements")
+@Table(name = "MajorRequirements")
 public class MajorRequirements 
 {
 	//declare variable (i.e table categories) for the major table) and map them to the table

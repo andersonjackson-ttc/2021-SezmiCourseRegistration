@@ -10,9 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
+@Table(name = "Courses")
 public class Courses 
 {
 	//declare variables
@@ -36,12 +38,13 @@ public class Courses
 	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. Might revisit later. 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "courseid", nullable = false, updatable = false)
+	@Column(name = "CourseID", nullable = false, updatable = false)
 	public String getCourseID()
 	{
 		return courseID;
 	}
 
+	@Column(name = "CourseName", nullable = false, updatable = false)
 	public String getCourseName() {
 		return courseName;
 	}
@@ -50,6 +53,7 @@ public class Courses
 		this.courseName = courseName;
 	}
 
+	@Column(name = "PreReqs")
 	public String getPrereqs() {
 		return prereqs;
 	}
@@ -62,6 +66,7 @@ public class Courses
 		this.courseID = courseID;
 	}
 
+	@Column(name = "CourseType")
 	public String getCourseType() {
 		return courseType;
 	}
