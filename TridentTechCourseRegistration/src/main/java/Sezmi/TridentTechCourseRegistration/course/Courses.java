@@ -26,6 +26,7 @@ public class Courses
 	//declare constructors with no args, and all args
 	public Courses()
 	{}
+ 
 	
 	public Courses(String courseID, String courseName, String courseType, String prereqs)
 	{
@@ -35,7 +36,7 @@ public class Courses
 		this.prereqs = prereqs;
 	}
 	
-	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. Might revisit later. 
+	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CourseID", nullable = false, updatable = false)
