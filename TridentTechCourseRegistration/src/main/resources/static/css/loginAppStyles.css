@@ -1,0 +1,247 @@
+.logo
+{
+    text-align: center;
+    background-color: #023570;
+}
+
+.header
+{
+    text-align: center;
+    font-size: 0.95em;
+    
+}
+.header-tag
+{
+    text-align: center;
+    font-family: cursive;
+    font-size: 0.75em;
+    text-align: center;
+}
+
+.login-form
+{
+    margin: 50px;
+    text-align: center;
+}
+
+#red-logo
+{
+    margin-bottom: 10px;
+}
+
+#red-logo-bottom
+{
+    width: 340px;
+}
+
+.username
+{
+    width: 100%;
+    text-align: center
+}
+
+ #username-label
+{
+    display: none;
+}
+    
+#password-label
+{
+    display: none;
+}
+
+.password
+{
+    width: 100%;
+    text-align: center
+}
+
+.options
+{
+    text-align: center;
+    margin: 10px;
+}
+.remember-me
+{
+    text-align: center;
+}
+
+#remember-me
+{
+    margin: 0px 0px 0px -190px;
+}
+#remember-me-label
+{
+    margin: -21px 0px 5px -55px;
+}
+
+.btn-log-on
+{
+    margin: 0px 0px 0px -140px;
+}
+
+#password-link
+{
+    color: #ff6c00;
+    text-decoration: none;
+    font-size: 70%;
+    margin: 0px 0px 0px -115px;
+}
+    
+#register-link
+{
+    color: #ff6c00;
+    text-decoration: none;
+    font-size: 70%;
+    margin: 0px 0px 0px -90px;
+}
+
+footer 
+{
+        font-size: 0.75em;
+        background-color: #cfde46;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+}
+
+@media screen and (min-width: 900px)
+{
+    #password-link
+    {
+        color: #ff6c00;
+        text-decoration: none;
+        font-size: 70%;
+        margin-left: -238px;
+    }
+    
+    #register-link
+    {
+        color: #ff6c00;
+        text-decoration: none;
+        font-size: 70%;
+        margin-left: -215px;
+    }
+    
+    .logo
+    {
+        text-align: left;
+    }
+    #ttc-logo
+    {
+        margin: 2px 0px 0px 5px;
+    }
+    .header
+    {
+        text-align: center;
+        margin: -60px -100px -3px 0px;
+        font-size: 30px;
+        font-weight: normal;
+        color: white;
+    }
+    .header-tag
+    {
+        font-family:helvetica;
+        font-weight:lighter;
+        font-size: 0.85em;
+        color: white;
+        text-align: center;
+        margin-top: 2px;
+    }
+    
+    .login
+    {
+        background-color:darkgrey;
+        height: 60em;
+    }
+    .login-form
+    {
+        margin: 160px;
+        text-align: center;
+        background-color: white;
+    }
+    
+    #red-logo
+    {
+        margin-bottom: 10px;
+    }
+    
+    #red-logo-bottom
+    {
+        margin-bottom: 70px;
+    }
+    
+    .username
+    {
+        margin-bottom: 10px;
+        padding-left: 60px;
+    }
+    
+    #username-label
+    {
+        margin: -25px 0px 0px -340px;
+        display: block;
+    }
+    
+    #password-label
+    {
+        margin: -25px 0px 0px -372px;
+        display: block;
+    }
+    
+    #username-text-box
+    {
+        background-color: #fff3c0;
+    }
+    
+    #password-text-box
+    {
+        background-color: #fff3c0;
+    }
+    
+    .password
+    {
+        margin-bottom: 15px;
+        padding-left: 60px;
+    }
+    
+    .options
+    {
+        margin-bottom: 5px;
+    }
+    
+    .remember-me
+    {
+        text-align: center;
+    }
+
+    #remember-me
+    {
+        margin: 0px 0px 0px -318px;
+    }
+    #remember-me-label
+    {
+        margin: -21px 0px 5px -180px;
+    }
+
+    .btn-log-on
+    {
+        margin: -3px 0px 0px 256px;
+    }
+    footer 
+    {
+        background-color: #cfde46;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+    }
+    
+    #sezmiFooter 
+    {
+        font-family: helvetica;
+        font-size: 1em;
+        color: #5e7c00;
+        width: 100%;
+    }
+}
