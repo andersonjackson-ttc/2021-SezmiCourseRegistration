@@ -1,0 +1,274 @@
+#bigPic
+    {
+        display: none;
+    }
+
+#header
+{
+/*    margin: 150px 0px 0px 0px;*/
+    text-align: center;
+    
+}
+#logoLine
+{
+    margin: -70px 0px 0px 0px;
+    width: 100%;
+    text-align: center;
+    background-color: #023570;
+    position: fixed;
+}
+
+#title
+{
+    margin: 70px 0px 0px 0px;
+    text-align: center;
+    font-size: 0.95em;
+}
+
+#sezmi
+{
+    font-family: cursive;
+    font-size: 0.75em;
+    text-align: center;
+}
+
+#selectLabel
+{
+    text-align: center;
+}
+
+#btnSubmit
+{
+    width: 100%;
+    text-align: center;
+}
+
+#combo
+{
+    width: 100%;
+    text-align: center; 
+}
+
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px 160px 0px;
+}
+
+th
+{
+    background-color: #023570;
+    color: white;
+    font-weight: 30;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+tr
+{
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+#address
+{
+    background-color: #5e7c00; 
+    color:white;
+    clear: both;
+    text-align: left;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    margin: 15px 10px 10px 0px;
+    font-family: Helvetica;
+    font-weight: lighter;
+}
+#footerLogo
+{
+    width: 150px;
+    margin: 15px 0px 10px 0px;
+}
+#mailingAddress
+{
+    margin: 0px 0px 10px 10px;
+}
+footer 
+{
+        font-size: 0.75em;
+        background-color: #cfde46;
+        clear: both;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+}
+
+@media screen and (min-width: 900px)
+{
+	#bigPic
+    {
+        display: block;
+/*        margin: 90px 0px 0px 0px;*/
+		margin: -40px 0px 0px 0px;
+        position: fixed;
+        width: 100%;
+    }
+    
+    #selectLabel
+    {
+        color: white;
+    }
+    
+    #blueLine
+    {
+        background-color: #023570;
+        width: 100%;
+        margin: 0px 0px 0px 0px;
+        height: 70px;
+        position: fixed;
+    }
+    
+    #logoLine
+    {
+        width: 300px;
+        margin: 2px 0px 0px 5px;
+        position: fixed;
+        text-align: center;
+        background-color: #023570;
+        z-index:99999;
+    }
+    
+     #header
+    {
+        text-align: center;
+        margin: 0px 0px 0px 0px;
+        background-color: clear;
+        width: 100%;
+        position:fixed;
+    }
+
+    #title
+    {
+        text-align: center;
+        margin: -5px 0px -3px 0px;
+        font-size: 30px;
+        font-weight: normal;
+        color: white;
+    }
+    
+    #sezmi
+    {
+        font-family:helvetica;
+        font-weight:lighter;
+        font-size: 0.85em;
+        color: white;
+        text-align: center;
+    }
+
+    #combobox
+    {
+        text-align: center;
+        margin: 100px;
+        position: relative;
+/*        max-width: 400px;*/
+    }
+    
+    #combobox:hover
+    {
+		cursor:pointer;
+	}
+    
+    #combo
+    {
+        width: auto;
+    }
+    
+    #combo:hover
+    {
+		cursor: pointer;
+	}
+    
+    #btnSubmit
+    {
+        width: auto;
+        text-align: center;
+    }
+    
+    #btnSubmit:hover
+    {
+		cursor:pointer;
+	}
+    
+    table
+    {
+        border-collapse: collapse;
+        margin: 20px 0px 190px 0px;
+    }
+    
+    table:hover
+    {
+		cursor:all-scroll;
+	}
+
+    th
+    {
+        background-color: #023570;
+        color: white;
+        padding: 5px;
+        border: 1px solid black;
+    }
+    
+    tr
+    {
+        padding: 5px;
+        border: 1px solid black;
+        background-color:antiquewhite;
+    }
+
+    #address
+    {
+        background-color: #5e7c00; 
+        color:white;
+        clear: both;
+        text-align: left;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+        margin: 15px 10px 10px 0px;
+        font-family: Helvetica;
+        font-weight: lighter;
+    }
+
+    #footerLogo
+    {
+        width: 150px;
+        margin: 15px 0px 10px 0px;
+    }
+    
+    #mailingAddress
+    {  
+        margin: 0px 0px 10px 10px;
+    }
+    footer 
+    {
+/*        font-size: 0.5em;*/
+/*        font-family: helvetica;*/
+        background-color: #cfde46;
+/*        color:white;*/
+/*        clear: both;*/
+/*        text-align: center;*/
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+    }
+    
+    #sezmiFooter 
+    {
+        font-family: helvetica;
+        font-size: 1em;
+        color: #5e7c00;
+        width: 100%;
+    }
+}
