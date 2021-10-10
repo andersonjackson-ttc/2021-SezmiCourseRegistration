@@ -15,4 +15,3 @@ function init()
     loadMajors();
     document.getElementById('btn-log-on').addEventListener('click', , false);
 }
-//Aaron Will Finish This By The Weekend of 10/08/2021
