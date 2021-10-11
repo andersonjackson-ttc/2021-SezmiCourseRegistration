@@ -64,7 +64,7 @@ public class StudentController {
 	}//end update method
 	
 	//the delete method allows an admin to delete a Student by email
-	@DeleteMapping("/section/{email}")
+	@DeleteMapping("/student/{email}")
 	public void delete(@PathVariable String email)
 	{
 		service.delete(email);
