@@ -12,22 +12,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="completedCourses")
+@Table(name="completed_courses")
 public class CompletedCourses 
 {
 	//Declare variables for column in the table
 	private String email;
-	private String courseId;
+	private String course_id;
 	private String grade;
 	private String term;
 	
 	public CompletedCourses()
 	{}
 	
-	public CompletedCourses(String email, String courseId, String grade, String term)
+	public CompletedCourses(String email, String course_id, String grade, String term)
 	{
 		this.email = email;
-		this.courseId = courseId;
+		this.course_id = course_id;
 		this.grade = grade;
 		this.term = term;		
 	}
@@ -43,13 +43,13 @@ public class CompletedCourses
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Column(name = "courseId")
+	@Column(name = "course_id")
 	public String getCourseId() {
-		return courseId;
+		return course_id;
 	}
 
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
+	public void setCourse_id(String courseId) {
+		this.course_id = courseId;
 	}
 	@Column(name = "grade")
 	public String getGrade() {
