@@ -44,12 +44,12 @@ public class CompletedCourses
 		this.email = email;
 	}
 	@Column(name = "course_id")
-	public String getCourseId() {
+	public String getCourse_id() {
 		return course_id;
 	}
 
-	public void setCourse_id(String courseId) {
-		this.course_id = courseId;
+	public void setCourse_id(String course_id) {
+		this.course_id = course_id;
 	}
 	@Column(name = "grade")
 	public String getGrade() {

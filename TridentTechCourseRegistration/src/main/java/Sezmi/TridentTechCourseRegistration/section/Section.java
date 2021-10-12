@@ -26,7 +26,7 @@ public class Section
 	{}
 
 	public Section(String section_id, String instructor_id, String schedule, String term, String duration, String time,
-			String course_format, String remaining_spaces, String courseID) 
+			String course_format, String remaining_spaces, String course_id) 
 	{
 		this.section_id = section_id;
 		this.instructor_id = instructor_id;
@@ -42,18 +42,18 @@ public class Section
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "section_id", nullable = false, updatable = false)
-	public String getSectionID()
+	public String getSection_id()
 	{
 		return section_id;
 	}
 
 	@Column(name = "instructor_id")
-	public String getInstructorID() {
+	public String getInstructor_id() {
 		return instructor_id;
 	}
 
-	public void setInstructorID(String instructorID) {
-		this.instructor_id = instructorID;
+	public void setInstructor_id(String instructor_id) {
+		this.instructor_id = instructor_id;
 	}
 
 	@Column(name = "schedule")
@@ -93,34 +93,34 @@ public class Section
 	}
 
 	@Column(name = "course_format")
-	public String getCourseFormat() {
+	public String getCourse_format() {
 		return course_format;
 	}
 
-	public void setCourseFormat(String courseFormat) {
-		this.course_format = courseFormat;
+	public void setCourse_format(String course_format) {
+		this.course_format = course_format;
 	}
 
 	@Column(name = "remaining_spaces")
-	public String getRemainingSpace() {
+	public String getRemaining_spaces() {
 		return remaining_spaces;
 	}
 
-	public void setRemainingSpace(String remainingSpace) {
-		this.remaining_spaces = remainingSpace;
+	public void setRemaining_spaces(String remaining_spaces) {
+		this.remaining_spaces = remaining_spaces;
 	}
 
 	@Column(name = "course_id")
-	public String getCourseID() {
+	public String getCourse_id() {
 		return course_id;
 	}
 
-	public void setCourseID(String courseID) {
-		this.course_id = courseID;
+	public void setCourse_id(String course_id) {
+		this.course_id = course_id;
 	}
 
-	public void setSectionID(String sectionID) {
-		this.section_id = sectionID;
+	public void setSection_id(String section_id) {
+		this.section_id = section_id;
 	}
 	
 	
