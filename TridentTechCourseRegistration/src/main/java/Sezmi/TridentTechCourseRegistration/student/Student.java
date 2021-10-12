@@ -1,6 +1,5 @@
 package Sezmi.TridentTechCourseRegistration.student;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,21 +14,21 @@ public class Student{
 	
 	//declare variables for column in the table
 	private String email;
-	private String lastName;
-	private String firstName;
+	private String last_name;
+	private String first_name;
 	private String password;
-	private String majorId;
+	private String major_id;
 	
 	public Student() {
 		
 	}
 		
-	public Student(String email, String lastName, String firstName, String password, String majorId) {
+	public Student(String email, String last_name, String first_name, String password, String major_id) {
 		this.email = email;
-		this.lastName = lastName;
-		this.firstName = firstName;
+		this.last_name = last_name;
+		this.first_name = first_name;
 		this.password = password;
-		this.majorId = majorId;
+		this.major_id = major_id;
 	}
 	
 	@Id
@@ -43,22 +42,22 @@ public class Student{
 		this.email = email;
 	}
 	
-	@Column(name = "lastName")
+	@Column(name = "last_name")
 	public String getLastName(){
-		return lastName;
+		return last_name;
 	}
 	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastName(String last_name) {
+		this.last_name = last_name;
 	}
 	
-	@Column(name = "firstName")
+	@Column(name = "first_name")
 	public String getFirstName() {
-		return firstName;
+		return first_name;
 	}
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstName(String first_name) {
+		this.first_name = first_name;
 	}
 	
 	@Column(name = "password")
@@ -70,13 +69,13 @@ public class Student{
 		this.password = password;
 	}
 	
-	@Column(name = "majorId")
+	@Column(name = "major_id")
 	public String getMajorId() {
-		return majorId;
+		return major_id;
 	}
 	
-	public void setMajorId(String majorId) {
-		this.majorId = majorId;
+	public void setMajorId(String major_id) {
+		this.major_id = major_id;
 	}
 }
 	

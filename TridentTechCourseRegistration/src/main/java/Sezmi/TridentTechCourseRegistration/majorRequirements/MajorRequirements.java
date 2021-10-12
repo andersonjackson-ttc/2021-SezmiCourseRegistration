@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MajorRequirements")
+@Table(name = "major_requirements")
 public class MajorRequirements 
 {
 	//declare variable (i.e table categories) for the major table) and map them to the table
@@ -33,7 +33,7 @@ public class MajorRequirements
 	//Create the primary key with the ID tag. We might need to adjust the @GeneratedValue later
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "MajorID", nullable = false, updatable = false)
+	@Column(name = "major_id", nullable = false, updatable = false)
 	public String getMajorId()
 	{
 		return majorid;
@@ -47,7 +47,7 @@ public class MajorRequirements
 	}
 
 	//was getCourseId
-	@Column(name = "CourseID", nullable = false, updatable = false)
+	@Column(name = "course_id", nullable = false, updatable = false)
 	public String getJames() {
 		return courseId;
 	}

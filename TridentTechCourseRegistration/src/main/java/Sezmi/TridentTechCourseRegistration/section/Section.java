@@ -12,51 +12,51 @@ import javax.persistence.Table;
 public class Section 
 {
 	//declare variables for column in the table
-	private String sectionID;
-	private String instructorID;
+	private String section_id;
+	private String instructor_id;
 	private String schedule;
 	private String term;
 	private String duration;
 	private String time;
-	private String courseFormat;
-	private String remainingSpace;
-	private String courseID;
+	private String course_format;
+	private String remaining_spaces;
+	private String course_id;
 	
 	public Section()
 	{}
 
-	public Section(String sectionID, String instructorID, String schedule, String term, String duration, String time,
-			String courseFormat, String remainingSpace, String courseID) 
+	public Section(String section_id, String instructor_id, String schedule, String term, String duration, String time,
+			String course_format, String remaining_spaces, String courseID) 
 	{
-		this.sectionID = sectionID;
-		this.instructorID = instructorID;
+		this.section_id = section_id;
+		this.instructor_id = instructor_id;
 		this.schedule = schedule;
 		this.term = term;
 		this.duration = duration;
 		this.time = time;
-		this.courseFormat = courseFormat;
-		this.remainingSpace = remainingSpace;
-		this.courseID = courseID;
+		this.course_format = course_format;
+		this.remaining_spaces = remaining_spaces;
+		this.course_id = course_id;
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SectionID", nullable = false, updatable = false)
+	@Column(name = "section_id", nullable = false, updatable = false)
 	public String getSectionID()
 	{
-		return sectionID;
+		return section_id;
 	}
 
-	@Column(name = "InstructorID")
+	@Column(name = "instructor_id")
 	public String getInstructorID() {
-		return instructorID;
+		return instructor_id;
 	}
 
 	public void setInstructorID(String instructorID) {
-		this.instructorID = instructorID;
+		this.instructor_id = instructorID;
 	}
 
-	@Column(name = "Schedule")
+	@Column(name = "schedule")
 	public String getSchedule() {
 		return schedule;
 	}
@@ -65,7 +65,7 @@ public class Section
 		this.schedule = schedule;
 	}
 
-	@Column(name = "Term")
+	@Column(name = "term")
 	public String getTerm() {
 		return term;
 	}
@@ -74,7 +74,7 @@ public class Section
 		this.term = term;
 	}
 
-	@Column(name = "Duration")
+	@Column(name = "duration")
 	public String getDuration() {
 		return duration;
 	}
@@ -83,7 +83,7 @@ public class Section
 		this.duration = duration;
 	}
 
-	@Column(name = "Time")
+	@Column(name = "time")
 	public String getTime() {
 		return time;
 	}
@@ -92,35 +92,35 @@ public class Section
 		this.time = time;
 	}
 
-	@Column(name = "CourseFormat")
+	@Column(name = "course_format")
 	public String getCourseFormat() {
-		return courseFormat;
+		return course_format;
 	}
 
 	public void setCourseFormat(String courseFormat) {
-		this.courseFormat = courseFormat;
+		this.course_format = courseFormat;
 	}
 
-	@Column(name = "RemainingSpaces")
+	@Column(name = "remaining_spaces")
 	public String getRemainingSpace() {
-		return remainingSpace;
+		return remaining_spaces;
 	}
 
 	public void setRemainingSpace(String remainingSpace) {
-		this.remainingSpace = remainingSpace;
+		this.remaining_spaces = remainingSpace;
 	}
 
-	@Column(name = "CourseID")
+	@Column(name = "course_id")
 	public String getCourseID() {
-		return courseID;
+		return course_id;
 	}
 
 	public void setCourseID(String courseID) {
-		this.courseID = courseID;
+		this.course_id = courseID;
 	}
 
 	public void setSectionID(String sectionID) {
-		this.sectionID = sectionID;
+		this.section_id = sectionID;
 	}
 	
 	

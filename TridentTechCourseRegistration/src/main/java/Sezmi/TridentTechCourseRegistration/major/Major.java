@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "Major")
+@Table(name = "major")
 public class Major 
 {
 	//declare variables (i.e table categories) for the Major table
@@ -30,13 +30,13 @@ public class Major
 	//Create the primary key within the database using the @ID tag.
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "MajorID", nullable = false, updatable = false)
+	@Column(name = "major_id", nullable = false, updatable = false)
 	public String getMajor_id()
 	{
 		return major_id;
 	}
 
-	@Column(name = "MajorName", nullable = false, updatable = false)
+	@Column(name = "major_name", nullable = false, updatable = false)
 	public String getMajor() {
 		return major;
 	}
