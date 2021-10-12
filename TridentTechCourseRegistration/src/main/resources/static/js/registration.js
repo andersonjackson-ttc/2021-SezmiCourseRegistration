@@ -15,20 +15,29 @@ window.onload = function()
 //Initialize all Event Listeners
 function init()
 {
-    document.getElementById('btnSubmit').addEventListener('click',postToDatabase, false);
+    document.getElementById('btnSubmit').addEventListener('click',validateUserInput, false);
 }
 
 //Store User Input Values in Appropriate Variables
-function storeUserInput()
+function validateUserInput()
 {
     firstName = document.getElementById("firstname-text-box");
     lastName = document.getElementById("lastname-text-box");
     email = document.getElementById("email-text-box");
     password = document.getElementById("password-text-box");
+    if (firstName.length > 0 && firstName.length > 0 && email.length > 0 && password.length >0)
+        {
+            postToDatabase();
+        }
+        
+    else
+        {
+            DisplayBadUserInputErrorMessage();
+        }
 }
 
 function postToDatabase()
-{
+{   
     //Create Array from User Input
     var elements = document.getElementsByClassName("formVal");
     
@@ -57,5 +66,10 @@ function postToDatabase()
     xmlhttp.open("POST", "/student"); 
     //Send All Key Value Pairs to Database
     xmlhttp.send(formData); 
+}
+
+function displayBadUserInputErrorMessage()
+{
+    alert("One or More of the Fields are Blank!");
 }
 
