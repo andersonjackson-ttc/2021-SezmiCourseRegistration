@@ -12,51 +12,51 @@ import javax.persistence.Table;
 public class Section 
 {
 	//declare variables for column in the table
-	private String sectionID;
-	private String instructorID;
+	private String section_id;
+	private String instructor_id;
 	private String schedule;
 	private String term;
 	private String duration;
 	private String time;
-	private String courseFormat;
-	private String remainingSpace;
-	private String courseID;
+	private String course_format;
+	private String remaining_spaces;
+	private String course_id;
 	
 	public Section()
 	{}
 
-	public Section(String sectionID, String instructorID, String schedule, String term, String duration, String time,
-			String courseFormat, String remainingSpace, String courseID) 
+	public Section(String section_id, String instructor_id, String schedule, String term, String duration, String time,
+			String course_format, String remaining_spaces, String course_id) 
 	{
-		this.sectionID = sectionID;
-		this.instructorID = instructorID;
+		this.section_id = section_id;
+		this.instructor_id = instructor_id;
 		this.schedule = schedule;
 		this.term = term;
 		this.duration = duration;
 		this.time = time;
-		this.courseFormat = courseFormat;
-		this.remainingSpace = remainingSpace;
-		this.courseID = courseID;
+		this.course_format = course_format;
+		this.remaining_spaces = remaining_spaces;
+		this.course_id = course_id;
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SectionID", nullable = false, updatable = false)
-	public String getSectionID()
+	@Column(name = "section_id", nullable = false, updatable = false)
+	public String getSection_id()
 	{
-		return sectionID;
+		return section_id;
 	}
 
-	@Column(name = "InstructorID")
-	public String getInstructorID() {
-		return instructorID;
+	@Column(name = "instructor_id")
+	public String getInstructor_id() {
+		return instructor_id;
 	}
 
-	public void setInstructorID(String instructorID) {
-		this.instructorID = instructorID;
+	public void setInstructor_id(String instructor_id) {
+		this.instructor_id = instructor_id;
 	}
 
-	@Column(name = "Schedule")
+	@Column(name = "schedule")
 	public String getSchedule() {
 		return schedule;
 	}
@@ -65,7 +65,7 @@ public class Section
 		this.schedule = schedule;
 	}
 
-	@Column(name = "Term")
+	@Column(name = "term")
 	public String getTerm() {
 		return term;
 	}
@@ -74,7 +74,7 @@ public class Section
 		this.term = term;
 	}
 
-	@Column(name = "Duration")
+	@Column(name = "duration")
 	public String getDuration() {
 		return duration;
 	}
@@ -83,7 +83,7 @@ public class Section
 		this.duration = duration;
 	}
 
-	@Column(name = "Time")
+	@Column(name = "time")
 	public String getTime() {
 		return time;
 	}
@@ -92,35 +92,35 @@ public class Section
 		this.time = time;
 	}
 
-	@Column(name = "CourseFormat")
-	public String getCourseFormat() {
-		return courseFormat;
+	@Column(name = "course_format")
+	public String getCourse_format() {
+		return course_format;
 	}
 
-	public void setCourseFormat(String courseFormat) {
-		this.courseFormat = courseFormat;
+	public void setCourse_format(String course_format) {
+		this.course_format = course_format;
 	}
 
-	@Column(name = "RemainingSpaces")
-	public String getRemainingSpace() {
-		return remainingSpace;
+	@Column(name = "remaining_spaces")
+	public String getRemaining_spaces() {
+		return remaining_spaces;
 	}
 
-	public void setRemainingSpace(String remainingSpace) {
-		this.remainingSpace = remainingSpace;
+	public void setRemaining_spaces(String remaining_spaces) {
+		this.remaining_spaces = remaining_spaces;
 	}
 
-	@Column(name = "CourseID")
-	public String getCourseID() {
-		return courseID;
+	@Column(name = "course_id")
+	public String getCourse_id() {
+		return course_id;
 	}
 
-	public void setCourseID(String courseID) {
-		this.courseID = courseID;
+	public void setCourse_id(String course_id) {
+		this.course_id = course_id;
 	}
 
-	public void setSectionID(String sectionID) {
-		this.sectionID = sectionID;
+	public void setSection_id(String section_id) {
+		this.section_id = section_id;
 	}
 	
 	
