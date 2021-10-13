@@ -43,7 +43,7 @@ public class MajorRequirements
 	public void setMajor_id(String major_id) {
 		this.major_id = major_id;
 	}
-	//was getJames
+	//was getJames. make sure to fix in JS
 	public String getCourse_id() {
 		return course_id;
 	}
