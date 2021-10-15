@@ -22,10 +22,10 @@ function majorTemplate(major)
 }
 
 //Template Literal to Return Course Name
-function courseTemplate(major_requirements)
+function courseTemplate(major_requirements) 
 {
     //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((majorRequirements.majorId).includes(majorId))
+    if ((major_requirements.majorId).includes(majorId))
     {
 		//Declare needed local variables
 		let output = "";
@@ -68,7 +68,7 @@ function loadMajors()
             xmlhttp = new XMLHttpRequest();
             
             //Get Status
-             xmlhttp.onreadystatechange = function() 
+            xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
                 if (this.readyState == 4 && this.status==200) 

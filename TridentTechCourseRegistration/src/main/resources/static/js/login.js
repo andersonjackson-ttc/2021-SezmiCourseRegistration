@@ -1,81 +1,84 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
-var email;
-var password;
+var inputEmail = "";
+var password = "";
+var isThisTrue = false;
+var testUserName;
+var isThisBlank = false;
 
 //Activate Event Listeners on Page Load
-window.onload = function() 
-    {
-    document.getElementById("btn-log-on").addEventListener("click", change, false);
-    }
-    function change() {
-        
-        email = document.getElementById("username-text-box").value;
-        password = document.getElementById("password-text-box").value;
-        
-        if (email=="sezmi123@aol.com" & password=="goteam")
-        window.location = "file://localhost/C:/Users/18436/Documents/GitHub/SezmiCourseRegistration/TridentTechCourseRegistration/src/main/resources/static/index.html";
-        else
-        alert("Username Not Found in Database, please click new user to set up account");
-       
-       // btn-log-on.disabled = true
-
-    }
-
-/*window.onload = function()
+window.onload = function()
 {
-    init();
+	init();
 };
 
 //Initialize all Event Listeners
 function init()
 {
-   
-    let button = document.querySelector(".btn-log-on")
-     button.disabled = true
-    //document.getElementsByClassName('btn-log-on').addEventListener('click', checkUser, false);
-    //document.getElementsByClassName('btn-log-on').onclick = 
-    //let button = document.getElementsByClassName('btn-log-on');
-   // button.disabled=true;
-
+	document.getElementById("btn-log-on").addEventListener("click", compareUser, false);
 }
 
-function redirectToURL(btnId){
-    if(btnId=="btn-log-off")
-        button.disabled = true
-        else
-        window.location.replace("https://en.wikipedia.org/wiki/Main_Page");
-    
-}
-function checkUser()
+//Template Literal to Return username and password
+function emailTemplate(login) 
 {
-    
-    //('btn-log-on').disabled
-    //email = document.getElementById("username-text-box").value;
-    //password = document.getElementById("password-text-box").value;
-    //if (email="sezmi123@aol.com")
-    //{
-     //   btn-log-on.disabled = true; //setting button state to disabled
-
-   //let input = document.querySelector("btn-log-on");
-   //et button = document.querySelector(".btn-log-on");
-   
-   //button.disabled = true; //setting button state to disabled
-   
-       
-    //}
-
+    return `<option value='${login.email}'>${login.password}</option>`
 }
 
-//indow.navigate("index.html");
-//Template Literal to Return email and password
-//function emailTemplate(email) 
-//{
-//    return `<option value='${email.email}'>${email.password}</option>`
-//}
-
-//Create API Call
-//xmlhttp.open("GET", '/student');
+function compareUser()
+    {
+ 		//Make a new API Request
+    	xmlhttp = new XMLHttpRequest();
             
-//Send API Call
-//xmlhttp.send()*/
+      	//Get Status
+      	xmlhttp.onreadystatechange = function() 
+        {
+	
+         	//Check if Status is Ready
+         	if (this.readyState == 4 && this.status==200) 
+         	{
+				isThisTrue = false;
+				isThisBlank = false;
+				
+       			//Parse into JSON
+       			const students = jQuery.parseJSON(xmlhttp.responseText);
+				
+				inputEmail = document.getElementById("username-text-box").value;
+    			password = document.getElementById("password-text-box").value;
+    			
+    			if (inputEmail == "" || password == "")
+    			{
+					isThisBlank = true;
+				}
+    			for (i=0; i < students.length; i++)
+    			{
+					if ((students[i].email) == (inputEmail) && inputEmail != "" && (students[i].password) == (password) && password != "")
+    				{
+						isThisTrue = true;
+					}
+				}	
+				if (isThisBlank)
+				{
+					document.getElementById('errorFooter').innerHTML = "Please Fill in All Empty Text Fields";
+				}
+				else if (isThisTrue)
+				{
+					//Display Success
+					document.getElementById('errorFooter').innerHTML = "Success!";
+					//Open Main Page
+					window.location = "/mainpage";
+				}
+				else
+				{
+					document.getElementById('errorFooter').innerHTML = "Email and/or Password is incorrect.";
+				}
+     		}    		  	
+     	}
+
+     //Create API Call
+     xmlhttp.open("GET", '/student');
+            
+     //Send API Call
+     xmlhttp.send();
+     }
+
+    

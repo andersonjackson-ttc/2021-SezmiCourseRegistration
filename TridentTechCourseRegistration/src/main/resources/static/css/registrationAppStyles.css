@@ -73,6 +73,12 @@ footer
         bottom: 0px;
 }
 
+#errorFooter
+{
+	color: red;
+	font-size: 1.6em;
+}
+
 @media screen and (min-width: 900px)
 {
     .logo
@@ -191,4 +197,10 @@ footer
         color: #5e7c00;
         width: 100%;
     }
+    
+    #errorFooter
+    {
+		color: red;
+		font-size: 1.6em;
+	}
 }

@@ -50,7 +50,7 @@ public class CompletedCoursesController
 		}
 		
 		//the update method allows a student to edit the Completed Courses info based on the email
-		@PutMapping("/student/{email}")
+		@PutMapping("/completedCourses/{email}")
 		public ResponseEntity<?> update(@RequestBody CompletedCourses completedCourses, @PathVariable String email)
 		{
 			try 

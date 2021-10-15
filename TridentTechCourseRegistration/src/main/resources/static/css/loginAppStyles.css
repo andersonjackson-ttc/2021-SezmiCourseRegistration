@@ -75,7 +75,7 @@
     margin: -21px 0px 5px -55px;
 }
 
-.btn-log-on
+#btn-log-on
 {
     margin: 0px 0px 0px -140px;
 }
@@ -104,6 +104,12 @@ footer
         width: 100%;
         position: fixed;
         bottom: 0px;
+}
+
+#errorFooter
+{
+	color: red;
+	font-size: 1.6em;
 }
 
 @media screen and (min-width: 900px)
@@ -225,9 +231,10 @@ footer
         margin: -21px 0px 5px -180px;
     }
 
-    .btn-log-on
+    #btn-log-on
     {
         margin: -3px 0px 0px 256px;
+        max-width: 100px;
     }
     footer 
     {
@@ -244,4 +251,10 @@ footer
         color: #5e7c00;
         width: 100%;
     }
+    
+    #errorFooter
+    {
+		color: red;
+		font-size: 1.6em;
+	}
 }

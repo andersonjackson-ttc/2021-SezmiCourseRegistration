@@ -26,14 +26,15 @@ public class StudentService {
 	}
 	
 	//the get method finds a student by the email
-	public Student get(String email)
+	
+	public Student get(Long id)
 	{
-		return repository.findById(email).get();
+		return repository.findById(id).get();
 	}
 	
 	//the delete method deletes a student by the email
-	public void delete(String email)
+	public void delete(Long id)
 	{
-		repository.deleteById(email);
+		repository.deleteById(id);;
 	}
 }
