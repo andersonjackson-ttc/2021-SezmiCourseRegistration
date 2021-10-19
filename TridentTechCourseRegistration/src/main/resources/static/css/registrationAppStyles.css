@@ -1,0 +1,206 @@
+.logo
+{
+    text-align: center;
+    background-color: #023570;
+}
+
+.header
+{
+    text-align: center;
+    font-size: 0.95em;
+    
+}
+.header-tag
+{
+    text-align: center;
+    font-family: cursive;
+    font-size: 0.75em;
+    text-align: center;
+}
+
+.credentials
+{
+/*    text-align: center;*/
+}
+
+#email-text-box
+{
+    width: 100%;
+}
+
+#email-label
+{
+    display: none;
+}
+    
+#password-text-box
+{
+    width: 100%;
+}
+
+#password-label
+{
+    display: none;
+}
+
+#firstname-text-box
+{
+    width: 100%;
+}
+
+#firstname-label
+{
+    display: none;
+}
+
+#lastname-text-box
+{
+    width: 100%;
+}
+
+#lastname-label
+{
+    display: none;
+}
+
+footer 
+{
+        font-size: 0.75em;
+        background-color: #cfde46;
+        text-align: center;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+}
+
+#errorFooter
+{
+	color: red;
+	font-size: 1.6em;
+}
+
+@media screen and (min-width: 900px)
+{
+    .logo
+    {
+        text-align: left;
+    }
+    #ttc-logo
+    {
+        margin: 2px 0px 0px 5px;
+    }
+    .header
+    {
+        text-align: center;
+        margin: -60px -10px -3px 0px;
+        font-size: 30px;
+        font-weight: normal;
+        color: white;
+    }
+    .header-tag
+    {
+        font-family:helvetica;
+        font-weight:lighter;
+        font-size: 0.85em;
+        color: white;
+        text-align: center;
+        margin-top: 2px;
+    }
+
+    .registration-form
+    {
+        margin: 60px;
+        text-align: center;
+    }
+    
+    .name
+    {
+        margin-bottom: 20px;
+        float: left;
+    }
+    
+    #firstname-label
+    {
+        display: block;
+        float: left;
+        margin-right:100px;
+    }
+    
+    #firstname-text-box
+    {
+        background-color: #fff3c0;
+        width:auto;
+    }
+    
+    #lastname-text-box
+    {
+        background-color: #fff3c0;
+        margin: 0px 0px 0px 180px;
+        width:auto;
+    }
+    
+    #lastname-label
+    {
+        margin: -25px 0px 0px -372px;
+        display: block;
+    }
+    
+    .credentials
+    {
+        float: left;
+        margin-bottom: 50px;
+    }
+    
+    #email-label
+    {
+        display: block;
+        float: left;
+        margin-right: 75px;
+    }
+    
+    #email-text-box
+    {
+        background-color: #fff3c0;
+        width:auto;
+    }
+    
+    #password-label
+    {
+        margin: -25px 0px 0px 0px;
+        display: block;
+    }
+    
+    #password-text-box
+    {
+        margin: 0px 0px 0px 180px;
+        background-color: #fff3c0;
+        width:auto;
+    }
+    
+    #btnSubmit
+    {
+        background-color:aliceblue;
+    }
+    
+    footer 
+    {
+        background-color: #cfde46;
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+    }
+    
+    #sezmiFooter 
+    {
+        font-family: helvetica;
+        font-size: 1em;
+        color: #5e7c00;
+        width: 100%;
+    }
+    
+    #errorFooter
+    {
+		color: red;
+		font-size: 1.6em;
+	}
+}

@@ -56,6 +56,14 @@ table
     margin: 10px 0px 160px 0px;
 }
 
+/*#logout-link
+    {
+        color: #ff6c00;
+        text-decoration: none;
+        font-size: 70%;
+        margin-left: -215px;
+    }*/
+    
 th
 {
     background-color: #023570;
@@ -103,6 +111,20 @@ footer
         width: 100%;
         position: fixed;
         bottom: 0px;
+}
+
+#completedBtn{
+	border-radius: 5px;
+	font-size: 15px;
+	float: right;
+}
+
+div.ui-page #logoutBtn{
+	float: right;
+	max-width: 89px;
+    max-height: 38px;
+    text-align: center;
+    font-size: 10px;
 }
 
 @media screen and (min-width: 900px)

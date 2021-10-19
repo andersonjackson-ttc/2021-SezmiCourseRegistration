@@ -43,7 +43,20 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\arian\Documents\GitHub\SezmiCourseRegistration\TridentTechCourseRegistration\src\main\java\Sezmi\TridentTechCourseRegistration\student"/>
+			<item value="C:\Users\arian\Documents\GitHub\SezmiCourseRegistration\TridentTechCourseRegistration\src\main\java"/>
+			<item value="C:\Users\arian\Documents\GitHub\SezmiCourseRegistration\TridentTechCourseRegistration\src\main\java\Sezmi\TridentTechCourseRegistration"/>
+			<item value="C:\Users\arian\Documents\GitHub\SezmiCourseRegistration\TridentTechCourseRegistration"/>
+			<item value="C:\Users\arian\Documents\GitHub\SezmiCourseRegistration"/>
 			<item value="C:\Users\SMAUG\AppData\Local\GitHubDesktop\Projects\SezmiCourseRegistration\TridentTechCourseRegistration"/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="518"/>
+		<item key="DIALOG_Y_ORIGIN" value="180"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
 		</list>
 	</section>
 </section>

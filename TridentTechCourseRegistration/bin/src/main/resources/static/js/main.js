@@ -25,18 +25,16 @@ function majorTemplate(major)
 function courseTemplate(major_requirements) 
 {
     //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((major_requirements.major_id).includes(majorId))
+    if ((major_requirements.majorId).includes(majorId))
     {
 		//Declare needed local variables
 		let output = "";
-		let courseList = major_requirements.course_id;
+		let courseList = majorRequirements.james;
 		let courses = "";
 		let test = "";
 		
-		
 		//Create Constant Array from splitting courselist String with comma delimiters
 		const jamesCoursesArray = courseList.split(",");
-		
 		
 		//Sort Array Alphabetically 
 		jamesCoursesArray.sort();
@@ -44,11 +42,10 @@ function courseTemplate(major_requirements)
 		//For loop that accumulates output variable with dynamic HTML building of Table 
 		for (i = 0; i < jamesCoursesArray.length; i++)
 		{
-		
 			//Output Accumulator
 			output += "<tr><td>";
 			courses += jamesCoursesArray[i];
-			test = jamesCoursesArray[i].substring(0,7);
+			test = jamesCoursesArray[i].substring(0,3);
 			
 			while (jamesCoursesArray[i+1] != null && jamesCoursesArray[i+1].includes(test))
 			{
@@ -56,8 +53,7 @@ function courseTemplate(major_requirements)
 				i++;
 			}
 			output += courses;
-			output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
-			
+			output += "</td></tr>";
 			courses =  "";
 		}
 		//Return Accumulated Output 
@@ -111,9 +107,7 @@ function loadCourses()
                     if (majorId != "nah")
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
-                    	document.getElementById('courses').innerHTML = `<tr><th>Eligible Courses</th><th id="selectHeader">Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-						document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Courses</button>'
-						document.getElementById('completedBtn').addEventListener('click', pleaseWork, false);
+                    	document.getElementById('courses').innerHTML = `<tr><th>Eligible Courses</th></tr>${courses.map(courseTemplate).join('')}`
 					}
 					//Clear Table from Page
 					else
@@ -136,103 +130,4 @@ function selectMajor()
     var majorSelection = document.querySelector('#combo');
     majorId = majorSelection.value;
     loadCourses();
-}
-
-function pleaseWork()
-    {
-        let checkbox = document.querySelector('input[type="checkbox"]:checked');
-        checkboxSelection = checkbox.value;
-	    //checkboxSelection = checkbox.parentElement.textContent;
-        alert(checkboxSelection);
-        
-        loadNewCourses();
-        document.getElementById("completedBtn").style.display = "none";
-    }
-    
-
-    
-//if I can't add value, maybe I can store the json values and add them another way
-function storeCourses()
-{
-    var selectedCourses = document.getElementById('courses');
-    store.set(courses.innerHTML, null);
-}
-
-function loadNewCourses()
-{
-    //Make a new API Request
-            xmlhttp = new XMLHttpRequest();
-            
-            //Get Status
-             xmlhttp.onreadystatechange = function() 
-            {
-                //Check if Status is Ready
-                if (this.readyState == 4 && this.status==200) 
-                {
-                    //Parse into JSON
-                    const newCourses = jQuery.parseJSON(xmlhttp.responseText);
-                    
-                    //test if user selected a REAL major
-                    if (majorId != "nah")
-                    {
-						//Generate Table of Eligible courses dynamically into HTML page
-                    	document.getElementById('courses').innerHTML = `<tr><th>Remaining Courses</th></tr>${newCourses.map(newCourseTemplate).join('')}`
-                        
-					}
-					//Clear Table from Page
-					else
-					{
-						document.getElementById('courses').innerHTML = "";
-					}
-                }
-            };
-            
-            //Create API Call
-            xmlhttp.open("GET", '/majors', true);
-            
-            //Send API Call
-            xmlhttp.send();
-}
-
-
-//only fill table with courses that weren't selected
-function newCourseTemplate(major_requirements)
-{
- 
-    //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((major_requirements.major_id).includes(majorId))
-    {
-		//Declare needed local variables
-		let output = "";
-		let courseList = major_requirements.course_id;
-		let courses = "";
-		let test = "";
-		
-		//Create Constant Array from splitting courselist String with comma delimiters
-		const jamesCoursesArray = courseList.split(",");
-		
-		//Sort Array Alphabetically 
-		jamesCoursesArray.sort();
-		
-		//For loop that accumulates output variable with dynamic HTML building of Table 
-		for (i = 0; i < jamesCoursesArray.length; i++)
-		{
-			//Output Accumulator
-			output += "<tr><td>";
-			courses += jamesCoursesArray[i];
-			test = jamesCoursesArray[i].substring(0,7);
-			
-			while (jamesCoursesArray[i+1] != null && jamesCoursesArray[i+1].includes(test))
-			{
-				courses += ", " + jamesCoursesArray[i+1];
-				i++;
-			}
-			output += courses;
-			output += "</td></tr>";
-			courses =  "";
-		}
-		//Return Accumulated Output 
-		return output;
-	}
-
 }

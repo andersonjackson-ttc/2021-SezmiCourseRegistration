@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' data:; style-src * 'self' 'unsafe-inline'; media-src *" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/loginAppStyles.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/login.js"></script>
+    <title>Trident Tech Course Login</title>
+</head>
+
+<body>
+<!--    <img id="background-pic" src="img/TTCBackground.jpg" alt="TTC Student">-->
+    <div class="login">
+        <div class="logo">
+            <img id="ttc-logo" src="img/TTCLogo.png" alt="TTC Logo">
+        </div>
+        <div class="header">TTC Course Registration Login</div>
+        <div class
+        ="header-tag">powered by ©Sezmi</div>
+        
+        <div class="login-form">
+            <img id="red-logo" src="img/red-ttc-logo.png" alt="red-ttc-logo">
+            <div class="username">
+                <input id="username-text-box" type="text" placeholder="Email Address" required maxlength="128" data-role="none">
+                <label id="username-label" for="username-text-box" >Email Address: </label>
+            </div><!-- username-->
+            
+            <div class="password">
+                <input id="password-text-box" type="password" placeholder="Password" data-role="none">
+                <label id="password-label" for="password-text-box" >Password: </label>
+            </div><!-- password-->
+            
+            <div class="options">
+                <div class="remember-me">
+                    <input id="remember-me" type="checkbox" data-role="none">
+                    <label id="remember-me-label" for="remember-me" >Remember Me?</label>
+                </div><!-- remember-me-->
+                
+                <!--<input type="button" id ="btn-log-on" data-role="none" value="Log On" onClick='redirectToURL(this.id)'/>
+                <a id="Registration" href="file://localhost/C:/Users/18436/Documents/GitHub/SezmiCourseRegistration/TridentTechCourseRegistration/src/main/resources/static/index.html" >
+                    <button class="btn-log-on" data-role="none">Log On</button>
+                </a>-->
+                <button type="button" id="btn-log-on" value="Log on" data-role="none">Log On</button>
+                <div class="forgot-password">
+                    <a id="password-link" href="#">Forgot Password</a>
+                </div><!-- forgot-password-->
+                <div class="register">
+                    <a id="register-link" href="/registration">New Users Click Here</a>
+                </div><!-- register-->
+                    <img id="red-logo-bottom" src="img/login_footer.jpg" alt="bottom-logo">
+            </div><!-- options-->
+            
+            
+            
+        </div><!-- login-form-->
+    </div><!-- login-->
+</body>
+<footer>
+	<div id="errorFooter"></div>
+    <p id="sezmiFooter">
+        powered by ©Sezmi 
+    </p>
+</footer>
+</html>

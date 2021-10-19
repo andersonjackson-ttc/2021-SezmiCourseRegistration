@@ -16,45 +16,40 @@ import javax.persistence.Table;
 public class MajorRequirements 
 {
 	//declare variable (i.e table categories) for the major table) and map them to the table
-	private String majorid;		//this is the primary key
-	private String courseId;
+	private String major_id;		//this is the primary key
+	private String course_id;
 	
 	//declare no arg constructor and full constructor
 	public MajorRequirements()
 	{}
 	
-	public MajorRequirements(String majorid, String courseid)
+	public MajorRequirements(String major_id, String course_id)
 	{
-		this.majorid = majorid;
-		this.courseId = courseid;
+		this.major_id = major_id;
+		this.course_id = course_id;
 		
 	}
 	
 	//Create the primary key with the ID tag. We might need to adjust the @GeneratedValue later
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "MajorID", nullable = false, updatable = false)
-	public String getMajorId()
-	{
-		return majorid;
-	}
+	@Column(name = "major_id", nullable = false, updatable = false)
 	
-	//source created setters and getters
 
-
-	public void setMajorId(String majorId) {
-		this.majorid = majorId;
+	public String getMajor_id() {
+		return major_id;
 	}
 
-	//was getCourseId
-	@Column(name = "CourseID", nullable = false, updatable = false)
-	public String getJames() {
-		return courseId;
+	public void setMajor_id(String major_id) {
+		this.major_id = major_id;
 	}
-
-	//was setCourseId
-	public void setJames(String courseId) {
-		this.courseId = courseId;
+	//was getJames. make sure to fix in JS
+	public String getCourse_id() {
+		return course_id;
+	}
+	//was setJames
+	public void setCourse_id(String course_id) {
+		this.course_id = course_id;
 	}
 	
 }//end Major class

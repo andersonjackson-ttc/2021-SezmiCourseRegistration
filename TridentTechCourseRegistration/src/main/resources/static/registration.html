@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' data:; style-src * 'self' 'unsafe-inline'; media-src *" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/registrationAppStyles.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/registration.js"></script>
+    <title>Trident Tech Registration Page</title>
+</head>
+
+<body>
+    <div class="registration">
+        <div class="logo">
+            <img id="ttc-logo" src="img/TTCLogo.png" alt="TTC Logo">
+        </div>
+        <div class="header">User Registration</div>
+        <div class="header-tag">powered by ©Sezmi</div>
+        
+        <div class="registration-form">
+            <div class="name">
+                <input class='formVal' id="firstname-text-box" name="firstName" type="text" placeholder="First Name" required maxlength="128" data-role="none">
+                <label id="firstname-label" for="firstname-text-box" >First Name: </label>
+                
+                <input class='formVal' id="lastname-text-box" name="lastName" type="text" placeholder="Last Name" required maxlength="128" data-role="none">
+                <label id="lastname-label" for="lastname-text-box" >Last Name: </label>
+            </div><!-- name-->
+            
+            <div class="credentials">
+                <input class='formVal' id="email-text-box" name="email" type="text" placeholder="Email Address" required maxlength="128" data-role="none">
+                <label id="email-label" for="email-text-box" >Email Address: </label>
+                <input class='formVal' id="password-text-box" name="password" type="text" placeholder="Password" required maxlength="128" data-role="none">
+                <label id="password-label" for="password-text-box" >Password: </label>
+            </div><!-- name-->
+            <div id="button">
+                <button id="btnSubmit">Submit</button>
+            </div>
+        </div><!-- registration-form-->
+    </div><!-- registration-->
+</body>
+<footer>
+	<div id="errorFooter"></div>
+    <p id="sezmiFooter">
+        powered by ©Sezmi 
+    </p>
+</footer>
+</html>

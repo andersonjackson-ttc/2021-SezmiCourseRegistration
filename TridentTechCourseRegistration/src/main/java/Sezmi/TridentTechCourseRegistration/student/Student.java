@@ -1,96 +1,97 @@
 package Sezmi.TridentTechCourseRegistration.student;
 
-import java.time.LocalDate;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-//the purpose of student class is to create a student object. Following along with Spring Boot Tutorial. 
-
-@Entity //specifies that this class is going to be an entity (needed for JPAs)
-@Table	//specifies that this class is going to be used to create a table. 
-public class Student 
-{
+@Entity
+@Table(name = "student")
+public class Student{
 	
+	//declare variables for column in the table
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private int age; 
+	
+	@Column(nullable = false, unique = true, length = 45)
 	private String email;
-	private LocalDate dob;
 	
+	@Column(nullable = false, length = 20)
+	private String last_name;
 	
-	//generated constructor for student without an id
-	public Student(String name, int age, String email, LocalDate dob) {
-		this.name = name;
-		this.age = age;
-		this.email = email;
-		this.dob = dob;
-	}
+	@Column(nullable = false, length = 20)
+	private String first_name;
 	
-	//generated no args constructor
+	@Column(nullable = false, length = 64)
+	private String password;
+	
+	@Column(nullable = false, length = 25)
+	private String major_id;
+	
 	public Student() {
-		super();
+		
 	}
-	
-	//generated constructor for student with full information
-	public Student(Long id, String name, int age, String email, LocalDate dob) {
+		
+	public Student(Long id, String email, String last_name, String first_name, String password, String major_id) {
 		this.id = id;
-		this.name = name;
-		this.age = age;
 		this.email = email;
-		this.dob = dob;
+		this.last_name = last_name;
+		this.first_name = first_name;
+		this.password = password;
+		this.major_id = major_id;
 	}
-	//generated getters and setters
 	
-	@Id				//specifies the primary key of a table being created
-	@SequenceGenerator( name = "student_sequence",						//@SequenceGenerator creates a block of code to create the formula for
-						sequenceName = "student_sequence",				//generating a primary key for a Student object in the table.  
-						allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,					//@GeneratedValue calls the SequenceGenerator (above) to generate the id (NAME).
-					generator = "student_sequence")
+	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public LocalDate getDob() {
-		return dob;
-	}
-	public void setDob(LocalDate dob) {
-		this.dob = dob;
-	}
-
 	
-	//generated toString to send the student object over the API. 
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + ", dob=" + dob + "]";
+	public String getLast_name(){
+		return last_name;
 	}
 	
+	public void setLast_name(String last_name) {
+		this.last_name = last_name;
+	}
 	
+	public String getFirst_name() {
+		return first_name;
+	}
 	
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
 	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getMajor_id() {
+		return major_id;
+	}
+	
+	public void setMajor_id(String major_id) {
+		this.major_id = major_id;
+	}
 }
+	
+	
