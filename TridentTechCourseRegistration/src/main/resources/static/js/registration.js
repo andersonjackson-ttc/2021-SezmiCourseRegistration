@@ -7,11 +7,14 @@ var password = "";
 var trueOrFalse = false;
 var emailArrayString;
 var userInputBlank = false;
-
+var salt = "";
 
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
+    //Get Salt Value
+    getSalty();
+    
 	//Load Array of Emails from Database
 	loadEmailsFromDatabase();
 	
@@ -26,6 +29,31 @@ function init()
     document.getElementById('btnSubmit').addEventListener('click',validateUserInput, false);
 }
 
+//Get Random Salt
+function getSalty()
+{
+  //Declare and Initialize New Ajax Object
+    var xhr = new XMLHttpRequest();
+           
+      //Get Status
+      xhr.onreadystatechange = function()
+      {
+          //Check if Status is Ready
+          if (this.readyState == 4 && this.status==200)
+          {
+            //Store Returned JSON String in Global Variable
+            salt = xhr.responseText;
+            salt = salt.substring(1,6);
+          }      
+       }
+     
+       //Create API Call to Random Number Website
+       xhr.open("GET", 'https://random.justyy.workers.dev/api/random/?cached&n=5&x=7');
+       
+       //Send API Call to Student Table
+       xhr.send();
+}
+
 //Vaidate User
 function validateUserInput()
 {
@@ -34,6 +62,7 @@ function validateUserInput()
     lastName = document.getElementById("lastname-text-box");
     email = document.getElementById("email-text-box");
     password = document.getElementById("password-text-box");
+    hashPassword = md5(salt + password.value);
     
     //Call Function to Check if Email Already Exists
     doesEmailAlreadyExist();
@@ -148,6 +177,6 @@ function postToDatabase()
     
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     //Send All Key Value Pairs to Database
-    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "password": password.value, "major_id": "null"})); 
+    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "salt": salt, "password": hashPassword, "major_id": "null"})); 
 }
 
