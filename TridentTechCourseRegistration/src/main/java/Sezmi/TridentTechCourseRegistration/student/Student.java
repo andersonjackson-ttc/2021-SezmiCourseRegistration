@@ -30,6 +30,9 @@ public class Student{
 	
 	@Column(nullable = false, length = 20)
 	private String first_name;
+
+	@Column(nullable = false, length = 64)
+	private String salt;
 	
 	@Column(nullable = false, length = 64)
 	private String password;
@@ -45,11 +48,12 @@ public class Student{
 		
 	}
 		
-	public Student(Long id, String email, String last_name, String first_name, String password, String major_id) {
+	public Student(Long id, String email, String last_name, String first_name, String salt, String password, String major_id) {
 		this.id = id;
 		this.email = email;
 		this.last_name = last_name;
 		this.first_name = first_name;
+		this.salt = salt;
 		this.password = password;
 		this.major_id = major_id;
 	}
@@ -93,6 +97,14 @@ public class Student{
 	
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
+	}
+
+	public String getSalt() {
+	return salt;
+	}
+
+	public void setSalt(String salt) {
+	this.salt = salt;
 	}
 	
 	public String getPassword() {
