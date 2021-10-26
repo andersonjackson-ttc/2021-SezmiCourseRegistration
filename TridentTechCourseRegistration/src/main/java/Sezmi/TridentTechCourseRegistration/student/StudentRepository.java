@@ -13,6 +13,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	//this Query translates to select s from Student s where student.email = ?1
 	@Query
 	List<Student> findByEmail(String email);
-	
-
+		
 }
