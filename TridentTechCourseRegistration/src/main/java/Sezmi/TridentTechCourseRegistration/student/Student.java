@@ -40,10 +40,10 @@ public class Student{
 	@Column(nullable = false, length = 25)
 	private String major_id;
 	
-	//declare a ManyToMany set so that courses can be assigned to the student. 
+/*	//declare a ManyToMany set so that courses can be assigned to the student. 
 	@ManyToMany
 	private Set<Courses> coursesTaken = new HashSet<Courses>();
-	
+*/	
 	public Student() {
 		
 	}
@@ -58,7 +58,7 @@ public class Student{
 		this.major_id = major_id;
 	}
 	
-	
+/*	
 	public Set<Courses> getCoursesTaken() {
 		return coursesTaken;
 	}
@@ -66,7 +66,7 @@ public class Student{
 	public void setCoursesTaken(Set<Courses> coursesTaken) {
 		this.coursesTaken = coursesTaken;
 	}
-
+*/
 	public Long getId() {
 		return id;
 	}

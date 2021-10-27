@@ -19,12 +19,19 @@ import Sezmi.TridentTechCourseRegistration.course.Courses;
 public class Major 
 {
 	//declare variables (i.e table categories) for the Major table
+	//Create the primary key within the database using the @ID tag.
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "major_id", nullable = false, updatable = false)
 	private String major_id;
+	
+	@Column(name = "major_name", nullable = false, updatable = false)
 	private String major;
+/*	
 	//declare a set for the required courses for each major
 	@ManyToMany
 	private Set<Courses> requiredCourses = new HashSet<Courses>();
-	
+*/
 	//create no arg constructor
 	public Major()
 	{}
@@ -35,17 +42,14 @@ public class Major
 		this.major_id = major_id;
 		this.major = major;
 	}
-	
-	//Create the primary key within the database using the @ID tag.
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "major_id", nullable = false, updatable = false)
+
+
 	public String getMajor_id()
 	{
 		return major_id;
 	}
 
-	@Column(name = "major_name", nullable = false, updatable = false)
+	
 	public String getMajor() {
 		return major;
 	}
@@ -57,18 +61,18 @@ public class Major
 	public void setMajor_id(String major_id) {
 		this.major_id = major_id;
 	}
-	
-	public Set<Courses> getRequiredCourses() {
+
+/*	public Set<Courses> getRequiredCourses() {
 		return requiredCourses;
 	}
 
 	public void setRequiredCourses(Set<Courses> requiredCourses) {
 		this.requiredCourses = requiredCourses;
 	}
-	
-	
-	
-	
-	
+
+*/
+
+
+
 
 }//end Major Class
