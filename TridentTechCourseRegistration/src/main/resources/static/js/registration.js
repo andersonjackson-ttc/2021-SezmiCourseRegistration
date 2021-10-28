@@ -8,6 +8,7 @@ var trueOrFalse = false;
 var emailArrayString;
 var userInputBlank = false;
 var salt = "";
+var stuff = "I have completed all of the courses";
 
 //Activate Event Listeners on Page Load
 window.onload = function()
@@ -158,7 +159,7 @@ function postToDatabase()
     //Check that Server is Ready
     xmlhttp.onreadystatechange = function()
         {
-            if(true)
+            if(this.status==200)
             {
 				//Success Message
 				document.getElementById('errorFooter').innerHTML = "Success!";
@@ -177,6 +178,100 @@ function postToDatabase()
     
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     //Send All Key Value Pairs to Database
-    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "salt": salt, "password": hashPassword, "major_id": "null"})); 
+    //xmlhttp.send(JSON.stringify({"email": "PUT", "last_name": "PUT", "first_name": "PUT", "salt": "PUT", "password": "PUT", "major_id": "PUT", "completed_courses": "PUT"}));
+    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "salt": salt, "password": hashPassword, "major_id": "null", "completed_courses": "ICE"}));
 }
 
+//This is for you to reference ARIANA
+/*
+//Writes a new student record to the student database table
+function putToDatabase()
+{   
+    //Create Array from User Input
+    //var elements = document.getElementsByClassName("formVal");
+    
+    //Declare and Initialize FormData Object
+    //var formData = new FormData(); 
+    
+    //For Loop that appends name and value pairs
+    /*for(var i=0; i<elements.length; i++)
+    {
+        formData.append(elements[i].name, elements[i].value);
+    }*/
+    
+    /*//Initialize XMLHttpRequest Object
+    xmlhttp = new XMLHttpRequest();
+    
+    //Check that Server is Ready
+    xmlhttp.onreadystatechange = function()
+        {
+            if(this.status==200)
+            {
+				//Success Message
+				document.getElementById('errorFooter').innerHTML = "Success!";
+				//Open Login Page
+				window.location = "/login";
+            }
+            else
+            {
+				//Tell User that there was a problem
+				document.getElementById('errorFooter').innerHTML = "This DID NOT Work!";
+            }
+        }
+    
+    //Request to Post Key Value Pairs
+    xmlhttp.open("PUT", "/student/7", true); 
+    
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    //Send All Key Value Pairs to Database
+    //xmlhttp.send(JSON.stringify({"email": "PUT", "last_name": "PUT", "first_name": "PUT", "salt": "PUT", "password": "PUT", "major_id": "PUT", "completed_courses": "PUT"}));
+    xmlhttp.send(JSON.stringify({"email": "james@gmail.com", "last_name": "last", "first_name": "PUT", "completed_courses": "PUT"})); 
+}
+*/
+
+//Writes a new student record to the student database table
+/*
+function patchToDatabase()
+{   
+    //Create Array from User Input
+    //var elements = document.getElementsByClassName("formVal");
+    
+    //Declare and Initialize FormData Object
+    //var formData = new FormData(); 
+    
+    //For Loop that appends name and value pairs
+    /*for(var i=0; i<elements.length; i++)
+    {
+        formData.append(elements[i].name, elements[i].value);
+    }*/
+    
+    //Initialize XMLHttpRequest Object
+    /*
+    xmlhttp = new XMLHttpRequest();
+    
+    //Check that Server is Ready
+    xmlhttp.onreadystatechange = function()
+        {
+            if(this.status==200)
+            {
+				//Success Message
+				document.getElementById('errorFooter').innerHTML = "Success!";
+				//Open Login Page
+				window.location = "/login";
+            }
+            else
+            {
+				//Tell User that there was a problem
+				document.getElementById('errorFooter').innerHTML = "This DID NOT Work!";
+            }
+        }
+    
+    //Request to Post Key Value Pairs
+    xmlhttp.open("PATCH", "/student/5/"+stuff, true); 
+    
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    //Send All Key Value Pairs to Database
+    //xmlhttp.send(JSON.stringify({"email": "PUT", "last_name": "PUT", "first_name": "PUT", "salt": "PUT", "password": "PUT", "major_id": "PUT", "completed_courses": "PUT"}));
+    xmlhttp.send();
+}
+*/

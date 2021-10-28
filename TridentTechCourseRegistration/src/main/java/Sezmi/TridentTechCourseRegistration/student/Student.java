@@ -40,6 +40,9 @@ public class Student{
 	@Column(nullable = false, length = 25)
 	private String major_id;
 	
+	@Column(nullable = false, length = 999)
+	private String completed_courses;
+	
 /*	//declare a ManyToMany set so that courses can be assigned to the student. 
 	@ManyToMany
 	private Set<Courses> coursesTaken = new HashSet<Courses>();
@@ -48,7 +51,7 @@ public class Student{
 		
 	}
 		
-	public Student(Long id, String email, String last_name, String first_name, String salt, String password, String major_id) {
+	public Student(Long id, String email, String last_name, String first_name, String salt, String password, String major_id, String completed_courses) {
 		this.id = id;
 		this.email = email;
 		this.last_name = last_name;
@@ -56,6 +59,7 @@ public class Student{
 		this.salt = salt;
 		this.password = password;
 		this.major_id = major_id;
+		this.completed_courses = completed_courses;
 	}
 	
 /*	
@@ -122,6 +126,14 @@ public class Student{
 	public void setMajor_id(String major_id) {
 		this.major_id = major_id;
 	}
+	
+	public String getCompleted_courses() {
+		return completed_courses;
+	}
+	
+	public void setCompleted_courses(String completed_courses) {
+		this.completed_courses = completed_courses;
+	}  
 }
 	
 	
