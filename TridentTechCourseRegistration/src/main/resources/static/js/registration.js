@@ -131,7 +131,7 @@ function doesEmailAlreadyExist()
 	//For loop that checks if user input email already exists within database and that the user input is not empty
     for (i=0; i < emails.length; i++)
     {
-		if ((emails[i].email) == (email.value))
+		if ((emails[i].email.toLowerCase()) == (email.value.toLowerCase()))
     	{
 			trueOrFalse = true;
 		}
