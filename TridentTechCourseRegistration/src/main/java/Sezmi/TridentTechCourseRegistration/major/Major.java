@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import Sezmi.TridentTechCourseRegistration.course.Course;
 
 
 @Entity
@@ -25,11 +29,15 @@ public class Major
 	
 	@Column(name = "major_name", nullable = false, updatable = false)
 	private String major;
-/*	
+	
 	//declare a set for the required courses for each major
 	@ManyToMany
-	private Set<Courses> requiredCourses = new HashSet<Courses>();
-*/
+	@JoinTable(
+			name = "major_course",
+			joinColumns = @JoinColumn(name = "major_id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id"))
+	private Set<Course> requiredCourses = new HashSet<Course>();
+
 	//create no arg constructor
 	public Major()
 	{}
