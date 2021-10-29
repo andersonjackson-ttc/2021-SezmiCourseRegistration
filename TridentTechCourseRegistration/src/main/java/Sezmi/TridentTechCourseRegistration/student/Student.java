@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import Sezmi.TridentTechCourseRegistration.course.Course;
+
 
 @Entity
 @Table(name = "student")
@@ -42,10 +44,10 @@ public class Student{
 	@Column(nullable = false, length = 999)
 	private String completed_courses;
 	
-/*	//declare a ManyToMany set so that courses can be assigned to the student. 
+	//declare a ManyToMany set so that courses can be assigned to the student. 
 	@ManyToMany
-	private Set<Courses> coursesTaken = new HashSet<Courses>();
-*/	
+	private Set<Course> coursesTaken = new HashSet<Course>();
+	
 	public Student() {
 		
 	}

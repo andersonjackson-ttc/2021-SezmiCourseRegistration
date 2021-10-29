@@ -2,6 +2,7 @@ package Sezmi.TridentTechCourseRegistration.major;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import Sezmi.TridentTechCourseRegistration.course.Course;
+
 @RestController
 public class MajorController 
 {
 	@Autowired 	//autowired info coming from the MajorService
 	private MajorService service;
+	@Autowired 
+	private MajorRepository repository;
+	
 	
 	//the list method maps all of the Majors to localhost:8080/majors
 	@GetMapping("/majors")
@@ -41,6 +47,18 @@ public class MajorController
 			return new ResponseEntity<Major>(HttpStatus.NOT_FOUND);
 		}
 	}//end get method 
+	
+	//the get method maps the classes for the major selected
+	@GetMapping("/majors/{major_id}/courses")
+	public ResponseEntity<Set<Course>> getCourses(@PathVariable String major_id)
+	{
+		try {
+			Major major = service.get(major_id);
+			return new ResponseEntity<Set<Course>>(major.getRequiredCourses(), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	//the method is responsible for allowing an admin to add a major to the major table
 	@PostMapping("/majors")

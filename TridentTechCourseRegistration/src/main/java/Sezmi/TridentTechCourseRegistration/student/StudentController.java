@@ -1,7 +1,10 @@
 package Sezmi.TridentTechCourseRegistration.student;
 
 import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
+import org.hibernate.tuple.entity.EntityMetamodel;
+
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.CDATASection;
+import org.w3c.dom.Entity;
 
 import javassist.expr.NewArray;
 
@@ -33,7 +38,18 @@ public class StudentController {
 
 		return service.listAll();
 	}
-
+	
+	//commented out 10/29/21 at 10am for testing -- Jeremy
+/*	@GetMapping("/student")
+	CollectionModel<EntityModel<Student>> all(@RequestParam Map<String, String> queryParams)
+	{
+		List<EntiytModel<Student>> student = null;
+		if (queryParams.get("major_id") != null)
+		{
+			String majorId = queryParams.get("major_id");
+		}
+	}
+*/
 	/*@GetMapping("/student")
 	public String showRegistrationForm(Model model)
 	{

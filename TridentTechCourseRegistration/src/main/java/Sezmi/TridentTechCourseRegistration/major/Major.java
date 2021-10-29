@@ -68,15 +68,15 @@ public class Major
 		this.major_id = major_id;
 	}
 
-/*	public Set<Courses> getRequiredCourses() {
+	public Set<Course> getRequiredCourses() {
 		return requiredCourses;
 	}
 
-	public void setRequiredCourses(Set<Courses> requiredCourses) {
+	public void setRequiredCourses(Set<Course> requiredCourses) {
 		this.requiredCourses = requiredCourses;
 	}
 
-*/
+
 
 
 

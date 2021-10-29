@@ -18,14 +18,26 @@ public class CourseController
 {
 	@Autowired				//Autowire the CourseService to communicate with the CourseRepository
 	private CourseService service;
+	private CourseRepository repository;
+	//private final CourseModelAssembler assembler;
+	
 
 	//This method is responsible for getting all the courses in the CourseRepository posted to localhost:8080/courses
 	@GetMapping("/courses")
 	public List<Course> list()
 	{
 		return service.listAll();
+		//return service.listAll();
 	}//end RESTful API retrieval operation
 
+/*	//This method is responsible for getting all the courses needed for a given major
+	@GetMapping("/course/{majorID")
+	CollectionModel<EntityModel<Course>> all(@RequestParam Map<String, String> queryParameters)
+	{
+		
+
+	}*/
+	
 	//This method is responsible for getting a course by the course code and posting it to localhost:8080/courses/{id}
 	@GetMapping("/courses/{courseID}")
 	public ResponseEntity<Course> get(@PathVariable String courseID)
