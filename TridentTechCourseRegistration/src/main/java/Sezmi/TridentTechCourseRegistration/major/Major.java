@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import Sezmi.TridentTechCourseRegistration.course.Courses;
-
 
 @Entity
 @Table(name = "major")

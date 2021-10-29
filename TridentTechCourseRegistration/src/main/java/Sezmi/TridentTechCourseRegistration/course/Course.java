@@ -14,8 +14,8 @@ import javax.persistence.Table;
 
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
-@Table(name = "courses")
-public class Courses 
+@Table(name = "course")
+public class Course 
 {
 	//declare variables
 	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. 
@@ -34,11 +34,11 @@ public class Courses
 	private String pre_reqs;
 
 	//declare constructors with no args, and all args
-	public Courses()
+	public Course()
 	{}
 
 
-	public Courses(String course_id, String course_name, String course_type, String pre_reqs)
+	public Course(String course_id, String course_name, String course_type, String pre_reqs)
 	{
 		this.course_id = course_id;
 		this.course_name = course_name;
