@@ -21,11 +21,11 @@ public class SectionController
 	@Autowired
 	private SectionService service;
 	
-	@GetMapping("/section")
-	public List<Section> list()
-	{
-		return service.listAll();
-	}
+	//@GetMapping("/section")
+	//public List<Section> list()
+	//{
+	//	return service.listAll();
+	//}
 	
 	//the get method displays the Section based on the section id
 	@GetMapping("/section/{sectionID}")

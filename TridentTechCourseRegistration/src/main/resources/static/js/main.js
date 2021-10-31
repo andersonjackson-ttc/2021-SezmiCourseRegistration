@@ -1,10 +1,13 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
 var majorId;
+var currentUser = "";
 
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
+	//getCurrentUser();
+	//document.getElementById('errorFooter').innerHTML = "hello";
     init();
 };
 
@@ -13,6 +16,32 @@ function init()
 {
     loadMajors();
     document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+    getCurrentUser();
+}
+
+//Get Current User
+function getCurrentUser()
+{
+  //Declare and Initialize New Ajax Object
+    var x = new XMLHttpRequest();
+           
+      //Get Status
+      x.onreadystatechange = function()
+      {
+          //Check if Status is Ready
+          if (true)
+          {
+            //Store Returned JSON String in Global Variable
+            currentUser = jQuery.parseJSON(x.responseText);
+            document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
+          }      
+       }
+     
+       //Create API Call to Random Number Website
+       x.open("GET", '/user/1');
+       
+       //Send API Call to Student Table
+       x.send();
 }
 
 //Template Literal to Return Major Name and Major ID

@@ -30,8 +30,6 @@ public class StudentController {
 	@Autowired
 	private StudentService service;
 
-	@Autowired
-	private StudentRepository studentRepository;
 
 	@GetMapping("/student")
 	public List<Student> list(){

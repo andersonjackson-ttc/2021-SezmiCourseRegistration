@@ -1,6 +1,6 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
-var inputEmail = "";
+var inputEmail = "null";
 var password = "";
 var isThisTrue = false;
 var testUserName;
@@ -16,6 +16,7 @@ window.onload = function()
 function init()
 {
 	document.getElementById("btn-log-on").addEventListener("click", compareUser, false);
+	document.getElementById("btn-log-on").addEventListener("click", putToDatabase, false);
 }
 
 //Template Literal to Return username and password
@@ -80,5 +81,34 @@ function compareUser()
      //Send API Call
      xmlhttp.send();
      }
+     
+     function putToDatabase()
+{   
+    //Initialize XMLHttpRequest Object
+    x = new XMLHttpRequest();
+    
+    //Check that Server is Ready
+    x.onreadystatechange = function()
+        {
+            if(true)
+            {
+				//Success Message
+				inputEmail = document.getElementById("username-text-box").value;
+				document.getElementById('errorFooter').innerHTML = "Success!";
+            }
+            else
+            {
+				//Tell User that there was a problem
+				document.getElementById('errorFooter').innerHTML = "This DID NOT Work!";
+            }
+        }
+    
+    //Request to Post Key Value Pairs
+    x.open("PUT", "/user/1", true); 
+    
+    x.setRequestHeader("Content-Type", "application/json");
+    //Send All Key Value Pairs to Database
+    x.send(JSON.stringify({"id": "1", "user": inputEmail})); 
+}
 
     
