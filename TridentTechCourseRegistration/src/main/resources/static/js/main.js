@@ -2,6 +2,7 @@
 var xmlhttp;
 var majorId;
 var currentUser = "";
+var userName = "";
 
 //Activate Event Listeners on Page Load
 window.onload = function()
@@ -17,6 +18,34 @@ function init()
     loadMajors();
     document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
     getCurrentUser();
+    setTimeout(getUserName,200);
+    //getUserName();
+}
+
+//Get User Name
+function getUserName()
+{
+  //Declare and Initialize New Ajax Object
+    var x = new XMLHttpRequest();
+           
+      //Get Status
+      x.onreadystatechange = function()
+      {
+          //Check if Status is Ready
+          if (true)
+          {
+            //Store Returned JSON String in Global Variable
+            userName = jQuery.parseJSON(x.responseText);
+            document.getElementById('sezmiFooter').color = "red";
+            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
+          }      
+       }
+     
+       //Create API Call to Random Number Website
+       x.open("GET", '/student/' + currentUser.user);
+       
+       //Send API Call to Student Table
+       x.send();
 }
 
 //Get Current User
@@ -33,7 +62,7 @@ function getCurrentUser()
           {
             //Store Returned JSON String in Global Variable
             currentUser = jQuery.parseJSON(x.responseText);
-            document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
+            //document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
           }      
        }
      

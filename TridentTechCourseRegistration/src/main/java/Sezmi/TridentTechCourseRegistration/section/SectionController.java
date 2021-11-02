@@ -12,45 +12,50 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.major.Major;
+import Sezmi.TridentTechCourseRegistration.student.Student;
+
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @RestController
 public class SectionController 
 {
 	@Autowired
 	private SectionService service;
-	
+
 	//@GetMapping("/section")
 	//public List<Section> list()
 	//{
 	//	return service.listAll();
 	//}
-	
-	//the get method displays the Section based on the section id
-	@GetMapping("/section/{sectionID}")
-	public ResponseEntity<Section> get(@PathVariable String sectionID)
+
+	/*//the get method displays the Section based on the section id
+	@GetMapping("/section/{courseID}")
+	public ResponseEntity<List<Section>> get(@PathVariable String courseID)
 	{
 		try 
 		{
-			Section section = service.get(sectionID);
-			return new ResponseEntity<>(section, HttpStatus.OK);
+			List<Section> section = service.get(courseID);
+			return new ResponseEntity<List<Section>>(section, HttpStatus.OK);
 		} 
 		catch ( NoSuchElementException e) 
 		{
-			return new ResponseEntity<Section>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Section>>(HttpStatus.NOT_FOUND);
 		}
-	}
-	
+	}*/
+
 	//the add method adds a new Section to the Section table
 	@PostMapping("/section")
 	public void add(@RequestBody Section section)
 	{
 		service.save(section);		
 	}
-	
+
 	//the update method allows an admin to edit the Section based upon the SectionID
-	@PutMapping("/section/{sectionID}")
+	@PutMapping("/section/{courseID}")
 	public ResponseEntity<?> update(@RequestBody Section section, @PathVariable String sectionID)
 	{
 		try 
@@ -58,22 +63,22 @@ public class SectionController
 			Section existingSection = service.get(sectionID);
 			service.save(section);
 			return new ResponseEntity<>(HttpStatus.OK);
-			
+
 		} catch (NoSuchElementException e) 
 		{
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}//end update method
-	
+
 	//the delete method allows an admin to delete a Section by the SectionID
 	@DeleteMapping("/section/{sectionID")
 	public void delete(@PathVariable String sectionID)
 	{
 		service.delete(sectionID);
 	}
-	
-	
-	
-	
+
+
+
+
 
 }//end SectionController

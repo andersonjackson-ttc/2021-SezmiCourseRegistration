@@ -12,26 +12,32 @@ public class StudentService {
 
 	@Autowired
 	private StudentRepository repository;
-	
+
 	//the ListAll method displays all of the Students in the student table
 	public List<Student> listAll()
 	{
 		return repository.findAll();
 	}
-	
+
 	//the save method saves a new Student to the Student table
 	public void save (Student student)
 	{
 		repository.save(student);
 	}
-	
-	//the get method finds a student by the email
-	
+
+	//the get method finds a student by the id
+
 	public Student get(Long id)
 	{
 		return repository.findById(id).get();
 	}
-	
+
+	//the get method finds a student by the email
+	public Student getEmail(String email)
+	{
+		return repository.findByEmail(email);
+	}
+
 	//the delete method deletes a student by the email
 	public void delete(Long id)
 	{

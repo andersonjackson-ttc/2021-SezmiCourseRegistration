@@ -36,9 +36,9 @@ public class StudentController {
 
 		return service.listAll();
 	}
-	
+
 	//commented out 10/29/21 at 10am for testing -- Jeremy
-/*	@GetMapping("/student")
+	/*	@GetMapping("/student")
 	CollectionModel<EntityModel<Student>> all(@RequestParam Map<String, String> queryParams)
 	{
 		List<EntiytModel<Student>> student = null;
@@ -47,7 +47,7 @@ public class StudentController {
 			String majorId = queryParams.get("major_id");
 		}
 	}
-*/
+	 */
 	/*@GetMapping("/student")
 	public String showRegistrationForm(Model model)
 	{
@@ -58,12 +58,25 @@ public class StudentController {
 
 	//the get mapping displays the Student based on the email (using as student id/username)
 
-	@GetMapping("/student/{id}")
+	/*@GetMapping("/student/{id}")
 	public ResponseEntity<Student> get(@PathVariable Long id)
 	{
 		try 
 		{
 			Student student = service.get(id);
+			return new ResponseEntity<>(student, HttpStatus.OK);
+		} catch (NoSuchElementException e) 
+		{
+			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+		}
+	}*/
+
+	@GetMapping("/student/{email}")
+	public ResponseEntity<Student> get(@PathVariable String email)
+	{
+		try 
+		{
+			Student student = service.getEmail(email);
 			return new ResponseEntity<>(student, HttpStatus.OK);
 		} catch (NoSuchElementException e) 
 		{
@@ -92,7 +105,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}//end update method*/
-	
+
 
 	//the update method allows a student to edit the Student info based on the id
 	@PutMapping("/student/{id}")
@@ -114,7 +127,7 @@ public class StudentController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}//end update method
-	
+
 	@PatchMapping("/student/{id}/{completed_courses}")
 	public ResponseEntity<Student> updateStudentPartially(@PathVariable Long id, @PathVariable String completed_courses)
 	{
@@ -126,7 +139,7 @@ public class StudentController {
 			service.save(existingStudent); 
 			return new ResponseEntity<Student>(HttpStatus.OK);
 		}
-		
+
 		catch (Exception e) 
 		{
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
