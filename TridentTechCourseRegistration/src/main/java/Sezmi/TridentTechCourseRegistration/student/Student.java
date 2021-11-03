@@ -147,5 +147,15 @@ public class Student{
 		//add the courseTaken to the set of coursesTaken
 		coursesTaken.add(completed_course);
 	}
+
+	public Set<Course> getCoursesTaken() {
+		return coursesTaken;
+	}
+
+	public void setCoursesTaken(Set<Course> coursesTaken) {
+		this.coursesTaken = coursesTaken;
+	}
+	
+	
 }
 

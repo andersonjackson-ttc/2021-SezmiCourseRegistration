@@ -37,7 +37,7 @@ public class Course
 	@Column(name = "course_type")
 	private String course_type;
 	
-	//declare a set for the required courses for each major
+	//declare a set for the sections available for each course
 		@ManyToMany
 		@JoinTable(
 				name = "course_section",
@@ -45,6 +45,14 @@ public class Course
 				inverseJoinColumns = @JoinColumn(name = "section_id"))
 		private Set<Section> availableSections = new HashSet<Section>();
 
+	//declare a set for the pre-req courses needed for each course
+		@ManyToMany
+		@JoinTable(
+				name = "course_prereq",
+				joinColumns = @JoinColumn(name = "course_id"),
+				inverseJoinColumns = @JoinColumn(name = "course_prereq"))
+		private Set<Course> preReqCourses = new HashSet<Course>();
+		
 	//declare constructors with no args, and all args
 	public Course()
 	{}
@@ -93,5 +101,17 @@ public class Course
 	public void setAvailableSections(Set<Section> availableSections) {
 		this.availableSections = availableSections;
 	}
+
+
+	public Set<Course> getPreReqCourses() {
+		return preReqCourses;
+	}
+
+
+	public void setPreReqCourses(Set<Course> preReqCourses) {
+		this.preReqCourses = preReqCourses;
+	}
+	
+	
 
 }//end Course class

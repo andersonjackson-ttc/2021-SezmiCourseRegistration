@@ -23,19 +23,18 @@ public class MajorController
 	@Autowired 	//autowired info coming from the MajorService
 	private MajorService service;
 	@Autowired 
-	private MajorRepository repository;
 	
 	
 	//the list method maps all of the Majors to localhost:8080/majors
 	@GetMapping("/majors")
-	public List<Major> list()
+	public List<MajorIdName> list()
 	{
-		return service.listAll();
+		return service.getMajorIdName();
 	}
 	
 	//the get method maps the individual major to localhost:8080/majors/{major_id}
 	@GetMapping("/majors/{major_id}")
-	public ResponseEntity<Major> get(@PathVariable String major_id)
+	public ResponseEntity<Major> getMajorIdName(@PathVariable String major_id)
 	{
 		try
 		{

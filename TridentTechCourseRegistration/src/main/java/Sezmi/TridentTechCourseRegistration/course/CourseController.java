@@ -71,7 +71,17 @@ public class CourseController
 			}
 		}
 		
-		
+	//getCoursePreReq gets the set of pre-req courses needed to take a course
+		@GetMapping("/courses/{course_id}/pre_reqs")
+		public ResponseEntity<Set<Course>> getCoursePreReq(@PathVariable String course_id)
+		{
+			try {
+				Course course = service.get(course_id);
+				return new ResponseEntity<Set<Course>>(course.getPreReqCourses(), HttpStatus.OK);
+			} catch (NoSuchElementException e) {
+				return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
+			}
+		}
 
 	//This method is responsible for allowing an admin to add a course to the course list.
 	@PostMapping("/courses")												//@PostMapping assigns the URL link for the POST annotation to the web/server. 

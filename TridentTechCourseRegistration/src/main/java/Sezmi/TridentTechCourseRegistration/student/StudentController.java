@@ -6,6 +6,8 @@ import org.hibernate.tuple.entity.EntityMetamodel;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import org.w3c.dom.Entity;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
+import Sezmi.TridentTechCourseRegistration.major.Major;
 import javassist.expr.NewArray;
 
 @RestController
@@ -76,6 +79,7 @@ public class StudentController {
 		}
 	}*/
 
+	//Get the student based upon their email address
 	@GetMapping("/student/{email}")
 	public ResponseEntity<Student> get(@PathVariable String email)
 	{
@@ -87,6 +91,19 @@ public class StudentController {
 		{
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	//getStudentCourses returns the list of courses the student has taken
+	@GetMapping("/student/{email}/courses")
+	public ResponseEntity<Set<Course>> getStudentCourses (@PathVariable String email)
+	{
+		try {
+			Student bueller = service.getEmail(email);
+			return new ResponseEntity<Set<Course>>(bueller.getCoursesTaken(), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
+		}
+		
 	}
 
 	//the add method adds a new Student to the Student table
@@ -156,14 +173,13 @@ public class StudentController {
 		
 	}
 	//was original patch method
-	/*@PatchMapping("/student/{id}/{completed_courses}")
-	public ResponseEntity<Student> updateStudentPartially(@PathVariable Long id, @PathVariable String completed_courses)
+	@PatchMapping("/student/{email}")
+	public ResponseEntity<Student> updateStudentPartially(@RequestBody Student student, @PathVariable String email)
 	{
 		try
 		{
-			Student existingStudent = service.get(id);
-			String earlierCompletedCourses = existingStudent.getCompleted_courses();
-			existingStudent.setCompleted_courses(earlierCompletedCourses + completed_courses);
+			Student existingStudent = service.getEmail(email);
+			existingStudent.setMajor_id(student.getMajor_id());
 			service.save(existingStudent); 
 			return new ResponseEntity<Student>(HttpStatus.OK);
 		}
@@ -172,7 +188,7 @@ public class StudentController {
 		{
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	} */
+	} 
 
 	//the delete method allows an admin to delete a Student by email
 	@DeleteMapping("/student/{id}")

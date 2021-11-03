@@ -11,8 +11,6 @@ var student_id = "";
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
-	//getCurrentUser();
-	//document.getElementById('errorFooter').innerHTML = "hello";
     init();
 };
 
@@ -20,14 +18,34 @@ window.onload = function()
 function init()
 {
     loadMajors();
-    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
     setTimeout(getCurrentUser,500);
     setTimeout(getUserName,1000);
-    setTimeout(patchCompletedCourses,3000);
-    //getUserName();
-    //setTimeout(patchCompletedCourses,1000);
-    //patchCompletedCourses();
+    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+    setTimeout(patchCompletedCourses,2000);
 }
+
+ function patchMajorSelection()
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(this.status==200)
+				{
+					alert("HAHAHAHA");
+				}
+				/*else
+				{
+					alert("I'm not working....JEREMY");
+				}*/
+			}
+			
+		xmlhttp.open("PATCH", "/student/" + currentUser.user, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send(JSON.stringify({"major_id": majorId}));
+}  
 
  function patchCompletedCourses(checkboxSelection)
  {
@@ -37,7 +55,7 @@ function init()
         	{
 				if(this.status==200)
 				{
-					alert("I'm working for real jeremy");
+					alert("HAHAHAHA");
 				}
 				/*else
 				{
@@ -66,11 +84,8 @@ function getUserName()
           {
             //Store Returned JSON String in Global Variable
             userName = jQuery.parseJSON(x.responseText);
-            document.getElementById('sezmiFooter').color = "red";
             student_id = userName.id;
-            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name + "Student ID #" + student_id).fontcolor("black").fontsize(2.1);
-            
-            
+            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name + " This email is " + currentUser.user).fontcolor("black").fontsize(2.1);
           }      
        }
      
@@ -95,7 +110,7 @@ function getCurrentUser()
           {
             //Store Returned JSON String in Global Variable
             currentUser = jQuery.parseJSON(x.responseText);
-            //document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
+            document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
           }      
        }
      
@@ -109,7 +124,7 @@ function getCurrentUser()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value='${major.major_id}'>${major.major}</option>`
+    return `<option value='${major.major_id}'>${major.major_name}</option>`
 }
 
 //Template Literal to Return Course Name
@@ -177,12 +192,12 @@ function sectionTemplate(course_id)
 		
 		while (courseListArray[i+1] != null && courseListArray[i+1].includes(test))
 		{
-			courses += ", " + jamesCoursesArray[i+1];
+			courses += ", " + courseListArray[i+1];
 			i++;
 		}
 		
 		output += courses;
-		output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
+		output += `</td><td><input type='checkbox' value =${courseListArray[i]} /></td></tr>`;
 			
 		courses =  "";	
 		}	
@@ -302,6 +317,7 @@ function selectMajor()
     var majorSelection = document.querySelector('#combo');
     majorId = majorSelection.value;
     loadCourses();
+    patchMajorSelection();
 }
 
 function pleaseWork()
@@ -322,13 +338,9 @@ function pleaseWork()
         
         xmlhttp.onreadystatechange = function()
         	{
-				if(this.status==200)
+				if(true)
 				{
-					alert("I'm working");
-				}
-				else
-				{
-					alert("I'm not working....");
+					alert("HalleLLuju");
 				}
 			}
 			
