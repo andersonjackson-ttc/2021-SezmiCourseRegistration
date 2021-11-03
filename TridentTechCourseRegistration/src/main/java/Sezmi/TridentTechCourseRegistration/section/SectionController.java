@@ -26,26 +26,26 @@ public class SectionController
 	@Autowired
 	private SectionService service;
 
-	//@GetMapping("/section")
-	//public List<Section> list()
-	//{
-	//	return service.listAll();
-	//}
+	@GetMapping("/section")
+	public List<Section> list()
+	{
+		return service.listAll();
+	}
 
-	/*//the get method displays the Section based on the section id
-	@GetMapping("/section/{courseID}")
-	public ResponseEntity<List<Section>> get(@PathVariable String courseID)
+	//the get method displays the Section based on the section id
+	@GetMapping("/section/{section_id}")
+	public ResponseEntity<Section> get(@PathVariable String section_id)
 	{
 		try 
 		{
-			List<Section> section = service.get(courseID);
-			return new ResponseEntity<List<Section>>(section, HttpStatus.OK);
+			Section section = service.get(section_id);
+			return new ResponseEntity<Section>(section, HttpStatus.OK);
 		} 
 		catch ( NoSuchElementException e) 
 		{
-			return new ResponseEntity<List<Section>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Section>(HttpStatus.NOT_FOUND);
 		}
-	}*/
+	}
 
 	//the add method adds a new Section to the Section table
 	@PostMapping("/section")

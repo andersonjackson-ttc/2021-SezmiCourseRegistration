@@ -28,9 +28,9 @@ public class SectionService
 	}
 
 	//the get method finds a Section by the SectionID
-	public Section get(String courseID)
+	public Section get(String section_id)
 	{
-		return repository.findById(courseID).get();
+		return repository.findById(section_id).get();
 	}
 
 	//the delete method deletes a section by the SectionID

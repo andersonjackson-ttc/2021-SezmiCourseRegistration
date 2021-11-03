@@ -13,6 +13,12 @@ var stuff = "I have completed all of the courses";
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
+	if(!window.location.hash)
+	{
+		window.location = window.location + '#loaded';
+		window.location.reload();
+	}
+	
     //Get Salt Value
     getSalty();
     

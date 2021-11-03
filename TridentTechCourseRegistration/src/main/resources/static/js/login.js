@@ -9,14 +9,24 @@ var isThisBlank = false;
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
+	//window.location.reload();
 	init();
 };
 
 //Initialize all Event Listeners
 function init()
 {
+	//window.reload();
 	document.getElementById("btn-log-on").addEventListener("click", compareUser, false);
 	document.getElementById("btn-log-on").addEventListener("click", putToDatabase, false);
+}
+
+function reloadPage()
+{
+	for (i=0; i < 2; i++)
+	{
+		setTimeout(location.reload,1000);
+	}
 }
 
 //Template Literal to Return username and password

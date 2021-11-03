@@ -12,13 +12,15 @@ import org.springframework.http.*;
 
 import org.springframework.web.bind.annotation.*;
 
+import Sezmi.TridentTechCourseRegistration.major.Major;
+import Sezmi.TridentTechCourseRegistration.section.Section;
+
 
 @RestController				//declare a REST controller.
 public class CourseController 
 {
 	@Autowired				//Autowire the CourseService to communicate with the CourseRepository
 	private CourseService service;
-	private CourseRepository repository;
 	//private final CourseModelAssembler assembler;
 	
 
@@ -55,6 +57,21 @@ public class CourseController
 		}//end catch no element found
 
 	}//end find course by course code. 
+	
+	
+	//the get method maps the sections for the course selected
+		@GetMapping("/courses/{course_id}/sections")
+		public ResponseEntity<Set<Section>> getSections(@PathVariable String course_id)
+		{
+			try {
+				Course course = service.get(course_id);
+				return new ResponseEntity<Set<Section>>(course.getAvailableSections(), HttpStatus.OK);
+			} catch (NoSuchElementException e) {
+				return new ResponseEntity<Set<Section>>(HttpStatus.NOT_FOUND);
+			}
+		}
+		
+		
 
 	//This method is responsible for allowing an admin to add a course to the course list.
 	@PostMapping("/courses")												//@PostMapping assigns the URL link for the POST annotation to the web/server. 

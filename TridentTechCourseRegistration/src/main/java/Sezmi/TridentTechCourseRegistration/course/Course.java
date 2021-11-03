@@ -5,12 +5,20 @@
 package Sezmi.TridentTechCourseRegistration.course;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import Sezmi.TridentTechCourseRegistration.section.Section;
 
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
@@ -28,6 +36,14 @@ public class Course
 	
 	@Column(name = "course_type")
 	private String course_type;
+	
+	//declare a set for the required courses for each major
+		@ManyToMany
+		@JoinTable(
+				name = "course_section",
+				joinColumns = @JoinColumn(name = "course_id"),
+				inverseJoinColumns = @JoinColumn(name = "section_id"))
+		private Set<Section> availableSections = new HashSet<Section>();
 
 	//declare constructors with no args, and all args
 	public Course()
@@ -70,6 +86,12 @@ public class Course
 	}
 
 	//auto generated setters/getters
+	public Set<Section> getAvailableSections() {
+		return availableSections;
+	}
 
+	public void setAvailableSections(Set<Section> availableSections) {
+		this.availableSections = availableSections;
+	}
 
 }//end Course class

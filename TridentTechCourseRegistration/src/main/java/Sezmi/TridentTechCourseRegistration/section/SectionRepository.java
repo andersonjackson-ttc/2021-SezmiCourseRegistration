@@ -11,6 +11,7 @@ public interface SectionRepository extends JpaRepository<Section, String> {
 	
 	//@Query("select u from Section u where u.section_id = ?1")
 	//List<Section> findBySectionID(String section_id);
-	//Section findByCourse_id(String course_id);
+	//Section findBySection_id(String section_id);
+	
 
 }

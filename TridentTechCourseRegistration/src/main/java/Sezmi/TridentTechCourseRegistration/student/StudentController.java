@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Entity;
 
+import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.course.CourseService;
 import javassist.expr.NewArray;
 
 @RestController
@@ -29,6 +31,9 @@ public class StudentController {
 
 	@Autowired
 	private StudentService service;
+	
+	@Autowired
+	private CourseService courseService;
 
 
 	@GetMapping("/student")
@@ -128,7 +133,30 @@ public class StudentController {
 		}
 	}//end update method
 
-	@PatchMapping("/student/{id}/{completed_courses}")
+	//Jackson Patch logic for adding a course taken to the student
+	@PatchMapping("/student/{id}/{course_id}")
+	public ResponseEntity<Student> addCourseTaken(@PathVariable Long id, @PathVariable String course_id) 
+	{
+		try {
+			//get the student by their id
+			Student student = service.get(id);
+			//get the course completed by its course_id
+			Course course = courseService.get(course_id);
+			//call the addCompletedCourse method in the student to add the completed course to the set
+			student.addCompletedCourse(course);
+			
+			//save the student object 
+			service.save(student);
+			//return the student
+			return new ResponseEntity<Student>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	//was original patch method
+	/*@PatchMapping("/student/{id}/{completed_courses}")
 	public ResponseEntity<Student> updateStudentPartially(@PathVariable Long id, @PathVariable String completed_courses)
 	{
 		try
@@ -144,7 +172,7 @@ public class StudentController {
 		{
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
+	} */
 
 	//the delete method allows an admin to delete a Student by email
 	@DeleteMapping("/student/{id}")
