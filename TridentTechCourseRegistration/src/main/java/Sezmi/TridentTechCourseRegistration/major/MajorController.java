@@ -1,5 +1,6 @@
 package Sezmi.TridentTechCourseRegistration.major;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.student.Student;
+import Sezmi.TridentTechCourseRegistration.student.StudentService;
 
 @RestController
 public class MajorController 
@@ -23,9 +26,10 @@ public class MajorController
 	@Autowired 	//autowired info coming from the MajorService
 	private MajorService service;
 	@Autowired 
+	private StudentService studentService; //pulls information from the student object. 
 	
 	
-	//the list method maps all of the Majors to localhost:8080/majors
+	//the list method lists ALL of the majors for the major dropdown menu (uses MajorIdName interface for relevant info)
 	@GetMapping("/majors")
 	public List<MajorIdName> list()
 	{
@@ -47,17 +51,41 @@ public class MajorController
 		}
 	}//end get method 
 	
-	//the get method maps the classes for the major selected
+	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
+	//(shows only the classes the student DOESN'T HAVE)
 	@GetMapping("/majors/{major_id}/courses")
-	public ResponseEntity<Set<Course>> getCourses(@PathVariable String major_id)
+	public ResponseEntity<Set<Course>> getCourses(@PathVariable String major_id, @PathVariable String email)
 	{
+		//create a local set to hold the courses the student needs
+		Set<Course> coursesStudentNeeds = new HashSet<Course>();
+		
 		try {
+			//declare the major at the major id given
 			Major major = service.get(major_id);
-			return new ResponseEntity<Set<Course>>(major.getRequiredCourses(), HttpStatus.OK);
+			//get the set of courses needed in the major from the major
+			Set<Course> majorCourses = major.getRequiredCourses();
+			//declare the student using the email given
+			Student student = studentService.getEmail(email);
+			//get the set of courses the student has taken 
+			Set<Course> studentCoursesTaken = student.getCoursesTaken();
+			
+			//compare the courses the student has taken to the courses within the major
+			//for each course within majorCourses
+			for(Course course : majorCourses)
+			{
+				//see if the student has taken that course. If the student HASN'T, add it to the coursesStudentNeeds
+				if(!studentCoursesTaken.contains(course))
+				{
+					//add the course to the courseseStudentNeeds set
+					coursesStudentNeeds.add(course);
+				}
+			}//end for loop cycling the courses within the major
+			
+			return new ResponseEntity<Set<Course>>(coursesStudentNeeds, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}//end getCourses method that returns the relevant courses the student user needs. 
 	
 	//the method is responsible for allowing an admin to add a major to the major table
 	@PostMapping("/majors")
@@ -73,7 +101,7 @@ public class MajorController
 		try
 		{
 			Major existingMajor = service.get(major_id);
-			service.save(major);
+			service.save(existingMajor);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(NoSuchElementException e)

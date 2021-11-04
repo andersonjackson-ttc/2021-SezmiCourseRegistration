@@ -32,10 +32,17 @@ public class StudentService {
 		return repository.findById(id).get();
 	}
 
-	//the get method finds a student by the email
+	//the getEmail method finds a student by the email
 	public Student getEmail(String email)
 	{
 		return repository.findByEmail(email);
+	}
+	
+	//the getStudentMajor searches the repository for a student by their email and returns their major
+	public StudentEmailMajor getStudentMajor(String email)
+	{
+		return repository.getStudentEmailMajors(email);
+		
 	}
 
 	//the delete method deletes a student by the email

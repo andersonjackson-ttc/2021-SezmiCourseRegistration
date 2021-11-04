@@ -14,4 +14,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	List<Student> findByEmail(String email);
 */		
 	Student findByEmail(String email);
+	
+	//this Query will return a student's email and major given it's email address
+	@Query(value = "SELECT email, major_id FROM student s WHERE s.email = ?1", nativeQuery = true)
+	StudentEmailMajor getStudentEmailMajors(String email);
 }
