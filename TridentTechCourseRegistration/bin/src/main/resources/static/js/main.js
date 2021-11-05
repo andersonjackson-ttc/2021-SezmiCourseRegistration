@@ -1,6 +1,12 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
 var majorId;
+var currentUser = "";
+var userName = "";
+var checkbox;
+var checkboxSelection;
+const courseListArray = new Array();
+var student_id = "";
 
 //Activate Event Listeners on Page Load
 window.onload = function()
@@ -12,13 +18,113 @@ window.onload = function()
 function init()
 {
     loadMajors();
+    setTimeout(getCurrentUser,500);
+    setTimeout(getUserName,1000);
     document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+    setTimeout(patchCompletedCourses,2000);
+}
+
+ function patchMajorSelection()
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(this.status==200)
+				{
+					alert("HAHAHAHA");
+				}
+				/*else
+				{
+					alert("I'm not working....JEREMY");
+				}*/
+			}
+			
+		xmlhttp.open("PATCH", "/student/" + currentUser.user, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send(JSON.stringify({"major_id": majorId}));
+}  
+
+ function patchCompletedCourses(checkboxSelection)
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(this.status==200)
+				{
+					alert("HAHAHAHA");
+				}
+				/*else
+				{
+					alert("I'm not working....JEREMY");
+				}*/
+			}
+			
+		xmlhttp.open("PATCH", "/student/" + student_id + "/"  + checkboxSelection, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send();
+}  
+
+//Get User Name
+function getUserName()
+{
+  //Declare and Initialize New Ajax Object
+    var x = new XMLHttpRequest();
+           
+      //Get Status
+      x.onreadystatechange = function()
+      {
+          //Check if Status is Ready
+          if (true)
+          {
+            //Store Returned JSON String in Global Variable
+            userName = jQuery.parseJSON(x.responseText);
+            student_id = userName.id;
+            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name + " This email is " + currentUser.user).fontcolor("black").fontsize(2.1);
+          }      
+       }
+     
+       //Create API Call to Random Number Website
+       x.open("GET", '/student/' + currentUser.user);
+       
+       //Send API Call to Student Table
+       x.send();
+}
+
+//Get Current User
+function getCurrentUser()
+{
+  //Declare and Initialize New Ajax Object
+    var x = new XMLHttpRequest();
+           
+      //Get Status
+      x.onreadystatechange = function()
+      {
+          //Check if Status is Ready
+          if (true)
+          {
+            //Store Returned JSON String in Global Variable
+            currentUser = jQuery.parseJSON(x.responseText);
+            document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
+          }      
+       }
+     
+       //Create API Call to Random Number Website
+       x.open("GET", '/user/1');
+       
+       //Send API Call to Student Table
+       x.send();
 }
 
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value='${major.major_id}'>${major.major}</option>`
+    return `<option value='${major.major_id}'>${major.major_name}</option>`
 }
 
 //Template Literal to Return Course Name
@@ -63,6 +169,41 @@ function courseTemplate(major_requirements)
 		//Return Accumulated Output 
 		return output;
 	}
+}
+
+function sectionTemplate(course_id)
+{
+	if 	((section.course_id).includes(course_id))
+	{
+		let output = "";
+		let courseSectionList = section;
+		let courses = "";
+		let test = "";
+		
+		courseListArray = courseSectionList.split(",");
+		
+		courseListArray.sort();
+		
+		for (i=0; i<courseListArray.length; i++)
+		{
+		output += "<tr><td>";
+		courses += courseListArray[i];
+		test = courseListArray[i].substring(1,261);
+		
+		while (courseListArray[i+1] != null && courseListArray[i+1].includes(test))
+		{
+			courses += ", " + courseListArray[i+1];
+			i++;
+		}
+		
+		output += courses;
+		output += `</td><td><input type='checkbox' value =${courseListArray[i]} /></td></tr>`;
+			
+		courses =  "";	
+		}	
+		return output;
+	}
+		
 }
 
 //Load Drop Down ComboBox with a List of Majors
@@ -130,24 +271,85 @@ function loadCourses()
             xmlhttp.send();
 }
 
+function loadSections()
+{
+	xmlhttp = new XMLHttpRequest();
+            
+            //Get Status
+             xmlhttp.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status==200) 
+                {
+                    //Parse into JSON
+                    const newCourses = jQuery.parseJSON(xmlhttp.responseText);
+                    
+                    //test if user selected a REAL major
+                    for (i=0; i<courseListArray.length; i++) 
+                    {
+						if (courseListArray[i] != "nah")
+						{
+						//Generate Table of Eligible courses dynamically into HTML page
+                    	document.getElementById('courses').innerHTML = `<tr><th>Eligible Courses</th><th id="selectHeader">Select Completed Courses</th></tr>${newCourses.map(sectionTemplate).join('')}`
+						document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Register Courses (dont press yet)</button>'
+						document.getElementById('completedBtn').addEventListener('click', pleaseWork, false);
+						}
+					
+					//Clear Table from Page
+					else
+					{
+						document.getElementById('courses').innerHTML = "";
+					}
+					}
+                }
+            };
+            
+            //Create API Call
+            xmlhttp.open("GET", '/section');
+            
+            //Send API Call
+            xmlhttp.send();
+}
+
 //Get Major Selection and Store as a Variable
 function selectMajor()
 {
     var majorSelection = document.querySelector('#combo');
     majorId = majorSelection.value;
     loadCourses();
+    patchMajorSelection();
 }
 
 function pleaseWork()
     {
-        let checkbox = document.querySelector('input[type="checkbox"]:checked');
+        checkbox = document.querySelector('input[type="checkbox"]:checked');
         checkboxSelection = checkbox.value;
 	    //checkboxSelection = checkbox.parentElement.textContent;
-        alert(checkboxSelection);
-        
-        loadNewCourses();
+        //alert(checkboxSelection);
+        patchCompletedCourses(checkboxSelection);
+        postCourses();
+        loadSections();
         document.getElementById("completedBtn").style.display = "none";
     }
+    
+ function postCourses()
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(true)
+				{
+					alert("HalleLLuju");
+				}
+			}
+			
+		xmlhttp.open("POST", "/completedCourses", true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send(JSON.stringify({"email": currentUser.value, "course_id": checkbox.value, "grade": "null", "term": "null"}));
+}  
     
 
     

@@ -1,5 +1,7 @@
 package Sezmi.TridentTechCourseRegistration.major;
 
+import java.util.ArrayList;
+	import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -53,33 +55,43 @@ public class MajorController
 	
 	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
 	//(shows only the classes the student DOESN'T HAVE)
-	@GetMapping("/majors/{major_id}/courses")
-	public ResponseEntity<Set<Course>> getCourses(@PathVariable String major_id, @PathVariable String email)
+	@GetMapping("/majors/{email}/courses") //does this needs to access student email
+	public ResponseEntity<Set<Course>> getCourses(@PathVariable String email)
 	{
 		//create a local set to hold the courses the student needs
 		Set<Course> coursesStudentNeeds = new HashSet<Course>();
 		
 		try {
-			//declare the major at the major id given
-			Major major = service.get(major_id);
-			//get the set of courses needed in the major from the major
-			Set<Course> majorCourses = major.getRequiredCourses();
+			
 			//declare the student using the email given
 			Student student = studentService.getEmail(email);
 			//get the set of courses the student has taken 
 			Set<Course> studentCoursesTaken = student.getCoursesTaken();
+			//declare the major at the major id given
+			Major major = service.get(student.getMajor_id());
+			//get the set of courses needed in the major from the major
+		
+			Set<Course> majorCourses = major.getRequiredCourses();
+			List<Course> listMajorCourses = new ArrayList<>(majorCourses);
+			Collections.sort(listMajorCourses, (courseOne, courseTwo) -> courseOne.getCourse_id().compareToIgnoreCase(courseTwo.getCourse_id()));
+			Set<Course> majorCoursesSorted = new HashSet<Course>(listMajorCourses);
 			
 			//compare the courses the student has taken to the courses within the major
 			//for each course within majorCourses
-			for(Course course : majorCourses)
+			for(Course course : majorCoursesSorted)
 			{
 				//see if the student has taken that course. If the student HASN'T, add it to the coursesStudentNeeds
-				if(!studentCoursesTaken.contains(course))
+				if(!studentCoursesTaken.contains(course) && !course.getAvailableSections().isEmpty())
 				{
 					//add the course to the courseseStudentNeeds set
 					coursesStudentNeeds.add(course);
 				}
 			}//end for loop cycling the courses within the major
+			//List<Course> coursesList = new ArrayList<Course>(coursesStudentNeeds);
+			
+			
+			//Collections.sort(coursesList, (courseOne, courseTwo) -> courseOne.getAvailableSections().compareToIgnoreCase(courseTwo.getClass().getName()));
+			//Collections.sort(coursesList);
 			
 			return new ResponseEntity<Set<Course>>(coursesStudentNeeds, HttpStatus.OK);
 		} catch (NoSuchElementException e) {

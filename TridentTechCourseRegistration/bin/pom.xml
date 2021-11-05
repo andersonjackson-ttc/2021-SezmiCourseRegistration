@@ -55,5 +55,10 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!--<named-query name="Section.findBySectionID">
+	<query>select u from Section where u.section_ID = ?1</query>
+	</named-query>
+	//List<Section> findByEmail(String section_id);-->
+		
 
 </project>

@@ -113,7 +113,7 @@ footer
         bottom: 0px;
 }
 
-#completedBtn{
+#completedBtn, #btnSection, #btnCompletedCourses{
 	border-radius: 5px;
 	font-size: 15px;
 	float: right;
