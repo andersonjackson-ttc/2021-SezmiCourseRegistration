@@ -1,6 +1,6 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var xmlhttp;
-var inputEmail = "";
+var inputEmail = "null";
 var password = "";
 var isThisTrue = false;
 var testUserName;
@@ -9,13 +9,24 @@ var isThisBlank = false;
 //Activate Event Listeners on Page Load
 window.onload = function()
 {
+	//window.location.reload();
 	init();
 };
 
 //Initialize all Event Listeners
 function init()
 {
+	//window.reload();
 	document.getElementById("btn-log-on").addEventListener("click", compareUser, false);
+	document.getElementById("btn-log-on").addEventListener("click", putToDatabase, false);
+}
+
+function reloadPage()
+{
+	for (i=0; i < 2; i++)
+	{
+		setTimeout(location.reload,1000);
+	}
 }
 
 //Template Literal to Return username and password
@@ -51,7 +62,7 @@ function compareUser()
 				}
     			for (i=0; i < students.length; i++)
     			{
-					if ((students[i].email) == (inputEmail) && inputEmail != "" && (students[i].password) == (password) && password != "")
+					if ((students[i].email) == (inputEmail) && inputEmail != "" && (students[i].password) == (md5(students[i].salt + password)) && password != "")
     				{
 						isThisTrue = true;
 					}
@@ -80,5 +91,34 @@ function compareUser()
      //Send API Call
      xmlhttp.send();
      }
+     
+     function putToDatabase()
+{   
+    //Initialize XMLHttpRequest Object
+    x = new XMLHttpRequest();
+    
+    //Check that Server is Ready
+    x.onreadystatechange = function()
+        {
+            if(true)
+            {
+				//Success Message
+				inputEmail = document.getElementById("username-text-box").value;
+				document.getElementById('errorFooter').innerHTML = "Success!";
+            }
+            else
+            {
+				//Tell User that there was a problem
+				document.getElementById('errorFooter').innerHTML = "This DID NOT Work!";
+            }
+        }
+    
+    //Request to Post Key Value Pairs
+    x.open("PUT", "/user/1", true); 
+    
+    x.setRequestHeader("Content-Type", "application/json");
+    //Send All Key Value Pairs to Database
+    x.send(JSON.stringify({"id": "1", "user": inputEmail})); 
+}
 
     

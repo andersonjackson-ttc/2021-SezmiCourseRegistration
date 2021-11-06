@@ -20,22 +20,28 @@ public class CourseService
 	private CourseRepository repository;
 	
 	//the ListAll method displays the entire list of courses
-	public List<Courses> listAll()
+	public List<Course> listAll()
 	{
 		return repository.findAll();
 	}
 	
 	//the save method allows for courses to be saved to the repository
-	public void save(Courses courses)
+	public void save(Course courses)
 	{
 		repository.save(courses);
 	}
 	
 	//the get method allows for a course to be pulled from the list based upon the course code matching the search
-	public Courses get(String courseID)
+	public Course get(String courseID)
 	{
 		return repository.findById(courseID).get();
 	}
+	
+	/*the getSectionsOnly returns a CourseIdSection that only has the id and sections
+	public CourseIdSection getSectionsOnly(String courseID)
+	{
+		return repository.findById(courseID);
+	}*/
 	
 	//the delete method removes a Course bean from the repository based upon its courseCode
 	public void delete(String courseID)
