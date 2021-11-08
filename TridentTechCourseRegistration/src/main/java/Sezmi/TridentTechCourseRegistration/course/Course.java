@@ -7,6 +7,7 @@ package Sezmi.TridentTechCourseRegistration.course;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ import Sezmi.TridentTechCourseRegistration.section.Section;
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
 @Table(name = "course")
-public class Course 
+public class Course implements Comparable<Course>
 {
 	//declare variables
 	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. 
@@ -43,7 +44,7 @@ public class Course
 				name = "course_section",
 				joinColumns = @JoinColumn(name = "course_id"),
 				inverseJoinColumns = @JoinColumn(name = "section_id"))
-		private Set<Section> availableSections = new HashSet<Section>();
+		private Set<Section> availableSections = new TreeSet<Section>();
 
 	//declare a set for the pre-req courses needed for each course
 		@ManyToMany
@@ -110,6 +111,13 @@ public class Course
 
 	public void setPreReqCourses(Set<Course> preReqCourses) {
 		this.preReqCourses = preReqCourses;
+	}
+
+
+	@Override
+	public int compareTo(Course o) {
+		int order = getCourse_name().compareToIgnoreCase(o.getCourse_name());// TODO Auto-generated method stub
+		return order;
 	}
 	
 	

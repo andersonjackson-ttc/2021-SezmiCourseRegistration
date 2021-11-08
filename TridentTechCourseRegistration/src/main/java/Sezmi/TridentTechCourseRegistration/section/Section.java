@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import Sezmi.TridentTechCourseRegistration.course.Course;
+
 @Entity
 @Table(name = "section")
-public class Section 
+public class Section implements Comparable<Section>
 {
 	//declare variables for column in the table
 	private String section_id;
@@ -122,7 +124,12 @@ public class Section
 	public void setSection_id(String section_id) {
 		this.section_id = section_id;
 	}
-	
+
+	@Override
+	public int compareTo(Section o) {
+		int order = getSection_id().compareToIgnoreCase(o.getSection_id());// TODO Auto-generated method stub
+		return order;
+	}
 	
 	
 	

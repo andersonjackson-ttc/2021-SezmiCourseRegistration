@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.course.CourseService;
 import Sezmi.TridentTechCourseRegistration.student.Student;
 import Sezmi.TridentTechCourseRegistration.student.StudentService;
 
 @RestController
 public class MajorController 
-{
+ {
 	@Autowired 	//autowired info coming from the MajorService
 	private MajorService service;
 	@Autowired 
@@ -52,14 +54,17 @@ public class MajorController
 			return new ResponseEntity<Major>(HttpStatus.NOT_FOUND);
 		}
 	}//end get method 
+	//TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
 	
 	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
 	//(shows only the classes the student DOESN'T HAVE)
 	@GetMapping("/majors/{email}/courses") //does this needs to access student email
+	
 	public ResponseEntity<Set<Course>> getCourses(@PathVariable String email)
 	{
 		//create a local set to hold the courses the student needs
-		Set<Course> coursesStudentNeeds = new HashSet<Course>();
+		TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
+		//Set<Course> coursesStudentNeeds = new HashSet<Course>();
 		
 		try {
 			
@@ -72,13 +77,13 @@ public class MajorController
 			//get the set of courses needed in the major from the major
 		
 			Set<Course> majorCourses = major.getRequiredCourses();
-			List<Course> listMajorCourses = new ArrayList<>(majorCourses);
-			Collections.sort(listMajorCourses, (courseOne, courseTwo) -> courseOne.getCourse_id().compareToIgnoreCase(courseTwo.getCourse_id()));
-			Set<Course> majorCoursesSorted = new HashSet<Course>(listMajorCourses);
+			//List<Course> listMajorCourses = new ArrayList<>(majorCourses);
+			//Collections.sort(listMajorCourses, (courseOne, courseTwo) -> courseOne.getCourse_id().compareToIgnoreCase(courseTwo.getCourse_id()));
+			//Set<Course> majorCoursesSorted = new HashSet<Course>(listMajorCourses);
 			
 			//compare the courses the student has taken to the courses within the major
 			//for each course within majorCourses
-			for(Course course : majorCoursesSorted)
+			for(Course course : majorCourses)
 			{
 				//see if the student has taken that course. If the student HASN'T, add it to the coursesStudentNeeds
 				if(!studentCoursesTaken.contains(course) && !course.getAvailableSections().isEmpty())
@@ -92,9 +97,11 @@ public class MajorController
 			
 			//Collections.sort(coursesList, (courseOne, courseTwo) -> courseOne.getAvailableSections().compareToIgnoreCase(courseTwo.getClass().getName()));
 			//Collections.sort(coursesList);
+			//Set<Course> coursesStudentNeeds = new HashSet<Course>(courseNeeds);
 			
 			return new ResponseEntity<Set<Course>>(coursesStudentNeeds, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
+			
 			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
 		}
 	}//end getCourses method that returns the relevant courses the student user needs. 
@@ -128,6 +135,10 @@ public class MajorController
 	{
 		service.delete(major_id);
 	}
+
+	
+
+	
 	
 
 }
