@@ -54,7 +54,7 @@ public class MajorController
 			return new ResponseEntity<Major>(HttpStatus.NOT_FOUND);
 		}
 	}//end get method 
-	//TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
+	
 	
 	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
 	//(shows only the classes the student DOESN'T HAVE)
@@ -64,8 +64,7 @@ public class MajorController
 	{
 		//create a local set to hold the courses the student needs
 		TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
-		//Set<Course> coursesStudentNeeds = new HashSet<Course>();
-		
+				
 		try {
 			
 			//declare the student using the email given
@@ -77,10 +76,7 @@ public class MajorController
 			//get the set of courses needed in the major from the major
 		
 			Set<Course> majorCourses = major.getRequiredCourses();
-			//List<Course> listMajorCourses = new ArrayList<>(majorCourses);
-			//Collections.sort(listMajorCourses, (courseOne, courseTwo) -> courseOne.getCourse_id().compareToIgnoreCase(courseTwo.getCourse_id()));
-			//Set<Course> majorCoursesSorted = new HashSet<Course>(listMajorCourses);
-			
+					
 			//compare the courses the student has taken to the courses within the major
 			//for each course within majorCourses
 			for(Course course : majorCourses)
@@ -92,13 +88,7 @@ public class MajorController
 					coursesStudentNeeds.add(course);
 				}
 			}//end for loop cycling the courses within the major
-			//List<Course> coursesList = new ArrayList<Course>(coursesStudentNeeds);
-			
-			
-			//Collections.sort(coursesList, (courseOne, courseTwo) -> courseOne.getAvailableSections().compareToIgnoreCase(courseTwo.getClass().getName()));
-			//Collections.sort(coursesList);
-			//Set<Course> coursesStudentNeeds = new HashSet<Course>(courseNeeds);
-			
+					
 			return new ResponseEntity<Set<Course>>(coursesStudentNeeds, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			

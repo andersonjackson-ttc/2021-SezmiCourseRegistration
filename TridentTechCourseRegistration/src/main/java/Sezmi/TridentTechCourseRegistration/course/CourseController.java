@@ -65,8 +65,8 @@ public class CourseController
 		{
 			try {
 				Course course = service.get(course_id);
-				//TreeSet<Section>sections =new TreeSet<Section>(course.getAvailableSections());
-				return new ResponseEntity<Set<Section>>(course.getAvailableSections(), HttpStatus.OK);
+				TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+				return new ResponseEntity<Set<Section>>(availableSections, HttpStatus.OK);
 			} catch (NoSuchElementException e) {
 				return new ResponseEntity<Set<Section>>(HttpStatus.NOT_FOUND);
 			}

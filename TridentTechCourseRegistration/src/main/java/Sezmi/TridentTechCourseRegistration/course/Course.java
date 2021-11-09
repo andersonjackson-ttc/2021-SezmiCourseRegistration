@@ -44,7 +44,7 @@ public class Course implements Comparable<Course>
 				name = "course_section",
 				joinColumns = @JoinColumn(name = "course_id"),
 				inverseJoinColumns = @JoinColumn(name = "section_id"))
-		private Set<Section> availableSections = new TreeSet<Section>();
+		private Set<Section> availableSections = new HashSet<Section>();
 
 	//declare a set for the pre-req courses needed for each course
 		@ManyToMany
