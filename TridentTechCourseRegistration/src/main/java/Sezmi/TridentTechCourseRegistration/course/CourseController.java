@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 
 import org.springframework.web.bind.annotation.*;
-
-import Sezmi.TridentTechCourseRegistration.major.Major;
 import Sezmi.TridentTechCourseRegistration.section.Section;
 
 
@@ -32,14 +30,6 @@ public class CourseController
 		//return service.listAll();
 	}//end RESTful API retrieval operation
 
-/*	//This method is responsible for getting all the courses needed for a given major
-	@GetMapping("/course/{majorID")
-	CollectionModel<EntityModel<Course>> all(@RequestParam Map<String, String> queryParameters)
-	{
-		
-
-	}*/
-	
 	//This method is responsible for getting a course by the course code and posting it to localhost:8080/courses/{id}
 	@GetMapping("/courses/{courseID}")
 	public ResponseEntity<Course> get(@PathVariable String courseID)
