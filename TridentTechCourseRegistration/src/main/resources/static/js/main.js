@@ -470,12 +470,7 @@ function pleaseWork()
     
 
     
-//if I can't add value, maybe I can store the json values and add them another way
-function storeCourses()
-{
-    var selectedCourses = document.getElementById('courses');
-    store.set(courses.innerHTML, null);
-}
+
 
 function loadNewCourses()
 {

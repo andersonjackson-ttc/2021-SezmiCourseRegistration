@@ -3,6 +3,7 @@ package Sezmi.TridentTechCourseRegistration.student;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
+import Sezmi.TridentTechCourseRegistration.section.Section;
 
 @RestController
 public class StudentController {
@@ -55,6 +57,7 @@ public class StudentController {
 	{
 		try {
 			Student bueller = service.getEmail(email);
+			
 			return new ResponseEntity<Set<Course>>(bueller.getCoursesTaken(), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
