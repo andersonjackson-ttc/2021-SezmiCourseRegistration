@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import Sezmi.TridentTechCourseRegistration.course.Course;
-
 @Entity
 @Table(name = "section")
 public class Section implements Comparable<Section>

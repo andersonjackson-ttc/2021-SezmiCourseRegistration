@@ -35,40 +35,6 @@ public class StudentController {
 		return service.listAll();
 	}
 
-	//commented out 10/29/21 at 10am for testing -- Jeremy
-	/*	@GetMapping("/student")
-	CollectionModel<EntityModel<Student>> all(@RequestParam Map<String, String> queryParams)
-	{
-		List<EntiytModel<Student>> student = null;
-		if (queryParams.get("major_id") != null)
-		{
-			String majorId = queryParams.get("major_id");
-		}
-	}
-	 */
-	/*@GetMapping("/student")
-	public String showRegistrationForm(Model model)
-	{
-		model.addAttribute("student", new Student());
-
-		return "registration.html";
-	}*/
-
-	//the get mapping displays the Student based on the email (using as student id/username)
-
-	/*@GetMapping("/student/{id}")
-	public ResponseEntity<Student> get(@PathVariable Long id)
-	{
-		try 
-		{
-			Student student = service.get(id);
-			return new ResponseEntity<>(student, HttpStatus.OK);
-		} catch (NoSuchElementException e) 
-		{
-			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
-		}
-	}*/
-
 	//Get the student based upon their email address
 	@GetMapping("/student/{email}")
 	public ResponseEntity<Student> get(@PathVariable String email)
@@ -101,23 +67,6 @@ public class StudentController {
 	public void add(@RequestBody Student student) {
 		service.save(student); //was save(student) new Student("testemail@gmail.com", "Hunton", "Jeremy", "12345", "CPT")
 	}
-
-	//the update method allows a student to edit the Student info based on the email
-	/*@PutMapping("/student/{id}")
-	public ResponseEntity<?> update(@RequestBody Student student, @PathVariable Long id)
-	{
-		try 
-		{
-			Student existingStudent = service.get(id);
-			service.save(student);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} 
-		catch (NoSuchElementException e) 
-		{
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}//end update method*/
-
 
 	//the update method allows a student to edit the Student info based on the id
 	@PutMapping("/student/{id}")

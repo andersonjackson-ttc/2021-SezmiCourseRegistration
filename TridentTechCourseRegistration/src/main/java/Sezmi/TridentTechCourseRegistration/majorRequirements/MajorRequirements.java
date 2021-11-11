@@ -52,4 +52,4 @@ public class MajorRequirements
 		this.course_id = course_id;
 	}
 	
-}//end Major class
+}//end Major_requirements class

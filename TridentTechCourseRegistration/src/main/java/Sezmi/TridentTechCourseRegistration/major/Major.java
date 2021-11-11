@@ -49,13 +49,11 @@ public class Major
 		this.major = major;
 	}
 
-
 	public String getMajor_id()
 	{
 		return major_id;
 	}
 
-	
 	public String getMajor() {
 		return major;
 	}
@@ -75,10 +73,4 @@ public class Major
 	public void setRequiredCourses(Set<Course> requiredCourses) {
 		this.requiredCourses = requiredCourses;
 	}
-
-
-
-
-
-
 }//end Major Class
