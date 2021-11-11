@@ -21,9 +21,9 @@ function init()
     setTimeout(getCurrentUser,500); //load the current user into the footer
     setTimeout(getUserName,1000); //load the current user name
 		//if statement seeing if the user has logged in before to only display their courses
-		if (student_id.major != null)
+		if (userName.major_id!= null)
 		{
-			loadCompletedCourses();
+			loadCoursesWithMajor()
 		}
 		//else they haven't signed up for a major so they need to do that. 
 		else
@@ -308,6 +308,52 @@ function loadCourses()
             //Send API Call
             xmlhttp.send();
 }
+
+//Load courses from the major that the student has already selected (from the student object)
+function loadCoursesWithMajor() 
+{
+            //Make a new API Request
+            xmlhttp = new XMLHttpRequest();
+            
+            //Get Status
+             xmlhttp.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status==200) 
+                {
+                    //Parse into JSON
+                    const courses = jQuery.parseJSON(xmlhttp.responseText);
+                    
+                    //test if user selected a REAL major
+                    if (majorId != null)
+                    {
+						//Generate Table of Eligible courses dynamically into HTML page
+                    	document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
+						document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Courses</button>'
+						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
+						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
+						loadCompletedCourses();
+						pleaseWork();
+						loadSections();
+					}
+					//Clear Table from Page
+					else
+					{
+						document.getElementById('courses').innerHTML = "";
+					}
+                }
+            };
+            
+            //Create API Call 											//this might be the culprit 11/4/2021
+            xmlhttp.open("GET", '/student/' + currentUser.user + '/courses');
+            
+            xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
+            
+            //Send API Call
+            xmlhttp.send();
+}
+
+
 
 function loadCompletedCourses()
 {
