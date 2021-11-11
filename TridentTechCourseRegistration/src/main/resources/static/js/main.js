@@ -20,9 +20,19 @@ function init()
     
     setTimeout(getCurrentUser,500); //load the current user into the footer
     setTimeout(getUserName,1000); //load the current user name
-		loadMajors(); //load the majors (from the user if possible)
-    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
-    setTimeout(patchCompletedCourses,2000);
+		//if statement seeing if the user has logged in before to only display their courses
+		if (student_id.major != null)
+		{
+			loadCompletedCourses();
+		}
+		//else they haven't signed up for a major so they need to do that. 
+		else
+		{
+			loadMajors(); //load the majors (from the user if possible)
+    	document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
+    	setTimeout(patchCompletedCourses,2000);
+		}
+		
 }
 
  function patchMajorSelection()
