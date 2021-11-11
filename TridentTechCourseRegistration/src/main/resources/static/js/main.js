@@ -17,10 +17,11 @@ window.onload = function()
 //Initialize all Event Listeners
 function init()
 {
-    loadMajors();
-    setTimeout(getCurrentUser,500);
-    setTimeout(getUserName,1000);
-    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+    
+    setTimeout(getCurrentUser,500); //load the current user into the footer
+    setTimeout(getUserName,1000); //load the current user name
+		loadMajors(); //load the majors (from the user if possible)
+    document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
     setTimeout(patchCompletedCourses,2000);
 }
 
@@ -421,6 +422,12 @@ function loadSections()
 //Get Major Selection and Store as a Variable
 function selectMajor()
 {
+	//use a get request the get the user name 
+	/*xmlhttp.open("GET", "/student/" + currentUser.user, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send(JSON.stringify({"major_id": majorId}));*/
     var majorSelection = document.querySelector('#combo');
     majorId = majorSelection.value;
     
