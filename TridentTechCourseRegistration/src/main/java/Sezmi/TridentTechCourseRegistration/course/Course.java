@@ -5,8 +5,12 @@
 package Sezmi.TridentTechCourseRegistration.course;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +45,8 @@ public class Course implements Comparable<Course>
 				name = "course_section",
 				joinColumns = @JoinColumn(name = "course_id"),
 				inverseJoinColumns = @JoinColumn(name = "section_id"))
-		private Set<Section> availableSections = new HashSet<Section>();
+		private List<Section> availableSections = new ArrayList<Section>();
+		
 
 	//declare a set for the pre-req courses needed for each course
 		@ManyToMany
@@ -92,11 +97,13 @@ public class Course implements Comparable<Course>
 	}
 
 	//auto generated setters/getters
-	public Set<Section> getAvailableSections() {
+	public List<Section> getAvailableSections()
+	{
+		Collections.sort(availableSections, (sectionOne, sectionTwo) -> sectionOne.getSection_id().compareToIgnoreCase(sectionTwo.getSection_id()));
 		return availableSections;
 	}
 
-	public void setAvailableSections(Set<Section> availableSections) {
+	public void setAvailableSections(List<Section> availableSections) {
 		this.availableSections = availableSections;
 	}
 
@@ -113,7 +120,7 @@ public class Course implements Comparable<Course>
 
 	@Override
 	public int compareTo(Course o) {
-		int order = getCourse_name().compareToIgnoreCase(o.getCourse_name());// TODO Auto-generated method stub
+		int order = getCourse_id().compareToIgnoreCase(o.getCourse_id());// TODO Auto-generated method stub
 		return order;
 	}
 	

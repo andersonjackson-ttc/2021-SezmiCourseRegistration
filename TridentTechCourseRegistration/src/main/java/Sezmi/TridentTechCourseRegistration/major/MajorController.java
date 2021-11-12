@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.hibernate.tool.schema.internal.exec.ScriptSourceInputFromReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
+import Sezmi.TridentTechCourseRegistration.section.Section;
 import Sezmi.TridentTechCourseRegistration.student.Student;
 import Sezmi.TridentTechCourseRegistration.student.StudentService;
 
@@ -64,6 +66,7 @@ public class MajorController
 	{
 		//create a local set to hold the courses the student needs
 		TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
+		//TreeSet<Course> sortedCoursesStudentNeedSet = new TreeSet<Course>();
 				
 		try {
 			
@@ -81,11 +84,33 @@ public class MajorController
 			//for each course within majorCourses
 			for(Course course : majorCourses)
 			{
+				//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+
+					
 				//see if the student has taken that course. If the student HASN'T, add it to the coursesStudentNeeds
 				if(!studentCoursesTaken.contains(course) && !course.getAvailableSections().isEmpty())
 				{
-					//add the course to the courseseStudentNeeds set
 					coursesStudentNeeds.add(course);
+					
+					/*for (Section section : course.getAvailableSections())
+					{
+						//if (!availableSections.isEmpty())
+						//{
+							availableSections.add(section);
+						//}
+				
+					}*/
+					
+					//sortedCoursesStudentNeedSet.addAll(coursesStudentNeeds);
+					
+					//Set<Section> sortedSections = course.getAvailableSections();
+					//List<Section> tguSections = new ArrayList<Section>(sortedSections);
+					//Collections.sort(tguSections, (sectionOne, sectionTwo) -> sectionOne.getSection_id().compareToIgnoreCase(sectionTwo.getSection_id()));
+					//Course sortedStuffCourse = new Course();
+					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+					//add the course to the courseseStudentNeeds set
+					
 				}
 			}//end for loop cycling the courses within the major
 					

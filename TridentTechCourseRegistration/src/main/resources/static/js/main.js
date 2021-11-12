@@ -146,7 +146,7 @@ function getCurrentUser()
 //Template Literal to Return Major Name and Major ID
 function majorTemplate(major) 
 {
-    return `<option value='${major.major_id}'>${major.major_name}</option>`
+    return `<option value='${major.major_id}'>${major.major_id} - ${major.major_name}</option>`
 }
 
 //Template Literal to Return Course Name
@@ -193,7 +193,7 @@ function courseTemplate(course)
 		return "<tr><td>";
 		return `<tr><td><input type='checkbox' value =${course.course_name} />${course.course_name}</td></tr>`;
 	}*/
-	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${course.course_name}</td></tr>`;
+	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${course.course_id} - ${course.course_name}</td></tr>`;
 }
 
 function sectionTemplate(course)
@@ -265,7 +265,7 @@ function loadMajors()
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
                     
                     //Template Literal to Add all Majors into HTML Dynamically
-                    document.getElementById('combo').innerHTML = `<option value='nah'>Select a Major</option>${majors.map(majorTemplate).join('')}`
+                    document.getElementById('combo').innerHTML = `<option value='nah'>Select a Major</option>${majors.map(majorTemplate)}`;
                 }
             };
             
@@ -474,6 +474,7 @@ function loadSections()
             
             //Create API Call
             xmlhttp.open("GET", '/majors/' + currentUser.user + '/courses');
+            //xmlhttp.open("GET", '/courses/ENG-260/sections');
             
             //Send API Call
             xmlhttp.send();
