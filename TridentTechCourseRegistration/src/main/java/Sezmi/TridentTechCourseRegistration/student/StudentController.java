@@ -51,6 +51,7 @@ public class StudentController {
 		}
 	}
 	
+	
 	//getStudentCourses returns the list of courses the student has taken
 	@GetMapping("/student/{email}/courses")
 	public ResponseEntity<Set<Course>> getStudentCourses (@PathVariable String email)
@@ -58,7 +59,8 @@ public class StudentController {
 		try {
 			Student bueller = service.getEmail(email);
 			
-			return new ResponseEntity<Set<Course>>(bueller.getCoursesTaken(), HttpStatus.OK);
+			TreeSet<Course>coursesTaken =new TreeSet<Course>(bueller.getCoursesTaken());
+			return new ResponseEntity<Set<Course>>(coursesTaken, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
 		}
