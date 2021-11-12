@@ -66,6 +66,20 @@ public class StudentController {
 		}
 		
 	}
+	
+	//GetStudentEmailMajor returns only the student's email and major
+	@GetMapping("/student/{email}/major")
+	public ResponseEntity<StudentEmailMajor> getStudentEmailMajoResponseEntity (@PathVariable String email)
+	{
+		try {
+			StudentEmailMajor studentEmailMajor = service.getStudentMajor(email);
+			return new ResponseEntity<StudentEmailMajor>(studentEmailMajor, HttpStatus.OK);
+		}
+		catch (NoSuchElementException x)
+		{
+			return new ResponseEntity<StudentEmailMajor>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	//the add method adds a new Student to the Student table
 	@PostMapping("/student")

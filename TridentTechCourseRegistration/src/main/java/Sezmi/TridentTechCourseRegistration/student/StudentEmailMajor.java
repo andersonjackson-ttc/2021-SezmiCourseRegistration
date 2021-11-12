@@ -4,5 +4,5 @@ package Sezmi.TridentTechCourseRegistration.student;
 public interface StudentEmailMajor {
 
 	String getEmail();
-	String getMajorId();
+	String getMajor_id();
 }

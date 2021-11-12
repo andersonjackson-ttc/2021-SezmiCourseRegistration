@@ -1,4 +1,5 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
+var student = ""; //declared global variable for student JH 11/12
 var xmlhttp;
 var majorId;
 var currentUser = "";
@@ -21,10 +22,14 @@ function init()
     setTimeout(getCurrentUser,500); //load the current user into the footer
     setTimeout(getUserName,1000); //load the current user name
 
+	//get the student major
+	setTimeout(getStudentMajor, 2000);
 		//if statement seeing if the user has logged in before to only display their courses
 		//calls getStudentMajor function that returns the student major (or null if never entered)
-		if (getStudentMajor()!= null)
+		if (majorId != null)
 		{
+			//alert window to test 
+			//window.alert("the student major is " + majorId);
 			//loadCourses only and skip the rest (no major drop down list anymore)
 			loadCourses();
 		}
@@ -35,6 +40,9 @@ function init()
     	document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
     	setTimeout(patchCompletedCourses,2000);
 		}
+		
+		//for testing (happening first for some reason? could issue be with timing? 11/12/21 JH)
+		//window.alert("major id is : " + majorId);
 		
 }
 
@@ -315,8 +323,7 @@ function loadCourses()
 //getStudentMajor returns a String with the student major from the database
 function getStudentMajor()
 {
-	//declare a string to be returned
-	let major_id = "";
+	
 	//make a new API request
 	xmlhttp = new XMLHttpRequest();
 
@@ -326,22 +333,30 @@ function getStudentMajor()
 		//if the status is ready
 		if(this.readyState == 4 && this.status == 200)
 		{
-			//parse into a JSON object
-			const student = jQuery.parseJSON(xmlhttp.responseText);
-
-			//assign the student obj major_id to local major_id 
-			major_id =  student.major_id;
+			
+			//parse the JSON object to the global variable for the student 
+			student = jQuery.parseJSON(xmlhttp.responseText);
+			
+			//assign the majorId from the student.major_id 
+			//majorId = student.major_id;
+			
+			//alert for testing
+			//window.alert(JSON.stringify(student));
+			
+			//alert for testing 
+			//window.alert("the majorId in getStudentMajor is : " + student.major_id);
 		}//end of successful API status
 	}//end of onreadystatechange function
 
 	//create API call to GET the student logged in 
-	xmlhttp.open("GET", "/students/" + currentUser)
+	xmlhttp.open("GET", "/student/" + currentUser.user + "/major");
+	
+	//test alert
+	//window.alert("current user: " + currentUser.user);
 
 	//Send API Call
 	xmlhttp.send();
 
-	//return the student major_id
-	return major_id;
 }//end of getStudentMajor
 
 function loadCompletedCourses()
