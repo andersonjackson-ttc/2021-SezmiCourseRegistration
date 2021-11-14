@@ -43,8 +43,8 @@ public class Student{
 	@Column(nullable = false, length = 25)
 	private String major_id;
 
-	@Column(nullable = false, length = 999)
-	private String completed_courses;
+	//@Column(nullable = false, length = 999)
+	//private String completed_courses;
 
 	//declare a ManyToMany set so that courses can be assigned to the student. 
 	@ManyToMany
@@ -66,7 +66,7 @@ public class Student{
 		this.salt = salt;
 		this.password = password;
 		this.major_id = major_id;
-		this.completed_courses = completed_courses;
+		//this.completed_courses = completed_courses;
 	}
 
 	/*	
@@ -134,13 +134,13 @@ public class Student{
 		this.major_id = major_id;
 	}
 
-	public String getCompleted_courses() {
+	/*public String getCompleted_courses() {
 		return completed_courses;
-	}
+	}*/
 
-	public void setCompleted_courses(String completed_courses) {
+	/*public void setCompleted_courses(String completed_courses) {
 		this.completed_courses = completed_courses;
-	}  
+	}  */
 
 	public void addCompletedCourse(Course completed_course)
 	{	

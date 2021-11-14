@@ -98,7 +98,7 @@ public class StudentController {
 			existingStudent.setEmail(student.getEmail());
 			existingStudent.setLast_name(student.getLast_name());
 			existingStudent.setFirst_name(student.getFirst_name());
-			existingStudent.setCompleted_courses(student.getCompleted_courses());
+			//existingStudent.setCompleted_courses(student.getCompleted_courses());
 			service.save(existingStudent);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 

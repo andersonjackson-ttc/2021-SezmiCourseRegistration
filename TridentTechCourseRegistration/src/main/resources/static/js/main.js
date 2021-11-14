@@ -367,19 +367,19 @@ function loadCompletedCourses()
 	{
 		if (this.readyState == 4 && this.status==200) 
                 {
-					words = "<tr><th>Completed Courses</th></tr><tr><td>";
+					words = "<tr><th>Completed Courses</th></tr>";
                     //Parse into JSON
                     const completedCourses = jQuery.parseJSON(xmlhttp.responseText);
                     for (i=0;i<completedCourses.length ;i++)
                     {
 						if (i>0)
 							{
-								words += `, `;
+								words += `<br>`;
 							}
-							words += `${completedCourses[i].course_name}`
+							words += `<tr><td>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
 							if (i == completedCourses.length -1)
 							{
-								words += "</td></tr>";
+								words += "</tr></td>";
 							}
 					}
 					document.getElementById('courses').innerHTML = words.fontcolor("white");
@@ -411,16 +411,74 @@ function loadSections()
                     for (i=0;i<courseSection.length ;i++)
                     {
 						//words +=`Course ID of ${courseSection[i].course_id}: `;
-						words += `<tr><td><a id="openUp"><style="red>${courseSection[i].course_name}</a></td></tr><tr><td>`;
+						words += `<tr><td><a id="openUp"><style="red>${courseSection[i].course_id} - ${courseSection[i].course_name}</a></td></tr><tr><td>`;
 						//document.getElementById("openUp").addEventListener('click',alert("hi"), false);
 					
 						for (z=0;z<courseSection[i].availableSections.length;z++)
 						{
 							if (z>0)
 							{
-								words += `, `;
+								words += `<br>`;
 							}
-							words += `<input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id}`
+							//All below if & else statments involve formating the output so that it is pretty
+							if ((courseSection[i].availableSections[z].term).length == 13)
+							{
+								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
+								{
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									else
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									
+									
+								}
+			
+								else
+								{
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									else
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									
+								}
+								
+							}
+							else
+							{
+								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
+								{
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									else
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									
+								}
+								else
+								{
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+									else
+									{
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].instructor_id}`
+									}
+								}
+								
+							}
+							//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id}  ||   ${courseSection[i].availableSections[z].course_format}  ||   ${courseSection[i].availableSections[z].term}          ||   ${courseSection[i].availableSections[z].instructor_id}`
 							if (z == courseSection[i].availableSections.length -1)
 							{
 								words += "</td></tr>";
