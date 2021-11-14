@@ -99,7 +99,7 @@ public class Course implements Comparable<Course>
 	//auto generated setters/getters
 	public List<Section> getAvailableSections()
 	{
-		Collections.sort(availableSections, (sectionOne, sectionTwo) -> sectionOne.getSection_id().compareToIgnoreCase(sectionTwo.getSection_id()));
+		Collections.sort(availableSections, (sectionOne, sectionTwo) -> sectionOne.getTerm().compareToIgnoreCase(sectionTwo.getTerm()));
 		return availableSections;
 	}
 
