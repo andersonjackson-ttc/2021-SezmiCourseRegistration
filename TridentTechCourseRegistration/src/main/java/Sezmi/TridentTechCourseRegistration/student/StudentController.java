@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
 import Sezmi.TridentTechCourseRegistration.section.Section;
+import Sezmi.TridentTechCourseRegistration.section.SectionService;
 
 @RestController
 public class StudentController {
@@ -29,6 +30,9 @@ public class StudentController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private SectionService sectionService;
 
 
 	@GetMapping("/student")
@@ -130,6 +134,35 @@ public class StudentController {
 		}
 		
 	}
+	
+	
+	  //adds section selection to the student
+	  @PatchMapping("/students/{id}/{section_id}") 
+	  public ResponseEntity<Student> addSectionSelection(@PathVariable Long id, @PathVariable String section_id) 
+	  {
+	  try { 
+		 //get the student by their id 
+	  Student student = service.get(id); 
+	  //get the section selected by it's section_id 
+	  Section section = sectionService.get(section_id); 
+	  //call the addSectionSelection method in the student to add the completed course to the set
+	  student.addSectionSelection(section);
+	  
+	  //save the student object 
+	  service.save(student); 
+	  
+	  //add the cooresponding course to the courses taken for the student
+	  addCourseTaken(id, section.getCourse_id());
+	  
+	  //return the student http status
+	  return new ResponseEntity<Student>(HttpStatus.OK);
+	  
+	  } catch (Exception e) { 
+		  return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
+		  }
+
+	  }
+	 
 	//was original patch method
 	@PatchMapping("/student/{email}")
 	public ResponseEntity<Student> updateStudentPartially(@RequestBody Student student, @PathVariable String email)

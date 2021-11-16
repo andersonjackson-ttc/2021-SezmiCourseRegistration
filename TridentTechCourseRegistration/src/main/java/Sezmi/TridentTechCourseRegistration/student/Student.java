@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.section.Section;
 
 
 @Entity
@@ -46,13 +47,24 @@ public class Student{
 	//@Column(nullable = false, length = 999)
 	//private String completed_courses;
 
-	//declare a ManyToMany set so that courses can be assigned to the student. 
-	@ManyToMany
-	@JoinTable(
-			name = "student_course",
-			joinColumns = @JoinColumn(name = "id"),
-			inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private Set<Course> coursesTaken = new HashSet<Course>();
+	
+	  //declare a ManyToMany set so that courses can be assigned to the student.
+	  
+	  @ManyToMany
+	  
+	  @JoinTable( name = "student_course", joinColumns = @JoinColumn(name = "id"),
+	  inverseJoinColumns = @JoinColumn(name = "course_id")) private Set<Course>
+	  coursesTaken = new HashSet<Course>();
+	  
+	  //declare a ManyToMany set so that section can be assigned to the student.
+		
+		  @ManyToMany
+		  
+		  @JoinTable( name = "student_section", joinColumns = @JoinColumn(name = "id"),
+		  inverseJoinColumns = @JoinColumn(name = "section_id")) private Set<Section>
+		  sectionSelection = new HashSet<Section>();
+		 
+	 
 
 	public Student() {
 
@@ -154,6 +166,10 @@ public class Student{
 
 	public void setCoursesTaken(Set<Course> coursesTaken) {
 		this.coursesTaken = coursesTaken;
+	}
+	
+	public void addSectionSelection(Section sectionChosen) {
+		sectionSelection.add(sectionChosen);
 	}
 	
 	

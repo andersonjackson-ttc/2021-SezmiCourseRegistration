@@ -113,18 +113,24 @@ footer
         bottom: 0px;
 }
 
+div.ui-page #navbar{
+	position: fixed;
+	z-index:99999
+}
+
 #completedBtn, #btnSection, #btnCompletedCourses{
 	border-radius: 5px;
 	font-size: 15px;
 	float: right;
 }
 
-div.ui-page #logoutBtn{
+div.ui-page #logoutBtn, #completedBtn, #btnSection, #btnCompletedCourses{
 	float: right;
 	max-width: 89px;
     max-height: 38px;
     text-align: center;
     font-size: 10px;
+    z-index: 100000;
 }
 
 @media screen and (min-width: 900px)
@@ -150,6 +156,7 @@ div.ui-page #logoutBtn{
         margin: 0px 0px 0px 0px;
         height: 70px;
         position: fixed;
+        z-index: 99999;
     }
     
     #logoLine
