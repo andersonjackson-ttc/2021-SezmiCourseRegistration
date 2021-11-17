@@ -234,7 +234,24 @@ function loadOverLoadMajors(majorName)
            
 					document.getElementById('combo').innerHTML = `<option value='nah'>${majorName}</option>${majors.map(majorTemplate)}`;
 					
-					document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+					//if the user has a major selected, warn them that they are changing their major
+					if(userName.major_id != "null")
+					{
+						//make the button send the alert 
+						document.getElementById('btnSubmit').addEventListener('click', majorChangeAlert, false);
+											
+					}//end major change options
+					
+					//else the major hasn't been selected '
+					else
+					{
+						//the major hasn't been selected or the user has chosen to change it, so allow the button to select the major
+						document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+					}
+					
+					
+					
+					
 					setTimeout(loadCourses(), 1000);
                 }
             };
@@ -286,6 +303,31 @@ function loadMajorWithId()
             //Send API Call
             xhr.send();
 }
+
+//majorChangeAlert alerts the user that they are about to change their major
+function majorChangeAlert()
+{
+	//declare variable for the message 
+	var message = confirm("You are about to change your major. Are you sure you want to do that?");
+	
+	//if the message is true, show that the major has been selected. 
+	if(message == true)
+	{
+		//alert that the use is trying to change their major
+		window.alert("Your major has been changed!");
+		//set the submit button to select the major in the combo box. 
+		document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+		//call selectMajor to change the major
+		selectMajor();
+		
+	}
+	//else the major change has been aborted
+	else
+	{
+		//alert the major cannot be changed. 
+		window.alert("Your major has not been changed.");
+	}
+}//end majorChangeAlert
 
 //Load Table with Required Courses
 function loadCourses() 
