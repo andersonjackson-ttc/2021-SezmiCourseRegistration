@@ -308,12 +308,14 @@ function loadCourses()
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
                     	document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-						document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Courses</button>'
+                    	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Courses</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
+						document.getElementById('showChosenSections').innerHTML = '<button id="btnChosenSections">Chosen Sections</button>'
 						document.getElementById('btnCompletedCourses').addEventListener('click', loadCompletedCourses, false);
 						document.getElementById('completedBtn').addEventListener('click', pleaseWork, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
+						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
 					}
 					//Clear Table from Page
 					else
@@ -405,7 +407,7 @@ function loadCompletedCourses()
             //Send API Call
             xmlhttp.send();
 }
-
+//Loads sections from the student_section table that student has chosen
 function loadSections()
 {
 	xmlhttp = new XMLHttpRequest();
@@ -549,6 +551,43 @@ function loadSections()
             //Send API Call
             xmlhttp.send();
 }
+//Loads sections from the student_section table that student has chosen
+function loadChosenSections()
+{
+	xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange = function()
+	{
+		if (this.readyState == 4 && this.status==200) 
+                {
+					words = "<tr><th>Chosen Sections</th></tr>";
+                    //Parse into JSON
+                    const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
+                    for (i=0;i<chosenSections.length ;i++)
+                    {
+						if (i>0)
+							{
+								words += `<br>`;
+							}
+							words += `<tr><td>${chosenSections[i].availableSections[z].section_id}, ${chosenSections[i].availableSections[z].term}</tr></td>`
+							if (i == chosenSections.length -1)
+							{
+								words += "</tr></td>";
+							}
+					}
+					document.getElementById('sections').innerHTML = words.fontcolor("white");
+					
+                }
+            };
+            
+            //Create API Call
+            xmlhttp.open("GET", '/student/' + currentUser.user + '/courses');
+            
+            //Send API Call
+            xmlhttp.send();
+	
+}
+
 
 //Get Major Selection and Store as a Variable
 function selectMajor()

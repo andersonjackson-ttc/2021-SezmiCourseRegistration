@@ -118,13 +118,13 @@ div.ui-page #navbar{
 	z-index:99999
 }
 
-#completedBtn, #btnSection, #btnCompletedCourses{
+#completedBtn, #btnSection, #btnCompletedCourses,#btnChosenSections{
 	border-radius: 5px;
 	font-size: 15px;
 	float: right;
 }
 
-div.ui-page #logoutBtn, #completedBtn, #btnSection, #btnCompletedCourses{
+div.ui-page #logoutBtn, #completedBtn, #btnSection, #btnCompletedCourses,#btnChosenSections{
 	float: right;
 	max-width: 89px;
     max-height: 38px;
