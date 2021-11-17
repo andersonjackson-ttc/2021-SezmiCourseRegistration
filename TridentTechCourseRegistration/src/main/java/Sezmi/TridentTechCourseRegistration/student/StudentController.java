@@ -151,7 +151,7 @@ public class StudentController {
 	  //save the student object 
 	  service.save(student); 
 	  
-	  //add the cooresponding course to the courses taken for the student
+	  //add the corresponding course to the courses taken for the student
 	  addCourseTaken(id, section.getCourse_id());
 	  
 	  //return the student http status

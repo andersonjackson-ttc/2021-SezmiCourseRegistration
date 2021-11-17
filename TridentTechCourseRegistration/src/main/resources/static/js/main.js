@@ -2,7 +2,7 @@
 var student = ""; //declared global variable for student JH 11/12
 var xmlhttp;
 var majorId;
-var currentUser = "";
+var userEmail = "";
 var userName = "";
 var checkbox;
 var checkboxSelection;
@@ -18,10 +18,11 @@ window.onload = function()
 //Initialize all Event Listeners
 function init()
 {
+    //Load User Email 
+    setTimeout(getUserEmail,500);
     
-    setTimeout(getCurrentUser,500); //load the current user into the footer
-    
-    setTimeout(getUserName,1000); //load the current user name
+    //
+    setTimeout(getUserName,1000);
     
 	//setTimeout(getStudentMajor, 2000); //get the student major
 	//setTimeout(getMajorIdFromStudent, 2500); //get the major id from the student.
@@ -46,7 +47,7 @@ function init()
 				}*/
 			}
 			
-		xmlhttp.open("PATCH", "/student/" + currentUser.user, true);
+		xmlhttp.open("PATCH", "/student/" + userEmail.user, true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
@@ -72,6 +73,29 @@ function init()
 		xmlhttp.open("PATCH", "/student/" + student_id + "/"  + checkboxSelection, true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json"); //Jeremy added 11/4/21
+		
+		xmlhttp.send();
+}
+
+ function patchSectionSelection(checkboxSelection)
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(true)
+				{
+					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+				}
+				/*else
+				{
+					alert("I'm not working....JEREMY");
+				}*/
+			}
+			
+		xmlhttp.open("PATCH", "/students/" + student_id + "/" +checkboxSelection, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
 		xmlhttp.send();
 }  
@@ -100,14 +124,14 @@ function getUserName()
        }
      
        //Create API Call to Random Number Website
-       x.open("GET", '/student/' + currentUser.user);
+       x.open("GET", '/student/' + userEmail.user);
        
        //Send API Call to Student Table
        x.send();
 }
 
 //Get Current User
-function getCurrentUser()
+function getUserEmail()
 {
   //Declare and Initialize New Ajax Object
     var x = new XMLHttpRequest();
@@ -119,8 +143,8 @@ function getCurrentUser()
           if (true)
           {
             //Store Returned JSON String in Global Variable
-            currentUser = jQuery.parseJSON(x.responseText);
-            document.getElementById('sezmiFooter').innerHTML = "Welcome " + currentUser.user;
+            userEmail = jQuery.parseJSON(x.responseText);
+            document.getElementById('sezmiFooter').innerHTML = "Welcome " + userEmail.user;
           }      
        }
      
@@ -164,47 +188,6 @@ function majorTemplate(major)
 //Template Literal to Return Course Name
 function courseTemplate(course) 
 {
-    /*//Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((major_requirements.major_id).includes(majorId))
-    {
-		//Declare needed local variables
-		let output = "";
-		let courseList = courses.course_name;
-		let courses = "";
-		let test = "";
-		
-		
-		//Create Constant Array from splitting courselist String with comma delimiters
-		const jamesCoursesArray = courseList.split(","); 
-		
-		
-		//Sort Array Alphabetically 
-		jamesCoursesArray.sort();
-		
-		//For loop that accumulates output variable with dynamic HTML building of Table 
-		for (i = 0; i < jamesCoursesArray.length; i++)
-		{
-		
-			//Output Accumulator
-			output = "<tr><td>";
-			courses = jamesCoursesArray[i];
-			//test = jamesCoursesArray[i].substring(0,7);
-			
-			//while (jamesCoursesArray[i+1] != null && jamesCoursesArray[i+1].includes(test))
-			//{
-				//courses += ", " + jamesCoursesArray[i+1];
-				//i++;
-			//}
-			//output += courses;
-			output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
-			
-			courses =  "";
-			return `<tr><td><input type='checkbox' value =${course.course_name} />${course.course_name}</td></tr>`;
-		}
-		//Return Accumulated Output 
-		return "<tr><td>";
-		return `<tr><td><input type='checkbox' value =${course.course_name} />${course.course_name}</td></tr>`;
-	}*/
 	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${course.course_id} - ${course.course_name}</td></tr>`;
 }
 
@@ -215,51 +198,7 @@ function sectionTemplate(course)
 	//output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
 }
 
-/*function sectionTemplate(course)
-{
-	for (i=0; i<course.availableSections.length; i++)
-	{
-		let output = "";
-		let courseList = course;
-		let courses = "";
-		let test = "";
-		
-		courseListArray = courseList.split(",");
-		courseListArray.sort();
-		alert();
-	}
-	if 	((course).includes(course_id))
-	{
-		let output = "";
-		let courseSectionList = section;
-		let courses = "";
-		let test = "";
-		
-		courseListArray = courseSectionList.split(",");
-		
-		courseListArray.sort();
-		
-		for (i=0; i<course.section_id.length; i++)
-		{
-		output += "<tr><td>";
-		courses += courseListArray[i];
-		test = courseListArray[i].substring(1,261);
-		
-		while (courseListArray[i+1] != null && courseListArray[i+1].includes(test))
-		{
-			courses += ", " + courseListArray[i+1];
-			i++;
-		}
-		
-		output += courses;
-		output += `</td><td><input type='checkbox' value =${courseListArray[i]} /></td></tr>`;
-			
-		courses =  "";	
-		}	
-		return output;
-	}
-		
-}*/
+
 
 //Load Drop Down ComboBox with a List of Majors
 function loadMajors() 
@@ -308,12 +247,12 @@ function loadCourses()
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
                     	document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-                    	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Courses</button>'
+                    	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Selection</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
 						document.getElementById('showChosenSections').innerHTML = '<button id="btnChosenSections">Chosen Sections</button>'
 						document.getElementById('btnCompletedCourses').addEventListener('click', loadCompletedCourses, false);
-						document.getElementById('completedBtn').addEventListener('click', pleaseWork, false);
+						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
 					}
@@ -326,7 +265,7 @@ function loadCourses()
             };
             
             //Create API Call 											//this might be the culprit 11/4/2021
-            xmlhttp.open("GET", '/majors/' + currentUser.user + '/courses');
+            xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
             
             xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
             
@@ -363,10 +302,10 @@ function getStudentMajor()
 	}//end of onreadystatechange function
 
 	//create API call to GET the student logged in 
-	xmlhttp.open("GET", "/student/" + currentUser.user + "/major");
+	xmlhttp.open("GET", "/student/" + userEmail.user + "/major");
 	
 	//test alert
-	window.alert("current user: " + currentUser.user);
+	window.alert("current user: " + userEmail.user);
 
 	//Send API Call
 	xmlhttp.send();
@@ -402,7 +341,7 @@ function loadCompletedCourses()
             };
             
             //Create API Call
-            xmlhttp.open("GET", '/student/' + currentUser.user + '/courses');
+            xmlhttp.open("GET", '/student/' + userEmail.user + '/courses');
             
             //Send API Call
             xmlhttp.send();
@@ -441,11 +380,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 									
@@ -455,11 +394,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
@@ -471,11 +410,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
@@ -483,11 +422,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 								}
 								
@@ -499,57 +438,19 @@ function loadSections()
 							}
 						}
 					}
-                    
-                    document.getElementById('courses').innerHTML = words.fontcolor("white");
-                    
-                    //output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
-			
-					//courses =  "";
-					//return `<tr><td><input type='checkbox' value =${course.course_name} />${course.course_name}</td></tr>`;
-					
-                    /*var moreWords = "";
-                    
-                    //var words = JSON.stringify(courseSection);
-                    for (i=0; i<courseSection.length; i++)
-                    {
-						var words = courseSection[i];
-						for (z=0; z<availableSection.length; z++)
-						{
-							moreWords += `${courseSection[0].availableSections[0].section_id}`;
-						}
-						//var words += courseSection[i].;
-						//document.getElementById('sezmiFooter').innerHTML = JSON.stringify(courseSection[0].availableSections[0].section_id);
-					}
-                    
-                    //document.getElementById('sezmiFooter').innerHTML = `${courseSection[0].availableSection[0].section_id}`;
-                    
-                    //test if user selected a REAL major
-                    for (i=0; i<courseListArray.length; i++) 
-                    {
-						if (courseListArray[i] != "nah")
-						{
-						//Generate Table of Eligible courses dynamically into HTML page
-                    	document.getElementById('courses').innerHTML = `<tr><th>Eligible Courses</th><th id="selectHeader">Select Completed Courses</th></tr>${newCourses.map(sectionTemplate).join(',')}`
-						document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Register Courses (dont press yet)</button>'
-						document.getElementById('completedBtn').addEventListener('click', pleaseWork, false);
-						}
-					
-					//Clear Table from Page
-					else
-					{
-						document.getElementById('courses').innerHTML = "";
-					}
-					}*/
-					
+                    document.getElementById('courses').innerHTML = words.fontcolor("white");	
                 }
             };
             
             //Create API Call
-            xmlhttp.open("GET", '/majors/' + currentUser.user + '/courses');
+            xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
             //xmlhttp.open("GET", '/courses/ENG-260/sections');
             
             //Send API Call
             xmlhttp.send();
+            
+            //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
+            document.getElementById('completedBtn').addEventListener('click', setSectionSelection, false);
 }
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
@@ -581,7 +482,7 @@ function loadChosenSections()
             };
             
             //Create API Call
-            xmlhttp.open("GET", '/student/' + currentUser.user + '/courses');
+            xmlhttp.open("GET", '/student/' + userEmail.user + '/courses');
             
             //Send API Call
             xmlhttp.send();
@@ -593,7 +494,7 @@ function loadChosenSections()
 function selectMajor()
 {
 	//use a get request the get the user name 
-	/*xmlhttp.open("GET", "/student/" + currentUser.user, true);
+	/*xmlhttp.open("GET", "/student/" + userEmail.user, true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
@@ -606,7 +507,7 @@ function selectMajor()
     
 }
 
-function pleaseWork()
+function setCourseSelection()
     {
 		
 		//var checkboxArray = [];
@@ -620,8 +521,27 @@ function pleaseWork()
 	    //checkboxSelection = checkbox.parentElement.textContent;
         //alert(checkboxSelection);
         patchCompletedCourses(checkboxSelection);
-        postCourses();
+        //postCourses();
         loadCourses();
+        
+        //document.getElementById("completedBtn").style.display = "none";
+    }
+    
+function setSectionSelection()
+    {
+		
+		//var checkboxArray = [];
+		
+        checkbox = document.querySelector('input[type="radio"]:checked');
+        //const checkboxArray = document.querySelectorAll("td[value]");
+        /*for (var i= 0; i < checkbox.length; i++){
+			checkboxArray.push(checkbox[i].value)
+		}*/
+        checkboxSelection = checkbox.value;
+	    //checkboxSelection = checkbox.parentElement.textContent;
+        //alert(checkboxSelection);
+        patchSectionSelection(checkboxSelection);
+        loadSections();
         
         //document.getElementById("completedBtn").style.display = "none";
     }
@@ -642,12 +562,8 @@ function pleaseWork()
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
-		xmlhttp.send(JSON.stringify({"email": currentUser.value, "course_id": checkbox.value, "grade": "null", "term": "null"}));
+		xmlhttp.send(JSON.stringify({"email": userEmail.value, "course_id": checkbox.value, "grade": "null", "term": "null"}));
 }  
-    
-
-    
-
 
 function loadNewCourses()
 {
@@ -691,7 +607,7 @@ function newCourseTemplate(major_requirements)
 {
  
     //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((student/currentUser.majorId).includes(majorId))
+    if ((student/userEmail.majorId).includes(majorId))
     {
 		//Declare needed local variables
 		let output = "";
