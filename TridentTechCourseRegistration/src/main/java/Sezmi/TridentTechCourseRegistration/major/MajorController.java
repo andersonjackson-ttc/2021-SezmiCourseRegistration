@@ -49,7 +49,7 @@ public class MajorController
 		try
 		{
 			Major major = service.get(major_id);
-			return new ResponseEntity<>(major, HttpStatus.OK);
+			return new ResponseEntity<Major>(major, HttpStatus.OK);
 		}
 		catch (NoSuchElementException e) 
 		{

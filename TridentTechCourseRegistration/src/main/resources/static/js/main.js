@@ -1,12 +1,9 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var student = ""; //declared global variable for student JH 11/12
-var xmlhttp;
+//var xmlhttp;
 var majorId;
 var userEmail = "";
 var userName = "";
-//var checkbox;
-//var checkboxSelection;
-const courseListArray = new Array();
 var student_id = "";
 
 //Activate Event Listeners on Page Load
@@ -22,13 +19,7 @@ function init()
     setTimeout(getUserEmail,500);
     
     //
-    setTimeout(getUserName,1000);
-    
-	//setTimeout(getStudentMajor, 2000); //get the student major
-	//setTimeout(getMajorIdFromStudent, 2500); //get the major id from the student.
-	
-		
-		
+    setTimeout(getUserName,1000);		
 }
 
  function patchMajorSelection()
@@ -41,10 +32,6 @@ function init()
 				{
 					;
 				}
-				/*else
-				{
-					alert("I'm not working....JEREMY");
-				}*/
 			}
 			
 		xmlhttp.open("PATCH", "/student/" + userEmail.user, true);
@@ -64,10 +51,6 @@ function init()
 				{
 					;
 				}
-				/*else
-				{
-					alert("I'm not working....JEREMY");
-				}*/
 			}
 			
 		xmlhttp.open("PATCH", "/student/" + student_id + "/"  + checkboxSelection, true);
@@ -87,10 +70,6 @@ function init()
 				{
 					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
 				}
-				/*else
-				{
-					alert("I'm not working....JEREMY");
-				}*/
 			}
 			
 		xmlhttp.open("PATCH", "/students/" + student_id + "/" + checkboxSelection, true);
@@ -163,18 +142,18 @@ function getMajorIdFromStudent()
 	//calls getStudentMajor function that returns the student major (or null if never entered)
 		if (userName.major_id != "null")
 		{
-			//alert window to test 
-			window.alert("the student major is " + userName.major_id);
-
+			loadMajorWithId();
+			//setTimeout(loadOverLoadMajors(currentMajor), 5000);
 			//loadCourses only and skip the rest (no major drop down list anymore)
-			loadCourses();
+			//loadCourses();
+			//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
 		}
 		//else they haven't signed up for a major so they need to do that. 
 		else
 		{
 			loadMajors(); //load the majors from the database
-    	document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
-    	setTimeout(patchCompletedCourses,2000);
+    		document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
+    		setTimeout(patchCompletedCourses,2000);
 		}
 }
 
@@ -214,9 +193,20 @@ function loadMajors()
                 {
                     //Parse into JSON
                     const majors = jQuery.parseJSON(xmlhttp.responseText);
+                    //const currentMajor = jQuery.parseJSON(majorStuff);
                     
-                    //Template Literal to Add all Majors into HTML Dynamically
+                    //if the user has a major assigned, add the major to the option menu, and then load the majors in the dropdown
+                    if(userName.major_id != "null")
+                    {
+						document.getElementById('combo').innerHTML = `<option value='nah'>${majorStuff} - ${majorStuff}</option>${majors.map(majorTemplate)}`;
+					}
+					//else the major isn't loaded, so give the option for select major
+					else
+					{
+						//Template Literal to Add all Majors into HTML Dynamically
                     document.getElementById('combo').innerHTML = `<option value='nah'>Select a Major</option>${majors.map(majorTemplate)}`;
+					}
+                        
                 }
             };
             
@@ -225,6 +215,76 @@ function loadMajors()
             
             //Send API Call
             xmlhttp.send();
+}
+
+//Load Drop Down ComboBox with a List of Majors
+function loadOverLoadMajors(majorName) 
+{
+            //Make a new API Request
+            xmlhttp = new XMLHttpRequest();
+            
+            //Get Status
+            xmlhttp.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status==200) 
+                {
+                    //Parse into JSON
+                    const majors = jQuery.parseJSON(xmlhttp.responseText);
+           
+					document.getElementById('combo').innerHTML = `<option value='nah'>${majorName}</option>${majors.map(majorTemplate)}`;
+					
+					document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+					setTimeout(loadCourses(), 1000);
+                }
+            };
+            
+            //Create API Call
+            xmlhttp.open("GET", '/majors');
+            
+            //Send API Call
+            xmlhttp.send();
+}
+
+
+//LoadMajorWithId load the major given the user major_id
+function loadMajorWithId()
+{
+		   //Make a new API Request
+           var xhr = new XMLHttpRequest();
+            
+            //Get Status
+            xhr.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status==200) 
+                {
+                    //Parse into JSON
+                    const majorStuff = jQuery.parseJSON(xhr.responseText);
+                    
+                    //Assign GLobal Variable Value
+                    var currentMajor = `Your Current Major is ${majorStuff.major_id} - ${majorStuff.major}`;
+                    
+                    //setTimeout(loadCourses(), 3000);
+                    setTimeout(loadOverLoadMajors(currentMajor),500);
+                    //loadCourses();
+					//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
+                    
+                    //window.alert("The user's major is : " + majorStuff.major);
+                    
+                    //window.alert("The user's major is : " + majorStuff.major);
+                    
+                    //Template Literal to Add all Majors into HTML Dynamically
+                    //document.getElementById('combo').innerHTML = `<option value='nah'>${majorStuff.major_id} - ${majorStuff.major}</option>$`;
+                }
+            };
+            
+            
+            //Create API Call
+            xhr.open("GET", '/majors/' + userName.major_id);
+            
+            //Send API Call
+            xhr.send();
 }
 
 //Load Table with Required Courses
@@ -244,8 +304,10 @@ function loadCourses()
                     
                     //test if user selected a REAL major
                     if (majorId != "nah")
+                    //if (true)
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
+						//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
                     	document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
                     	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Selection</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
@@ -259,7 +321,7 @@ function loadCourses()
 					//Clear Table from Page
 					else
 					{
-						document.getElementById('courses').innerHTML = "";
+						//document.getElementById('courses').innerHTML = "";
 					}
                 }
             };
