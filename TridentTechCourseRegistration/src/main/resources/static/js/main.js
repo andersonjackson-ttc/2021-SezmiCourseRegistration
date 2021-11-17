@@ -4,8 +4,8 @@ var xmlhttp;
 var majorId;
 var userEmail = "";
 var userName = "";
-var checkbox;
-var checkboxSelection;
+//var checkbox;
+//var checkboxSelection;
 const courseListArray = new Array();
 var student_id = "";
 
@@ -93,7 +93,7 @@ function init()
 				}*/
 			}
 			
-		xmlhttp.open("PATCH", "/students/" + student_id + "/" +checkboxSelection, true);
+		xmlhttp.open("PATCH", "/students/" + student_id + "/" + checkboxSelection, true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
@@ -512,12 +512,12 @@ function setCourseSelection()
 		
 		//var checkboxArray = [];
 		
-        checkbox = document.querySelector('input[type="radio"]:checked');
+        var checkbox = document.querySelector('input[type="radio"]:checked');
         //const checkboxArray = document.querySelectorAll("td[value]");
         /*for (var i= 0; i < checkbox.length; i++){
 			checkboxArray.push(checkbox[i].value)
 		}*/
-        checkboxSelection = checkbox.value;
+        var checkboxSelection = checkbox.value;
 	    //checkboxSelection = checkbox.parentElement.textContent;
         //alert(checkboxSelection);
         patchCompletedCourses(checkboxSelection);
@@ -532,12 +532,12 @@ function setSectionSelection()
 		
 		//var checkboxArray = [];
 		
-        checkbox = document.querySelector('input[type="radio"]:checked');
+        var checkbox = document.querySelector('input[type="radio"]:checked');
         //const checkboxArray = document.querySelectorAll("td[value]");
         /*for (var i= 0; i < checkbox.length; i++){
 			checkboxArray.push(checkbox[i].value)
 		}*/
-        checkboxSelection = checkbox.value;
+        var checkboxSelection = checkbox.value;
 	    //checkboxSelection = checkbox.parentElement.textContent;
         //alert(checkboxSelection);
         patchSectionSelection(checkboxSelection);
