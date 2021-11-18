@@ -171,7 +171,12 @@ public class Student{
 	public void addSectionSelection(Section sectionChosen) {
 		sectionSelection.add(sectionChosen);
 	}
-	
+	public Set<Section> getSectionsChosen() {
+		return sectionSelection;
+	}
+	public void setSectionSelection(Set<Section> sectionSelection) {
+		this.sectionSelection = sectionSelection;
+	}
 	
 }
 

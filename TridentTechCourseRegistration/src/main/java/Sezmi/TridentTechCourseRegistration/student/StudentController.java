@@ -71,6 +71,21 @@ public class StudentController {
 		
 	}
 	
+	//getChosenSections returns the list of sections the student has chosen
+		@GetMapping("/student/{email}/sections")
+		public ResponseEntity<Set<Section>> getChosenSections (@PathVariable String email)
+		{
+			try {
+				Student bueller = service.getEmail(email);
+				
+				TreeSet<Section>sectionsChosen =new TreeSet<Section>(bueller.getSectionsChosen());
+				return new ResponseEntity<Set<Section>>(sectionsChosen, HttpStatus.OK);
+			} catch (NoSuchElementException e) {
+				return new ResponseEntity<Set<Section>>(HttpStatus.NOT_FOUND);
+			}
+			
+		}
+	
 	//GetStudentEmailMajor returns only the student's email and major
 	@GetMapping("/student/{email}/major")
 	public ResponseEntity<StudentEmailMajor> getStudentEmailMajoResponseEntity (@PathVariable String email)

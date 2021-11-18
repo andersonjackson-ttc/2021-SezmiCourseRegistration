@@ -559,28 +559,46 @@ function loadSections()
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
 {
+alert("you are in loadChosen Sections")	
+//document.getElementById('sections').innerHTML = ("white");
 	xmlhttp = new XMLHttpRequest();
 	
 	xmlhttp.onreadystatechange = function()
 	{
 		if (this.readyState == 4 && this.status==200) 
-                {
-					words = "<tr><th>Chosen Sections</th></tr>";
-                    //Parse into JSON
-                    const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
-                    for (i=0;i<chosenSections.length ;i++)
+		
+		/*for (i=0;i<completedCourses.length ;i++)
                     {
 						if (i>0)
 							{
 								words += `<br>`;
 							}
-							words += `<tr><td>${chosenSections[i].availableSections[z].section_id}, ${chosenSections[i].availableSections[z].term}</tr></td>`
+							words += `<tr><td>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
+							if (i == completedCourses.length -1)
+							{
+								words += "</tr></td>";
+							}
+					}*/
+                {
+					words = "<tr><th>Chosen Sections</th></tr>";
+                    //Parse into JSON
+                    const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
+                   for (i=0;i<chosenSections.length ;i++)
+                    {
+						if (i>0)
+							{
+								words += `<br>`;
+							}
+							words += `<tr><td>${chosenSections[i].course_id}, ${chosenSections[i].course_name}</tr></td>`
 							if (i == chosenSections.length -1)
+							/*words += `<tr><td>${chosenSections[i].availableSections[z].section_id}, ${chosenSections[i].availableSections[z].term}</tr></td>`
+							if (i == chosenSections.length -1)*/
 							{
 								words += "</tr></td>";
 							}
 					}
-					document.getElementById('sections').innerHTML = words.fontcolor("white");
+					//document.getElementById('sezmiFooter').innerHTML = words.fontcolor("white");
+					
 					
                 }
             };
