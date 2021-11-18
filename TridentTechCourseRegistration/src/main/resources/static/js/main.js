@@ -450,7 +450,7 @@ function loadCompletedCourses()
             //Send API Call
             xmlhttp.send();
 }
-//Loads sections from the student_section table that student has chosen
+//Loads all sections for student to choose from
 function loadSections()
 {
 	xmlhttp = new XMLHttpRequest();
@@ -559,52 +559,36 @@ function loadSections()
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
 {
-alert("you are in loadChosen Sections")	
-//document.getElementById('sections').innerHTML = ("white");
 	xmlhttp = new XMLHttpRequest();
 	
 	xmlhttp.onreadystatechange = function()
 	{
 		if (this.readyState == 4 && this.status==200) 
-		
-		/*for (i=0;i<completedCourses.length ;i++)
-                    {
-						if (i>0)
-							{
-								words += `<br>`;
-							}
-							words += `<tr><td>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
-							if (i == completedCourses.length -1)
-							{
-								words += "</tr></td>";
-							}
-					}*/
-                {
-					words = "<tr><th>Chosen Sections</th></tr>";
-                    //Parse into JSON
+		    {
+					sectionTableInfo = "<tr><th>Chosen Sections</th></tr>";
+				   //Parse into JSON
                     const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
                    for (i=0;i<chosenSections.length ;i++)
                     {
 						if (i>0)
 							{
-								words += `<br>`;
+								sectionTableInfo += `<br>`;
 							}
-							words += `<tr><td>${chosenSections[i].course_id}, ${chosenSections[i].course_name}</tr></td>`
+							sectionTableInfo += `<tr><td>${chosenSections[i].section_id}   ||   ${chosenSections[i].course_format}   ||   ${chosenSections[i].term}   ||   ${chosenSections[i].remaining_spaces}   ||   ${chosenSections[i].schedule}   ||   ${chosenSections[i].duration}   ||   ${chosenSections[i].time}   ||   ${chosenSections[i].instructor_id}</tr></td>`
 							if (i == chosenSections.length -1)
-							/*words += `<tr><td>${chosenSections[i].availableSections[z].section_id}, ${chosenSections[i].availableSections[z].term}</tr></td>`
-							if (i == chosenSections.length -1)*/
+							
 							{
-								words += "</tr></td>";
+								sectionTableInfo += "</tr></td>";
 							}
 					}
-					//document.getElementById('sezmiFooter').innerHTML = words.fontcolor("white");
+					document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
 					
 					
                 }
             };
             
             //Create API Call
-            xmlhttp.open("GET", '/student/' + userEmail.user + '/courses');
+            xmlhttp.open("GET", '/student/' + userEmail.user + '/sections');
             
             //Send API Call
             xmlhttp.send();
