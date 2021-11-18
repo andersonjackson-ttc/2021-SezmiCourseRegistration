@@ -359,6 +359,7 @@ function loadCourses()
 						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
+						
 					}
 					//Clear Table from Page
 					else
@@ -555,6 +556,8 @@ function loadSections()
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
             document.getElementById('completedBtn').addEventListener('click', setSectionSelection, false);
+            document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn">Courses Needed</button>'
+        	document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 }
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
@@ -629,6 +632,7 @@ function setCourseSelection()
         patchCompletedCourses(checkboxSelection);
         //postCourses();
         loadCourses();
+       
         
         //document.getElementById("completedBtn").style.display = "none";
     }

@@ -113,24 +113,23 @@ footer
         bottom: 0px;
 }
 
-div.ui-page #navbar{
-	position: fixed;
-	z-index:99999
-}
+ div.ui-page #buttons
+ {
+	padding-top: 70px;
+	z-index: 5;
+	margin-right: 0px;
+	padding-right: 0px;
+}  
 
-#completedBtn, #btnSection, #btnCompletedCourses,#btnChosenSections{
-	border-radius: 5px;
-	font-size: 15px;
-	float: right;
-}
 
-div.ui-page #logoutBtn, #completedBtn, #btnSection, #btnCompletedCourses,#btnChosenSections{
+
+div.ui-page #logoutBtn{
 	float: right;
 	max-width: 89px;
-    max-height: 38px;
+    min-height: 38px;
     text-align: center;
     font-size: 10px;
-    z-index: 100000;
+    /*z-index: 99999;*/
 }
 
 @media screen and (min-width: 900px)
@@ -238,7 +237,7 @@ div.ui-page #logoutBtn, #completedBtn, #btnSection, #btnCompletedCourses,#btnCho
     
     table:hover
     {
-		cursor:all-scroll;
+		cursor:pointer;
 	}
 
     th
