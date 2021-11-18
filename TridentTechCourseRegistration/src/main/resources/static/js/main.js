@@ -574,7 +574,7 @@ function loadChosenSections()
 							{
 								sectionTableInfo += `<br>`;
 							}
-							sectionTableInfo += `<tr><td>${chosenSections[i].section_id}   ||   ${chosenSections[i].course_format}   ||   ${chosenSections[i].term}   ||   ${chosenSections[i].remaining_spaces}   ||   ${chosenSections[i].schedule}   ||   ${chosenSections[i].duration}   ||   ${chosenSections[i].time}   ||   ${chosenSections[i].instructor_id}</tr></td>`
+							sectionTableInfo += `<tr><td><pre>${chosenSections[i].section_id}   ||   ${chosenSections[i].course_format}   ||   ${chosenSections[i].term}   ||   ${chosenSections[i].remaining_spaces}   ||   ${chosenSections[i].schedule}   ||   ${chosenSections[i].duration}   ||   ${chosenSections[i].time}   ||   ${chosenSections[i].instructor_id}</tr></td>`
 							if (i == chosenSections.length -1)
 							
 							{
