@@ -68,7 +68,8 @@ function init()
         	{
 				if(true)
 				{
-					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+					//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+					setTimeout(loadSection(), 2000);
 				}
 			}
 			
@@ -592,7 +593,7 @@ function loadChosenSections()
                     const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
                     
                     //Header Info for All Selected Chosen Sections
-                  	sectionTableInfo += `<tr><td><b><pre>Section ID       || Type    || Term            || Seats || Days    ||       Dates              ||      Times          || Instructor </b></td></tr>`	
+                  	sectionTableInfo += `<tr><td><b><pre>  Section ID     ||   Type  || Term            || Seats || Days    ||       Dates              ||      Times          || Instructor </b></td></tr>`	
                    for (i=0;i<chosenSections.length ;i++)
                     {
 						if (i>0)
@@ -673,7 +674,7 @@ function setSectionSelection()
 	    //checkboxSelection = checkbox.parentElement.textContent;
         //alert(checkboxSelection);
         patchSectionSelection(checkboxSelection);
-        loadSections();
+        //setTimout(loadSections();
         
         //document.getElementById("completedBtn").style.display = "none";
     }
