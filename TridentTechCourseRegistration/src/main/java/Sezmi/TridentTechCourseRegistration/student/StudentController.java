@@ -166,8 +166,8 @@ public class StudentController {
 	  //save the student object 
 	  service.save(student); 
 	  
-	  //add the corresponding course to the courses taken for the student
-	  addCourseTaken(id, section.getCourse_id());
+	  //add the corresponding course to the courses taken for the student								Removed by Jeremy 11/23/21 since we don't want it to add a course when you add the section
+	  //addCourseTaken(id, section.getCourse_id());
 	  
 	  //return the student http status
 	  return new ResponseEntity<Student>(HttpStatus.OK);
