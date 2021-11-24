@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.section.Section;
 
 
 @Entity
@@ -43,16 +44,27 @@ public class Student{
 	@Column(nullable = false, length = 25)
 	private String major_id;
 
-	@Column(nullable = false, length = 999)
-	private String completed_courses;
+	//@Column(nullable = false, length = 999)
+	//private String completed_courses;
 
-	//declare a ManyToMany set so that courses can be assigned to the student. 
-	@ManyToMany
-	@JoinTable(
-			name = "student_course",
-			joinColumns = @JoinColumn(name = "id"),
-			inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private Set<Course> coursesTaken = new HashSet<Course>();
+	
+	  //declare a ManyToMany set so that courses can be assigned to the student.
+	  
+	  @ManyToMany
+	  
+	  @JoinTable( name = "student_course", joinColumns = @JoinColumn(name = "id"),
+	  inverseJoinColumns = @JoinColumn(name = "course_id")) private Set<Course>
+	  coursesTaken = new HashSet<Course>();
+	  
+	  //declare a ManyToMany set so that section can be assigned to the student.
+		
+		  @ManyToMany
+		  
+		  @JoinTable( name = "student_section", joinColumns = @JoinColumn(name = "id"),
+		  inverseJoinColumns = @JoinColumn(name = "section_id")) private Set<Section>
+		  sectionSelection = new HashSet<Section>();
+		 
+	 
 
 	public Student() {
 
@@ -66,7 +78,7 @@ public class Student{
 		this.salt = salt;
 		this.password = password;
 		this.major_id = major_id;
-		this.completed_courses = completed_courses;
+		//this.completed_courses = completed_courses;
 	}
 
 	/*	
@@ -134,13 +146,13 @@ public class Student{
 		this.major_id = major_id;
 	}
 
-	public String getCompleted_courses() {
+	/*public String getCompleted_courses() {
 		return completed_courses;
-	}
+	}*/
 
-	public void setCompleted_courses(String completed_courses) {
+	/*public void setCompleted_courses(String completed_courses) {
 		this.completed_courses = completed_courses;
-	}  
+	}  */
 
 	public void addCompletedCourse(Course completed_course)
 	{	
@@ -156,6 +168,15 @@ public class Student{
 		this.coursesTaken = coursesTaken;
 	}
 	
+	public void addSectionSelection(Section sectionChosen) {
+		sectionSelection.add(sectionChosen);
+	}
+	public Set<Section> getSectionsChosen() {
+		return sectionSelection;
+	}
+	public void setSectionSelection(Set<Section> sectionSelection) {
+		this.sectionSelection = sectionSelection;
+	}
 	
 }
 

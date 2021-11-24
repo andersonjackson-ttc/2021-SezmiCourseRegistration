@@ -37,12 +37,6 @@ public class CourseService
 		return repository.findById(courseID).get();
 	}
 	
-	/*the getSectionsOnly returns a CourseIdSection that only has the id and sections
-	public CourseIdSection getSectionsOnly(String courseID)
-	{
-		return repository.findById(courseID);
-	}*/
-	
 	//the delete method removes a Course bean from the repository based upon its courseCode
 	public void delete(String courseID)
 	{

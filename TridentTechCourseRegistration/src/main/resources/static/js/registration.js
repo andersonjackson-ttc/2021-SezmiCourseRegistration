@@ -185,7 +185,7 @@ function postToDatabase()
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     //Send All Key Value Pairs to Database
     //xmlhttp.send(JSON.stringify({"email": "PUT", "last_name": "PUT", "first_name": "PUT", "salt": "PUT", "password": "PUT", "major_id": "PUT", "completed_courses": "PUT"}));
-    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "salt": salt, "password": hashPassword, "major_id": "null", "completed_courses": "ICE"}));
+    xmlhttp.send(JSON.stringify({"email": email.value, "last_name": lastName.value, "first_name": firstName.value, "salt": salt, "password": hashPassword, "major_id": "null"}));
 }
 
 //This is for you to reference ARIANA

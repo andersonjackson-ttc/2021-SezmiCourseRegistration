@@ -5,13 +5,15 @@
 package Sezmi.TridentTechCourseRegistration.course;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,7 +25,7 @@ import Sezmi.TridentTechCourseRegistration.section.Section;
 //the Course class creates course obj framework to be stored in the database. 
 @Entity
 @Table(name = "course")
-public class Course 
+public class Course implements Comparable<Course>
 {
 	//declare variables
 	//create the ID with the ID tag. I'm leaving out the @GeneratedValue tag since we are using a string for the PK. 
@@ -43,7 +45,8 @@ public class Course
 				name = "course_section",
 				joinColumns = @JoinColumn(name = "course_id"),
 				inverseJoinColumns = @JoinColumn(name = "section_id"))
-		private Set<Section> availableSections = new HashSet<Section>();
+		private List<Section> availableSections = new ArrayList<Section>();
+		
 
 	//declare a set for the pre-req courses needed for each course
 		@ManyToMany
@@ -94,11 +97,13 @@ public class Course
 	}
 
 	//auto generated setters/getters
-	public Set<Section> getAvailableSections() {
+	public List<Section> getAvailableSections()
+	{
+		Collections.sort(availableSections, (sectionOne, sectionTwo) -> sectionOne.getTerm().compareToIgnoreCase(sectionTwo.getTerm()));
 		return availableSections;
 	}
 
-	public void setAvailableSections(Set<Section> availableSections) {
+	public void setAvailableSections(List<Section> availableSections) {
 		this.availableSections = availableSections;
 	}
 
@@ -110,6 +115,13 @@ public class Course
 
 	public void setPreReqCourses(Set<Course> preReqCourses) {
 		this.preReqCourses = preReqCourses;
+	}
+
+
+	@Override
+	public int compareTo(Course o) {
+		int order = getCourse_id().compareToIgnoreCase(o.getCourse_id());// TODO Auto-generated method stub
+		return order;
 	}
 	
 	

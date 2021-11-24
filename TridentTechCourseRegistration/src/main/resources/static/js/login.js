@@ -62,7 +62,7 @@ function compareUser()
 				}
     			for (i=0; i < students.length; i++)
     			{
-					if ((students[i].email) == (inputEmail) && inputEmail != "" && (students[i].password) == (md5(students[i].salt + password)) && password != "")
+					if ((students[i].email.toUpperCase()) == (inputEmail.toUpperCase()) && inputEmail != "" && (students[i].password) == (md5(students[i].salt + password)) && password != "")
     				{
 						isThisTrue = true;
 					}

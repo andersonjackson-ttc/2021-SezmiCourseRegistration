@@ -1,6 +1,5 @@
 package Sezmi.TridentTechCourseRegistration.section;
 
-import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import Sezmi.TridentTechCourseRegistration.course.Course;
-import Sezmi.TridentTechCourseRegistration.major.Major;
-import Sezmi.TridentTechCourseRegistration.student.Student;
-
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @RestController
 public class SectionController 
@@ -76,9 +70,5 @@ public class SectionController
 	{
 		service.delete(sectionID);
 	}
-
-
-
-
 
 }//end SectionController
