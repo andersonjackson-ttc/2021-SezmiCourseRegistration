@@ -335,6 +335,9 @@ function loadCourses()
 {
             //Make a new API Request
             xmlhttp = new XMLHttpRequest();
+            //Make 2nd API Request for Boolean value to check Pre Req status
+           //xmlhttp2 = new XMLHttpRequest();
+            
             
             //Get Status
              xmlhttp.onreadystatechange = function() 
@@ -344,9 +347,11 @@ function loadCourses()
                 {
                     //Parse into JSON
                     const courses = jQuery.parseJSON(xmlhttp.responseText);
+                    //const preReqStatus = jQuery.parseJSON(xmlhttp2.responseText);
+                    //Need to loop through courses and remove if pre-req value is false
                     
                     //test if user selected a REAL major
-                    if (majorId != "nah")
+                                        if (majorId != "nah")
                     //if (true)
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
@@ -377,6 +382,14 @@ function loadCourses()
             
             //Send API Call
             xmlhttp.send();
+            
+             //Create 2nd API Call to get boolean value for Pre Req Status	-PLEASE DONT DELETE!										
+            //xmlhttp2.open("GET", '/student/{id}/{course_id}/course_prereq');
+            
+           //xmlhttp2.setRequestHeader("Content-Type", "application/json"); 
+            
+            //Send 2nd API Call
+            //http.send();
 }
 
 //getStudentMajor returns a String with the student major from the database

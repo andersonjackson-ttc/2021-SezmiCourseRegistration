@@ -54,7 +54,37 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
+	//compare courses taken (<Student> getCoursesTaken) with set of pre reqs for that course from
+		//course_prereq table (<Course> getPreReqCourses) Returns true if pre reqs met for given course
+		@GetMapping("/student/{id}/{course_id}/course_prereq")
+		public ResponseEntity<Boolean> getPreReqStatus (@PathVariable Long id,@PathVariable String course_id)
+		{
+			
+			
+			try {
+				Boolean preReqStatus=false;
+				Student student = service.get(id);
+				//get the course completed by its course_id
+				Course courseID = courseService.get(course_id);
+				Set<Course> studentCoursesTaken = student.getCoursesTaken();
+				Set<Course>preReqsNeeded = courseID.getPreReqCourses();
+				
+				//compare the courses the student has taken to the PreReqs Needed for
+				//a given course
+				for(Course course : preReqsNeeded)
+				{
+					if(!studentCoursesTaken.contains(course) || !course.getPreReqCourses().isEmpty())
+					{
+						preReqStatus=false;
+					}
+				}
+				preReqStatus=true;
+				
+				return new ResponseEntity<Boolean>(preReqStatus, HttpStatus.OK);
+			}catch(NoSuchElementException e){
+				return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+			}
+		}
 	
 	//getStudentCourses returns the list of courses the student has taken
 	@GetMapping("/student/{email}/courses")
