@@ -57,32 +57,60 @@ public class StudentController {
 	//compare courses taken (<Student> getCoursesTaken) with set of pre reqs for that course from
 		//course_prereq table (<Course> getPreReqCourses) Returns true if pre reqs met for given course
 		@GetMapping("/student/{id}/{course_id}/course_prereq")
-		public ResponseEntity<Boolean> getPreReqStatus (@PathVariable Long id,@PathVariable String course_id)
+		public ResponseEntity<String> getPreReqStatus (@PathVariable Long id,@PathVariable String course_id)
+		//public ResponseEntity<Set<Course>> getPreReqStatus (@PathVariable Long id,@PathVariable String course_id)
 		{
 			
 			
 			try {
-				Boolean preReqStatus=false;
+				String tellMeString = "";
+				//Boolean preReqStatus=false;
+				String preReqStatus = "false";
 				Student student = service.get(id);
 				//get the course completed by its course_id
 				Course courseID = courseService.get(course_id);
 				Set<Course> studentCoursesTaken = student.getCoursesTaken();
-				Set<Course>preReqsNeeded = courseID.getPreReqCourses();
+				Set<Course>preReqsNeeded = new TreeSet<Course>(courseID.getPreReqCourses());
 				
 				//compare the courses the student has taken to the PreReqs Needed for
 				//a given course
-				for(Course course : preReqsNeeded)
+				if(preReqsNeeded.isEmpty())
 				{
-					if(!studentCoursesTaken.contains(course) || !course.getPreReqCourses().isEmpty())
-					{
-						preReqStatus=false;
-					}
+					//preReqStatus = true;
+					tellMeString = "THIS COURSE HAS NO PRE-REQS";
 				}
-				preReqStatus=true;
+				else {
+					for(Course course : preReqsNeeded)
+					{
+						/*if(studentCoursesTaken.contains(course))
+						{
+							//preReqStatus = true;
+							tellMeString = "Student has Taken one of the Pre-Reqs";
+						}*/
+						
+						
+						
+						
+						if(!studentCoursesTaken.contains(course))
+						{
+							preReqStatus="false";
+						}
+						else 
+						{
+							preReqStatus="true";
+						}
+							
+											
+					}
+					
+				}
 				
-				return new ResponseEntity<Boolean>(preReqStatus, HttpStatus.OK);
+				
+				//return new ResponseEntity<Set<Course>>(preReqsNeeded, HttpStatus.OK);
+				return new ResponseEntity<String>(preReqStatus, HttpStatus.OK);
 			}catch(NoSuchElementException e){
-				return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+				//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 			}
 		}
 	

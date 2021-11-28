@@ -5,6 +5,8 @@ var majorId;
 var userEmail = "";
 var userName = "";
 var student_id = "";
+var coursesList = `<tr><th>Select Completed Courses</th></tr>`;
+//var preReqStatus;
 
 //Activate Event Listeners on Page Load
 window.onload = function()
@@ -68,8 +70,7 @@ function init()
         	{
 				if(true)
 				{
-					//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
-					setTimeout(loadSection(), 2000);
+					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
 				}
 			}
 			
@@ -95,7 +96,7 @@ function getUserName()
             //Store Returned JSON String in Global Variable
             userName = jQuery.parseJSON(x.responseText);
             student_id = userName.id;
-            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
+            //document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
           }   
           
           //alert("This should happen last " + userName.major_id); //this is where we can get the major id
@@ -168,8 +169,52 @@ function majorTemplate(major)
 //Template Literal to Return Course Name
 function courseTemplate(course) 
 {
-	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${course.course_id} - ${course.course_name}</td></tr>`;
+	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${course.course_id} - ${course.course_name}</td></tr>`;
+	//getPreReqStatus();
+	//setPreReqStatus();
+	//setTimeout(doNothing, 1000);
+	/*if (getPreReqStatus() == "true")
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}
+	else
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}*/
 }
+
+function courseTemplateIfFalse(course) 
+{
+	//getPreReqStatus();
+	//setPreReqStatus();
+	//setTimeout(doNothing, 1000);
+	/*if (getPreReqStatus() == "true")
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}
+	else
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}*/
+	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${course.course_id} - ${course.course_name}</td></tr>`
+}
+
+function doNothing()
+{
+	;
+}
+function setPreReqStatus()
+{
+	if (preReqStatus == "true")
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}
+	else
+	{
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+	}
+}
+
 
 function sectionTemplate(course)
 {
@@ -335,9 +380,6 @@ function loadCourses()
 {
             //Make a new API Request
             xmlhttp = new XMLHttpRequest();
-            //Make 2nd API Request for Boolean value to check Pre Req status
-           //xmlhttp2 = new XMLHttpRequest();
-            
             
             //Get Status
              xmlhttp.onreadystatechange = function() 
@@ -347,16 +389,31 @@ function loadCourses()
                 {
                     //Parse into JSON
                     const courses = jQuery.parseJSON(xmlhttp.responseText);
-                    //const preReqStatus = jQuery.parseJSON(xmlhttp2.responseText);
-                    //Need to loop through courses and remove if pre-req value is false
                     
                     //test if user selected a REAL major
-                                        if (majorId != "nah")
+                    if (majorId != "nah")
                     //if (true)
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
 						//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
-                    	document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
+						for (i=0;i<4;i++)
+						{
+							getPreReqStatus(courses);
+						}
+						//getPreReqStatus(courses);
+						//let frank = getPreReqStatus();
+						//document.getElementById('sezmiFooter').innerHTML = (frank).fontcolor("black").fontsize(2.1);
+						//slowSetOfPreReq();
+                    	/*if (preReqStatus == true)
+                    	{
+							document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
+						}
+						else
+						{
+							document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplateIfFalse).join('')}`
+						}*/
+                    	//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
+                    	document.getElementById('courses').innerHTML = coursesList;
                     	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Selection</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
@@ -365,7 +422,6 @@ function loadCourses()
 						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
-						
 					}
 					//Clear Table from Page
 					else
@@ -382,14 +438,10 @@ function loadCourses()
             
             //Send API Call
             xmlhttp.send();
-            
-             //Create 2nd API Call to get boolean value for Pre Req Status	-PLEASE DONT DELETE!										
-            //xmlhttp2.open("GET", '/student/{id}/{course_id}/course_prereq');
-            
-           //xmlhttp2.setRequestHeader("Content-Type", "application/json"); 
-            
-            //Send 2nd API Call
-            //http.send();
+}
+function returnTest()
+{
+	return "hi billy";
 }
 
 //getStudentMajor returns a String with the student major from the database
@@ -485,9 +537,7 @@ function loadSections()
 						//words +=`Course ID of ${courseSection[i].course_id}: `;
 						words += `<tr><td><a id="openUp"><style="red>${courseSection[i].course_id} - ${courseSection[i].course_name}</a></td></tr><tr><td>`;
 						//document.getElementById("openUp").addEventListener('click',alert("hi"), false);
-						
-						//Header for Sections within Each Course
-						words += `<b><pre>   Section ID     || Type|| Term          || RS || Days   ||       Dates          ||      Times      || Instructor </b>`					
+					
 						for (z=0;z<courseSection[i].availableSections.length;z++)
 						{
 							if (z>0)
@@ -499,29 +549,13 @@ function loadSections()
 							{
 								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
 								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH")
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										if((courseSection[i].availableSections[z].time).length == 15)
-										{
-											words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										else
-										{
-											words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || TBD               || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										if((courseSection[i].availableSections[z].time).length == 15)
-										{
-											words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} ||   N/A  || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										else
-										{
-											words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || TBD               || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 									
@@ -529,13 +563,13 @@ function loadSections()
 			
 								else
 								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH")
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
 										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  ||   N/A  || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
@@ -545,25 +579,25 @@ function loadSections()
 							{
 								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
 								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH")
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
 										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} ||   N/A  || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
 								else
 								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH")
+									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
 										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  ||   N/A  || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 								}
 								
@@ -588,8 +622,6 @@ function loadSections()
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
             document.getElementById('completedBtn').addEventListener('click', setSectionSelection, false);
-            document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn">Courses Needed</button>'
-        	document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 }
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
@@ -601,12 +633,8 @@ function loadChosenSections()
 		if (this.readyState == 4 && this.status==200) 
 		    {
 					sectionTableInfo = "<tr><th>Chosen Sections</th></tr>";
-				   	
-				   	//Parse into JSON
+				   //Parse into JSON
                     const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
-                    
-                    //Header Info for All Selected Chosen Sections
-                  	sectionTableInfo += `<tr><td><b><pre>  Section ID     ||   Type  || Term            || Seats || Days    ||       Dates              ||      Times          || Instructor </b></td></tr>`	
                    for (i=0;i<chosenSections.length ;i++)
                     {
 						if (i>0)
@@ -668,7 +696,6 @@ function setCourseSelection()
         patchCompletedCourses(checkboxSelection);
         //postCourses();
         loadCourses();
-       
         
         //document.getElementById("completedBtn").style.display = "none";
     }
@@ -687,7 +714,7 @@ function setSectionSelection()
 	    //checkboxSelection = checkbox.parentElement.textContent;
         //alert(checkboxSelection);
         patchSectionSelection(checkboxSelection);
-        //setTimout(loadSections();
+        loadSections();
         
         //document.getElementById("completedBtn").style.display = "none";
     }
@@ -788,4 +815,51 @@ function newCourseTemplate(major_requirements)
 		return output;
 	}
 
+}
+
+function getPreReqStatus(courses)
+{
+//Make API Request for Boolean value to check Pre Req status
+			var preReqStatus;
+			//var coursesList = `<tr><th>Select Completed Courses</th></tr>`;
+           	var tOrF = new XMLHttpRequest();
+           	//Get Status
+             tOrF.onreadystatechange = function() 
+             {
+					//window.alert("Sup Dog");
+                    //document.getElementById('sezmiFooter').innerHTML="test";
+                //Check if Status is Ready
+                if (true) 
+                {
+                    //Parse into JSON
+                    preReqStatus = tOrF.responseText;
+                    document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("black").fontsize(2.1);
+                    
+                    if (true)
+                    {
+						//document.getElementById('sezmiFooter').innerHTML = (`${courses[i].course_id}`).fontcolor("black").fontsize(2.1);
+						//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
+						coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />TRUE-${preReqStatus}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
+					}
+					else if(preReqStatus == "false")
+					{
+						//document.getElementById('sezmiFooter').innerHTML = (`${courses[i].course_id}`).fontcolor("black").fontsize(2.1);
+						//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplateIfFalse).join('')}`
+						coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />FALSE-${preReqStatus}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
+					}
+                    //preReqStatus = "hi billy";
+                    //document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("black").fontsize(2.1);
+                    //document.getElementById('courses').innerHTML = coursesList;
+                }
+             }
+                 
+                //Create API Call to get boolean value for Pre Req Status	-PLEASE DONT DELETE!										
+            
+           		tOrF.open("GET", '/student/' + student_id + '/' + courses[3].course_id + '/course_prereq');
+            
+                tOrF.setRequestHeader("Content-Type", "application/json"); 
+            
+            	//Send API Call
+            	tOrF.send();
+            	//return preReqStatus;
 }
