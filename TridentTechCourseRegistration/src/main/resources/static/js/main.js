@@ -169,7 +169,7 @@ function majorTemplate(major)
 //Template Literal to Return Course Name
 function courseTemplateAvailable(course) 
 {
-	coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${course.course_id} - ${course.course_name}</td></tr>`;
+	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id}/>${course.course_id} - ${course.course_name}</td></tr>`;
 	//getPreReqStatus();
 	//setPreReqStatus();
 	//setTimeout(doNothing, 1000);
@@ -197,7 +197,7 @@ function courseTemplateUnavailable(course)
 		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
 	}*/
 	//return `<tr><td>Pre Req Not Met: ${course.course_id} - ${course.course_name}</td></tr>`
-	coursesList += `<tr><td>Pre Req Not Met: ${course.course_id} - ${course.course_name}</td></tr>`;
+	return `<tr><td>Pre Req Not Met: ${course.course_id} - ${course.course_name}</td></tr>`;
 }
 
 function doNothing()
@@ -395,14 +395,19 @@ function loadCourses()
                     if (majorId != "nah")
                     //if (true)
                     {
-						//create the course list
-					coursesList = "<tr><th>Courses Needed</th></tr>";
+	
+						//create the course list. This will be appended in each pre-req method
+						coursesList = "<tr><th>Courses Needed</th></tr>";
+						
 						//call function to display courses with pre reqs met
-						//displayCoursesWithPreReqMet();
+						displayCoursesWithPreReqMet();
 						//call function to display courses with pre reqs not met
+						
+						window.alert("does pausing fix the issue?");
+						
 						displayCoursesWithPreReqNotMet();
-						window.alert(coursesList + "final list");
-					
+						
+					window.alert("does pausing fix the issue?");
 						
 						//Generate Table of Eligible courses dynamically into HTML page
 						//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
@@ -465,9 +470,11 @@ function displayCoursesWithPreReqMet()
                 {
                     //Parse into JSON
                     const coursesWithPreReqMet = jQuery.parseJSON(xmlhttp.responseText);
-                    document.getElementById('courses').innerHTML = `<tr><th>Courses</th></tr>${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`
+                    //document.getElementById('courses').innerHTML = `<tr><th>Courses</th></tr>${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`
                     //coursesList += courseTemplateAvailable(coursesWithPreReqMet);
-                   //window.alert("Pre req met displaying");
+                   
+                   
+                   coursesList += `${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`;
                     
                  }
                  
@@ -496,12 +503,12 @@ function displayCoursesWithPreReqNotMet()
                 //Check if Status is Ready
                 if (this.readyState == 4 && this.status==200) 
                 {
-					//declare header
-					courses += "<tr><th>Courses with Prereqs Needed</th></tr>";
+					//declare header by editing coursesList
+					coursesList += "<tr><th>Courses Without Prerequisites Met</th></tr>";
                     //Parse into JSON
                     const coursesWithPreReqNotMet = jQuery.parseJSON(xmlhttp.responseText);
-                    document.getElementById('courses').innerHTML = `${coursesWithPreReqNotMet.map(courseTemplateUnavailable).join('')}`
-                   
+                    //document.getElementById('courses').innerHTML = `${coursesWithPreReqNotMet.map(courseTemplateUnavailable).join('')}`
+                    coursesList += `${coursesWithPreReqNotMet.map(courseTemplateUnavailable).join('')}`
                    
                  }
              }

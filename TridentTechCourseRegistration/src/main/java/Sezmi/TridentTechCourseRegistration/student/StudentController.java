@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Sezmi.TridentTechCourseRegistration.course.Course;
+import Sezmi.TridentTechCourseRegistration.course.CourseNoSection;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
 import Sezmi.TridentTechCourseRegistration.major.Major;
 import Sezmi.TridentTechCourseRegistration.major.MajorService;
@@ -63,6 +64,7 @@ public class StudentController {
 	}
 
 	//getCoursesWithPrereqs returns the list of courses the student has prereqs for
+	//changed to return CourseNoSection to limit load times from server
 	@GetMapping("/student/{email}/course_prereq_true")
 	public ResponseEntity<TreeSet<Course>> getCoursesWithPrereqs(@PathVariable String email)
 	{
@@ -120,6 +122,11 @@ public class StudentController {
 				//if the prereq status is true after comparing ALL the courses in the coursePrereqs, add the course to the coursesWithPrereq
 				if(preReqStatus)
 				{
+					//this is ugly as sin, but assign values of majorCourse to CourseNoSection object
+					CourseNoSection courseNoSection;
+					
+					
+					
 					coursesWithPrereq.add(majorCourse);
 				}
 			}//end for loop cycling the list of courses the student has taken
