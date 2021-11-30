@@ -209,6 +209,80 @@ public class StudentController {
 			}
 
 		}//end getCoursesWithPrereq
+		
+		//getAllCourses
+		@GetMapping("/student/{email}/all_courses")
+		public ResponseEntity<TreeSet<Course>> getAllCourses(@PathVariable String email)
+		{
+			try 
+			{
+				//create a set of courses
+				TreeSet<Course> courseList = new TreeSet<Course>();
+
+				//get the student based on the id
+				Student student = service.getEmail(email);
+
+				//get the student's major based off of the major id
+				Major studentMajor = majorService.get(student.getMajor_id());
+
+				//get the list of courses within the student's major
+				Set<Course> majorCourses = studentMajor.getRequiredCourses();
+
+				//get the list of courses the student has 
+				Set<Course> coursesStudentTaken = student.getCoursesTaken();
+
+				//for each course in the major, compare the pre-reqs to the courses the student has taken
+				for(Course course : majorCourses)
+				{
+					//get the list of pre-reqs needed for the course
+					Set<Course> coursePrereqs = course.getPreReqCourses();
+
+					//define the preReqStatus as false until the list is cycled through
+					course.setRadioButton("");
+
+					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
+					if(coursePrereqs.isEmpty())
+					{
+						course.setRadioButton("input type='radio' name = 'radioBtn' ");
+						courseList.add(course);
+					}//end no pre-reqs, so the student can take it
+					//else there are courses needed, so we need to compare to the student's courses taken
+					else 
+					{
+						//compare the course pre-reqs of the single course to the courses the student has taken
+						for(Course prereq : coursePrereqs)
+						{
+							//if the student hasn't taken the course, the status is false
+							if(!coursesStudentTaken.contains(prereq))
+							{
+								course.setRadioButton("");
+								courseList.add(course);
+							}
+							//else the student has all the courses, so the status is true
+							else 
+							{
+								course.setRadioButton("input type='radio' name = 'radioBtn' ");
+								courseList.add(course);
+							}
+
+						}//end for loop cycling the list of pre-reqs needed for a course
+
+					}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
+
+					
+				}//end for loop cycling the list of courses the student has taken
+				
+				//return the list of courses from the major that the student has pre-reqs for
+				return new ResponseEntity<TreeSet<Course>>(courseList, HttpStatus.OK);
+
+			} 
+			catch (NoSuchElementException e) 
+			{
+				//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
+			}
+
+		}//end getAllCourses
 	
 
 

@@ -57,7 +57,7 @@ function init()
 			
 		xmlhttp.open("PATCH", "/student/" + student_id + "/"  + checkboxSelection, true);
 		
-		xmlhttp.setRequestHeader("Content-Type", "application/json"); //Jeremy added 11/4/21
+		xmlhttp.setRequestHeader("Content-Type", "application/json"); 
 		
 		xmlhttp.send();
 }
@@ -181,6 +181,12 @@ function courseTemplateAvailable(course)
 	{
 		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
 	}*/
+}
+
+//Template Literal to Return Course Name
+function realCourseTemplate(course) 
+{
+	return `<tr><td><${course.radioButton}value =${course.course_id}/>${course.course_id} - ${course.course_name}</td></tr>`;
 }
 
 function courseTemplateUnavailable(course) 
@@ -395,19 +401,26 @@ function loadCourses()
                     if (majorId != "nah")
                     //if (true)
                     {
-	
+						document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(realCourseTemplate).join('')}`
 						//create the course list. This will be appended in each pre-req method
-						coursesList = "<tr><th>Courses Needed</th></tr>";
+						//coursesList = "<tr><th>Courses Needed</th></tr>";
+						
+						//displayAllCourses();
+						
+						
+						
 						
 						//call function to display courses with pre reqs met
-						displayCoursesWithPreReqMet();
+						//displayCoursesWithPreReqMet();
 						//call function to display courses with pre reqs not met
 						
-						window.alert("does pausing fix the issue?");
+						//having a window alert fixes the load errors
+						//window.alert("does pausing fix the issue?");
 						
-						displayCoursesWithPreReqNotMet();
+						//displayCoursesWithPreReqNotMet();
 						
-					window.alert("does pausing fix the issue?");
+					//window.alert("does pausing fix the issue?");
+						
 						
 						//Generate Table of Eligible courses dynamically into HTML page
 						//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
@@ -429,7 +442,7 @@ function loadCourses()
 							document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplateIfFalse).join('')}`
 						}*/
                     	//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-                    	document.getElementById('courses').innerHTML = coursesList;
+                    	//document.getElementById('courses').innerHTML = coursesList;
                     	
                     	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Selection</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
@@ -449,13 +462,49 @@ function loadCourses()
             };
             
             //Create API Call 											//this might be the culprit 11/4/2021
-            xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
+            //xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
+            xmlhttp.open("GET", '/student/' + userEmail.user + '/all_courses');
             
             xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
             
             //Send API Call
             xmlhttp.send();
 }
+//Function to print to table set of courses with pre-reqs met
+function displayAllCourses()
+{
+	  //Make a new API Request
+            xhr = new XMLHttpRequest();
+            
+            //Get Status
+             xhr.onreadystatechange = function() 
+            {
+                //Check if Status is Ready
+                if (this.readyState == 4 && this.status==200) 
+                {
+                    //Parse into JSON
+                    const allCourses = jQuery.parseJSON(xhr.responseText);
+                    //document.getElementById('courses').innerHTML = `<tr><th>Courses</th></tr>${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`
+                    //coursesList += courseTemplateAvailable(coursesWithPreReqMet);
+                   
+                   
+                   coursesList += `${allCourses.map(realCourseTemplate).join('')}`;
+                    
+                 }
+                 
+                 
+             }
+             
+            //Create API Call 											//this might be the culprit 11/4/2021
+            xhr.open("GET", '/student/familyguy@gmail.com/all_courses');
+            
+            xhr.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
+            
+            //Send API Call
+            xhr.send();
+ }//End of function to display courses with pre req met
+
+
 //Function to print to table set of courses with pre-reqs met
 function displayCoursesWithPreReqMet()
 {

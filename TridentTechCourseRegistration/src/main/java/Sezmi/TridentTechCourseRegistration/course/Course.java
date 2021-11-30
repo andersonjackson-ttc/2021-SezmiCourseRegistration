@@ -5,6 +5,7 @@
 package Sezmi.TridentTechCourseRegistration.course;
 
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -37,6 +38,10 @@ public class Course implements Comparable<Course>
 	
 	@Column(name = "course_type")
 	private String course_type;
+	
+	//Aaron Test 11/30/2021
+	@javax.persistence.Transient
+	private String radioButton;
 	
 	//declare a set for the sections available for each course
 		@ManyToMany
@@ -121,6 +126,17 @@ public class Course implements Comparable<Course>
 	public int compareTo(Course o) {
 		int order = getCourse_id().compareToIgnoreCase(o.getCourse_id());// TODO Auto-generated method stub
 		return order;
+	}
+	
+	public void setRadioButton(String input_type)
+	{
+		this.radioButton = input_type;
+	}
+	
+	
+	public String getRadioButton()
+	{
+		return radioButton;
 	}
 	
 	
