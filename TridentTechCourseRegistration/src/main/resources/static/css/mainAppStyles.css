@@ -254,6 +254,11 @@ div.ui-page #logoutBtn{
         border: 1px solid black;
         background-color:antiquewhite;
     }
+    
+    tr:nth-child(even)
+    {
+		background-color: lightgreen;
+}
 
     #address
     {

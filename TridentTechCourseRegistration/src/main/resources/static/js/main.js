@@ -727,7 +727,7 @@ function loadSections()
                     for (i=0;i<courseSection.length ;i++)
                     {
 						//words +=`Course ID of ${courseSection[i].course_id}: `;
-						words += `<tr><td><a id="openUp"><style="red>${courseSection[i].course_id} - ${courseSection[i].course_name}</a></td></tr><tr><td>`;
+						words += `<tr><td><a id="openUp"><style="red">${courseSection[i].course_id} - ${courseSection[i].course_name}</a></td></tr><tr><td>`;
 						//document.getElementById("openUp").addEventListener('click',alert("hi"), false);
 					
 						for (z=0;z<courseSection[i].availableSections.length;z++)
