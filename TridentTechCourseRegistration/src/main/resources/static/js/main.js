@@ -96,7 +96,7 @@ function getUserName()
             //Store Returned JSON String in Global Variable
             userName = jQuery.parseJSON(x.responseText);
             student_id = userName.id;
-            //document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
+            document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
           }   
           
           //alert("This should happen last " + userName.major_id); //this is where we can get the major id
@@ -407,9 +407,6 @@ function loadCourses()
 						
 						//displayAllCourses();
 						
-						
-						
-						
 						//call function to display courses with pre reqs met
 						//displayCoursesWithPreReqMet();
 						//call function to display courses with pre reqs not met
@@ -418,8 +415,7 @@ function loadCourses()
 						//window.alert("does pausing fix the issue?");
 						
 						//displayCoursesWithPreReqNotMet();
-						
-					//window.alert("does pausing fix the issue?");
+						//window.alert("does pausing fix the issue?");
 						
 						
 						//Generate Table of Eligible courses dynamically into HTML page
@@ -496,7 +492,7 @@ function displayAllCourses()
              }
              
             //Create API Call 											//this might be the culprit 11/4/2021
-            xhr.open("GET", '/student/familyguy@gmail.com/all_courses');
+            xhr.open("GET", '/student/' + userEmail.user + '/all_courses');
             
             xhr.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
             
@@ -747,11 +743,13 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
+										//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 									
@@ -761,11 +759,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
@@ -777,11 +775,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									
 								}
@@ -789,11 +787,11 @@ function loadSections()
 								{
 									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 									else
 									{
-										words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
+										words += `<pre><${courseSection[i].radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
 									}
 								}
 								
@@ -891,7 +889,7 @@ function setCourseSelection()
         //alert(checkboxSelection);
         patchCompletedCourses(checkboxSelection);
         //postCourses();
-        loadCourses();
+        setTimout(loadCourses, 500);
         
         //document.getElementById("completedBtn").style.display = "none";
     }

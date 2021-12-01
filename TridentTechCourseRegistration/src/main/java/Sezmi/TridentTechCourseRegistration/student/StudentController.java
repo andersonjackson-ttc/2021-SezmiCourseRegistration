@@ -241,9 +241,9 @@ public class StudentController {
 					course.setRadioButton("");
 
 					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
-					if(coursePrereqs.isEmpty())
+					if(coursePrereqs.isEmpty() && !coursesStudentTaken.contains(course))
 					{
-						course.setRadioButton("input type='radio' name = 'radioBtn' ");
+						course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
 						courseList.add(course);
 					}//end no pre-reqs, so the student can take it
 					//else there are courses needed, so we need to compare to the student's courses taken
@@ -261,7 +261,7 @@ public class StudentController {
 							//else the student has all the courses, so the status is true
 							else 
 							{
-								course.setRadioButton("input type='radio' name = 'radioBtn' ");
+								course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
 								courseList.add(course);
 							}
 
@@ -281,7 +281,6 @@ public class StudentController {
 				//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
 				return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
 			}
-
 		}//end getAllCourses
 	
 

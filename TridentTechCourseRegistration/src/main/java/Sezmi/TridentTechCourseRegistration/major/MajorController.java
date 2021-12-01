@@ -57,7 +57,7 @@ public class MajorController
 		}
 	}//end get method 
 	
-	
+	/*
 	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
 	//(shows only the classes the student DOESN'T HAVE)
 	@GetMapping("/majors/{email}/courses") //does this needs to access student email
@@ -110,6 +110,97 @@ public class MajorController
 					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
 					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
 					//add the course to the courseseStudentNeeds set
+					/*
+				}
+			}//end for loop cycling the courses within the major
+					
+			return new ResponseEntity<Set<Course>>(coursesStudentNeeds, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			
+			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
+		}
+	}//end getCourses method that returns the relevant courses the student user needs. 
+	*/
+	
+	//the getCourses method maps the classes for the major selected COMPARED TO the classes the student has taken
+	//(shows only the classes the student DOESN'T HAVE)
+	@GetMapping("/majors/{email}/courses") //does this needs to access student email
+	public ResponseEntity<Set<Course>> getCourses(@PathVariable String email)
+	{
+		//create a local set to hold the courses the student needs
+		TreeSet<Course> coursesStudentNeeds = new TreeSet<Course>();
+		//TreeSet<Course> sortedCoursesStudentNeedSet = new TreeSet<Course>();
+				
+		try {
+			
+			//declare the student using the email given
+			Student student = studentService.getEmail(email);
+			//get the set of courses the student has taken 
+			Set<Course> studentCoursesTaken = student.getCoursesTaken();
+			//declare the major at the major id given
+			Major major = service.get(student.getMajor_id());
+			//get the set of courses needed in the major from the major
+		
+			Set<Course> majorCourses = major.getRequiredCourses();
+					
+			//compare the courses the student has taken to the courses within the major
+			//for each course within majorCourses
+			for(Course course : majorCourses)
+			{
+				//see if the student has taken that course. If the student HASN'T, add it to the coursesStudentNeeds
+				if(!studentCoursesTaken.contains(course) && !course.getAvailableSections().isEmpty() && !studentCoursesTaken.contains(course))
+				{
+					//get the list of pre-reqs needed for the course
+					Set<Course> coursePrereqs = course.getPreReqCourses();
+
+					//define the preReqStatus as false until the list is cycled through
+					course.setRadioButton("");
+
+					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
+					if(coursePrereqs.isEmpty())
+					{
+						course.setRadioButton("input type='radio' name = 'radioBtn' ");
+					}//end no pre-reqs, so the student can take it
+					//else there are courses needed, so we need to compare to the student's courses taken
+					else 
+					{
+						//compare the course pre-reqs of the single course to the courses the student has taken
+						for(Course prereq : coursePrereqs)
+						{
+							//if the student hasn't taken the course, the status is false
+							if(!studentCoursesTaken.contains(prereq))
+							{
+								course.setRadioButton("");
+							}
+							//else the student has all the courses, so the status is true
+							else 
+							{
+								course.setRadioButton("input type='radio' name = 'radioBtn' ");
+							}
+
+						}//end for loop cycling the list of pre-reqs needed for a course
+
+					}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
+					coursesStudentNeeds.add(course);
+					
+					/*for (Section section : course.getAvailableSections())
+					{
+						//if (!availableSections.isEmpty())
+						//{
+							availableSections.add(section);
+						//}
+				
+					}*/
+					
+					//sortedCoursesStudentNeedSet.addAll(coursesStudentNeeds);
+					
+					//Set<Section> sortedSections = course.getAvailableSections();
+					//List<Section> tguSections = new ArrayList<Section>(sortedSections);
+					//Collections.sort(tguSections, (sectionOne, sectionTwo) -> sectionOne.getSection_id().compareToIgnoreCase(sectionTwo.getSection_id()));
+					//Course sortedStuffCourse = new Course();
+					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+					//TreeSet<Section>availableSections =new TreeSet<Section>(course.getAvailableSections());
+					//add the course to the courseseStudentNeeds set
 					
 				}
 			}//end for loop cycling the courses within the major
@@ -120,6 +211,11 @@ public class MajorController
 			return new ResponseEntity<Set<Course>>(HttpStatus.NOT_FOUND);
 		}
 	}//end getCourses method that returns the relevant courses the student user needs. 
+	
+	
+	
+	
+	
 	
 	//the method is responsible for allowing an admin to add a major to the major table
 	@PostMapping("/majors")

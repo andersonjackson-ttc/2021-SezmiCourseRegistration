@@ -39,7 +39,7 @@ public class Course implements Comparable<Course>
 	@Column(name = "course_type")
 	private String course_type;
 	
-	//Aaron Test 11/30/2021
+	//Transient Attribute if course needs a radio button.  Not a part of the database
 	@javax.persistence.Transient
 	private String radioButton;
 	
@@ -128,9 +128,9 @@ public class Course implements Comparable<Course>
 		return order;
 	}
 	
-	public void setRadioButton(String input_type)
+	public void setRadioButton(String radio_button_text)
 	{
-		this.radioButton = input_type;
+		this.radioButton = radio_button_text;
 	}
 	
 	

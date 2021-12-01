@@ -146,11 +146,13 @@ public class Student{
 		this.major_id = major_id;
 	}
 
-	/*public String getCompleted_courses() {
+	/*
+	public String getCompleted_courses() {
 		return completed_courses;
 	}*/
 
-	/*public void setCompleted_courses(String completed_courses) {
+	/*
+	public void setCompleted_courses(String completed_courses) {
 		this.completed_courses = completed_courses;
 	}  */
 
