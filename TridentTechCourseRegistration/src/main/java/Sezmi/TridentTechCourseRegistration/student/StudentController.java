@@ -238,13 +238,13 @@ public class StudentController {
 					Set<Course> coursePrereqs = course.getPreReqCourses();
 
 					//define the preReqStatus as false until the list is cycled through
-					course.setRadioButton("");
+					course.setAvailability("False");
 
 					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
 					if(coursePrereqs.isEmpty() && !coursesStudentTaken.contains(course))
 					{
-						course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
-						courseList.add(course);
+						course.setAvailability("True");
+						//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
 					}//end no pre-reqs, so the student can take it
 					//else there are courses needed, so we need to compare to the student's courses taken
 					else 
@@ -255,19 +255,25 @@ public class StudentController {
 							//if the student hasn't taken the course, the status is false
 							if(!coursesStudentTaken.contains(prereq))
 							{
-								course.setRadioButton("");
-								courseList.add(course);
+								course.setAvailability("False");
+								//course.setRadioButton("");
 							}
 							//else the student has all the courses, so the status is true
 							else 
 							{
-								course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
-								courseList.add(course);
+								course.setAvailability("True");
+								//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
 							}
 
 						}//end for loop cycling the list of pre-reqs needed for a course
 
 					}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
+					
+					//Add Course to List if Student has not taken the course
+					if(!coursesStudentTaken.contains(course))
+					{
+						courseList.add(course);
+					}
 
 					
 				}//end for loop cycling the list of courses the student has taken

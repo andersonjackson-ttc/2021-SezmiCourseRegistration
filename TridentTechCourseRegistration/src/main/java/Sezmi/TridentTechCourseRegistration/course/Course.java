@@ -41,7 +41,7 @@ public class Course implements Comparable<Course>
 	
 	//Transient Attribute if course needs a radio button.  Not a part of the database
 	@javax.persistence.Transient
-	private String radioButton;
+	private String availability;
 	
 	//declare a set for the sections available for each course
 		@ManyToMany
@@ -128,15 +128,15 @@ public class Course implements Comparable<Course>
 		return order;
 	}
 	
-	public void setRadioButton(String radio_button_text)
+	public void setAvailability(String status)
 	{
-		this.radioButton = radio_button_text;
+		this.availability = status;
 	}
 	
 	
-	public String getRadioButton()
+	public String getAvailabilty()
 	{
-		return radioButton;
+		return availability;
 	}
 	
 	
