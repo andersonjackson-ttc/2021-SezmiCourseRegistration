@@ -459,6 +459,9 @@ function loadCourses()
 						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
+						document.getElementById('btnSubmit').innerHTML = 'Change Major';
+						document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn"">Courses Needed</button>'
+            
 					}
 					//Clear Table from Page
 					else
@@ -725,7 +728,6 @@ function loadSections()
 {
 	xmlhttp = new XMLHttpRequest();
 	let words = "";
-	let radioButton = "";
             
             //Get Status
              xmlhttp.onreadystatechange = function() 
@@ -738,123 +740,99 @@ function loadSections()
                     const courseSection = jQuery.parseJSON(xmlhttp.responseText);
                     for (i=0;i<courseSection.length ;i++)
                     {
+	     				let preReqNotMet = "";
+						if (courseSection[i].availabilty == "False")
+						{
+							preReqNotMet = "Pre Reqs Not Met Scrub";		
+						}
+						
+						
 						//words +=`Course ID of ${courseSection[i].course_id}: `;
-						words += `<tr><td><a id="openUp"><style="red">${courseSection[i].course_id} - ${courseSection[i].course_name}</a></td></tr><tr><td>`;
+						words += `<tr><td><a><font color = black>${courseSection[i].course_id} - ${courseSection[i].course_name}</font>&nbsp;&nbsp;&nbsp;&nbsp;<font color = red>${preReqNotMet}</font></a></td></tr><tr><td><pre><div style="color:blue"><b>      Section            Term        Format         Duration        Schedule       Time              Instructor       Remaining Seats</b></div>`;
 						//document.getElementById("openUp").addEventListener('click',alert("hi"), false);
 					
 						for (z=0;z<courseSection[i].availableSections.length;z++)
 						{
 							if (z>0)
 							{
-								words += `<br>`;
+								words += `<br><div style="height:1px;background-color:gray;color:blue"><b></b></div>`;
 							}
+							
+							let section = courseSection[i].availableSections[z].section_id;
+							let courseFormat = courseSection[i].availableSections[z].course_format;
+							let term = courseSection[i].availableSections[z].term;
+							let remainingSpaces = courseSection[i].availableSections[z].remaining_spaces;
+							let schedule = courseSection[i].availableSections[z].schedule;
+							let duration = courseSection[i].availableSections[z].duration;
+							let time = courseSection[i].availableSections[z].time;
+							let instructor = courseSection[i].availableSections[z].instructor_id;
+							let oneSpace = " ";
+							let formatSpacing = "";
+							let radioButton = "";
+							let noRadioBtnFormatter = "";
+							
+							if (section.length >= 0 && section.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - section.length);
+								section += formatSpacing;
+							}
+							
+							if (courseFormat.length >=0 && courseFormat.length < 4)
+							{
+								formatSpacing = oneSpace.repeat(4 - courseFormat.length);
+								courseFormat += formatSpacing;
+							}
+							
+							if (term.length >=0 && term.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - term.length);
+								term += formatSpacing;
+							}
+							
+							if (remainingSpaces.length >=0 && remainingSpaces.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - remainingSpaces.length);
+								remainingSpaces += formatSpacing;
+							}
+							
+							if (schedule.length >=0 && schedule.length < 4)
+							{
+								formatSpacing = oneSpace.repeat(4 - schedule.length);
+								schedule += formatSpacing;
+							}
+							
+							if (duration.length < 22)
+							{
+								formatSpacing = oneSpace.repeat(22 - duration.length);
+								duration += formatSpacing;
+							}
+							
+							if (time.length < 16)
+							{
+								formatSpacing = oneSpace.repeat(16 - time.length);
+								time += formatSpacing;
+							}
+							
+							if (instructor.length < 19)
+							{
+								formatSpacing = oneSpace.repeat(19 - instructor.length);
+								instructor += formatSpacing;
+							}
+							
+							
 							
 							if (courseSection[i].availabilty == "True")
 							{
 								radioButton = "input type='radio' name = 'newRadioBtn' ";
+								
 							}
 							
 							else
 							{
-								//radioButton = "input type='radio' disabled = true name = 'newRadioBtn' ";
-								radioButton = "";
+								noRadioBtnFormatter = "   ";
 							}
-							let oneSpace = " ";
-							let term = courseSection[i].availableSections[z].term;
-							if((courseSection[i].availableSections[z].term).length != 13)
-							{
-								(courseSection[i].availableSections[z].term).length - 13
-							}
-							//All below if & else statments involve formating the output so that it is pretty
-							if ((courseSection[i].availableSections[z].term).length == 13)
-							{
-								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
-								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
-									{
-										if((courseSection[i].availableSections[z].time).length == 23)
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
-										else if((courseSection[i].availableSections[z].time).length == 22)
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
-										else
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}     || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
-										//words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-										//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									else
-									{
-										if((courseSection[i].availableSections[z].time).length == 23)
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
-										else if((courseSection[i].availableSections[z].time).length == 22)
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										
-										else
-										{
-											words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}     || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}     || ${courseSection[i].availableSections[z].instructor_id}`
-										}
-										//words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-										//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									
-									
-								}
+							words += `<pre><${radioButton}value =${section} />${noRadioBtnFormatter}<b>${section}</b>||<b> ${term}</b>||<b> ${courseFormat}</b>||<b> ${duration}</b>||<b> ${schedule}</b>||<b> ${time}</b>||<b> ${instructor}</b>||<b> ${remainingSpaces}</b>`
 			
-								else
-								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									else
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term} || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									
-								}
-								
-							}
-							else
-							{
-								if((courseSection[i].availableSections[z].remaining_spaces).length > 1)
-								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}    || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									else
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces} || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									
-								}
-								else
-								{
-									if(courseSection[i].availableSections[z].schedule == "MWF" || courseSection[i].availableSections[z].schedule == "TTH" ||  courseSection[i].availableSections[z].schedule == "MTWTHF")
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ${courseSection[i].availableSections[z].schedule}    || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time}   || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-									else
-									{
-										words += `<pre><${radioButton}value =${courseSection[i].availableSections[z].section_id} />${courseSection[i].availableSections[z].section_id} || ${courseSection[i].availableSections[z].course_format} || ${courseSection[i].availableSections[z].term}   || ${courseSection[i].availableSections[z].remaining_spaces}  || ONLINE || ${courseSection[i].availableSections[z].duration} || ${courseSection[i].availableSections[z].time} || ${courseSection[i].availableSections[z].instructor_id}`
-									}
-								}
-								
-							}
-							//words += `<pre><input type='radio' name='newRadioBtn' value =${courseSection[i].course_id} />${courseSection[i].availableSections[z].section_id}  ||   ${courseSection[i].availableSections[z].course_format}  ||   ${courseSection[i].availableSections[z].term}          ||   ${courseSection[i].availableSections[z].instructor_id}`
 							if (z == courseSection[i].availableSections.length -1)
 							{
 								words += "</td></tr>";
@@ -874,6 +852,8 @@ function loadSections()
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
             document.getElementById('completedBtn').addEventListener('click', setSectionSelection, false);
+            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            
 }
 //Loads sections from the student_section table that student has chosen
 function loadChosenSections()
@@ -884,7 +864,7 @@ function loadChosenSections()
 	{
 		if (this.readyState == 4 && this.status==200) 
 		    {
-					sectionTableInfo = "<tr><th>Chosen Sections</th></tr>";
+					sectionTableInfo = "<tr><th>Chosen Sections<br></th></tr>";
 				   //Parse into JSON
                     const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
                    for (i=0;i<chosenSections.length ;i++)
@@ -893,7 +873,68 @@ function loadChosenSections()
 							{
 								sectionTableInfo += `<br>`;
 							}
-							sectionTableInfo += `<tr><td><pre>${chosenSections[i].section_id}   ||   ${chosenSections[i].course_format}   ||   ${chosenSections[i].term}   ||   ${chosenSections[i].remaining_spaces}   ||   ${chosenSections[i].schedule}   ||   ${chosenSections[i].duration}   ||   ${chosenSections[i].time}   ||   ${chosenSections[i].instructor_id}</tr></td>`
+							let section = chosenSections[i].section_id;
+							let term = chosenSections[i].term;
+							let courseFormat = chosenSections[i].course_format;
+							let duration = chosenSections[i].duration;
+							let schedule = chosenSections[i].schedule;
+							let time = chosenSections[i].time;
+							let instructor = chosenSections[i].instructor_id;
+							let remainingSpaces = chosenSections[i].remaining_spaces;
+							let oneSpace = " ";
+							let formatSpacing = "";
+							
+							if (section.length >= 0 && section.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - section.length);
+								section += formatSpacing;
+							}
+							
+							if (courseFormat.length >=0 && courseFormat.length < 4)
+							{
+								formatSpacing = oneSpace.repeat(4 - courseFormat.length);
+								courseFormat += formatSpacing;
+							}
+							
+							if (term.length >=0 && term.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - term.length);
+								term += formatSpacing;
+							}
+							
+							if (remainingSpaces.length >=0 && remainingSpaces.length < 15)
+							{
+								formatSpacing = oneSpace.repeat(15 - remainingSpaces.length);
+								remainingSpaces += formatSpacing;
+							}
+							
+							if (schedule.length >=0 && schedule.length < 4)
+							{
+								formatSpacing = oneSpace.repeat(4 - schedule.length);
+								schedule += formatSpacing;
+							}
+							
+							if (duration.length < 22)
+							{
+								formatSpacing = oneSpace.repeat(22 - duration.length);
+								duration += formatSpacing;
+							}
+							
+							if (time.length < 16)
+							{
+								formatSpacing = oneSpace.repeat(16 - time.length);
+								time += formatSpacing;
+							}
+							
+							if (instructor.length < 19)
+							{
+								formatSpacing = oneSpace.repeat(19 - instructor.length);
+								instructor += formatSpacing;
+							}
+							
+							
+							sectionTableInfo += `<tr><td><pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}</tr></td>`
+							
 							if (i == chosenSections.length -1)
 							
 							{
