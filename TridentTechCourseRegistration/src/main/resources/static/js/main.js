@@ -1,6 +1,6 @@
 //Global Scope Variable to Hold JSON Object and Parsed Text Data
 var student = ""; //declared global variable for student JH 11/12
-//var xmlhttp;
+var index = 0;
 var majorId;
 var userEmail = "";
 var userName = "";
@@ -20,7 +20,7 @@ function init()
     //Load User Email 
     setTimeout(getUserEmail,500);
     
-    //
+    //Load User Name
     setTimeout(getUserName,1000);		
 }
 
@@ -85,7 +85,7 @@ function init()
 function getUserName()
 {
   //Declare and Initialize New Ajax Object
-    var x = new XMLHttpRequest();
+    let x = new XMLHttpRequest();
            
       //Get Status
       x.onreadystatechange = function()
@@ -98,9 +98,6 @@ function getUserName()
             student_id = userName.id;
             document.getElementById('sezmiFooter').innerHTML = ("Welcome " + userName.first_name + " " + userName.last_name).fontcolor("black").fontsize(2.1);
           }   
-          
-          //alert("This should happen last " + userName.major_id); //this is where we can get the major id
-          //call getMajorIdFromStudent to get the major id and display the relevant courses for their major
           getMajorIdFromStudent();
        }
      
@@ -115,7 +112,7 @@ function getUserName()
 function getUserEmail()
 {
   //Declare and Initialize New Ajax Object
-    var x = new XMLHttpRequest();
+    let x = new XMLHttpRequest();
            
       //Get Status
       x.onreadystatechange = function()
@@ -125,7 +122,6 @@ function getUserEmail()
           {
             //Store Returned JSON String in Global Variable
             userEmail = jQuery.parseJSON(x.responseText);
-            document.getElementById('sezmiFooter').innerHTML = "Welcome " + userEmail.user;
           }      
        }
      
@@ -170,66 +166,38 @@ function majorTemplate(major)
 function courseTemplateAvailable(course) 
 {
 	return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id}/>${course.course_id} - ${course.course_name}</td></tr>`;
-	//getPreReqStatus();
-	//setPreReqStatus();
-	//setTimeout(doNothing, 1000);
-	/*if (getPreReqStatus() == "true")
-	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
-	}
-	else
-	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
-	}*/
 }
 
 //Template Literal to Return Course Name
 function realCourseTemplate(course) 
 {
-	var radioButtonText = "";
+	let radioButtonText = "";
 	if (course.availabilty == "True")
 	{
-		radioButtonText = "input type='radio' name = 'newRadioBtn' ";
-		//return `<tr><td><${course.radioButton}value =${course.course_id}/>${course.course_id} - ${course.course_name}</td></tr>`;
+		radioButtonText = `input type='checkbox' name = 'checkBox${index}' `;
 	}
 	else
 	{
-		radioButtonText = "input type='radio' disabled= true name = 'newRadioBtn' ";
+		radioButtonText = `input type='checkbox' disabled = true name = 'checkBox${index}' `;
 	}
-	return `<tr><td><${radioButtonText}value =${course.course_id}/>${course.course_id} - ${course.course_name} - ${course.availabilty}</td></tr>`;
-	//return `<tr><td><${course.radioButton}value =${course.course_id}/>${course.course_id} - ${course.course_name}</td></tr>`;
+	index++;
+	return `<tr><td><${radioButtonText}value =${course.course_id}>${course.course_id} - ${course.course_name} - ${course.availabilty}</td></tr>`;	
 }
 
 function courseTemplateUnavailable(course) 
 {
-	//getPreReqStatus();
-	//setPreReqStatus();
-	//setTimeout(doNothing, 1000);
-	/*if (getPreReqStatus() == "true")
-	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
-	}
-	else
-	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
-	}*/
-	//return `<tr><td>Pre Req Not Met: ${course.course_id} - ${course.course_name}</td></tr>`
 	return `<tr><td>Pre Req Not Met: ${course.course_id} - ${course.course_name}</td></tr>`;
 }
 
-function doNothing()
-{
-	;
-}
 function setPreReqStatus()
 {
 	if (preReqStatus == "true")
 	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />TRUE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
 	}
 	else
 	{
-		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />FALSE-${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
+		return `<tr><td><input type='radio' name = 'radioBtn' value =${course.course_id} />${preReqStatus}${course.course_id} - ${course.course_name}</td></tr>`;
 	}
 }
 
@@ -238,7 +206,6 @@ function sectionTemplate(course)
 {
 	document.getElementById('sezmiFooter').innerHTML = course[0].course_id;
 	return `course.availableSections[0].section_id`;
-	//output += `</td><td><input type='checkbox' value =${jamesCoursesArray[i]} /></td></tr>`;
 }
 
 
@@ -311,12 +278,10 @@ function loadOverLoadMajors(majorName)
 					{
 						//the major hasn't been selected or the user has chosen to change it, so allow the button to select the major
 						document.getElementById('btnSubmit').addEventListener('click', selectMajor, false);
+						
 					}
 					
-					
-					
-					
-					setTimeout(loadCourses(), 1000);
+					setTimeout(loadCourses, 1000);
                 }
             };
             
@@ -348,15 +313,6 @@ function loadMajorWithId()
                     
                     //setTimeout(loadCourses(), 3000);
                     setTimeout(loadOverLoadMajors(currentMajor),500);
-                    //loadCourses();
-					//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
-                    
-                    //window.alert("The user's major is : " + majorStuff.major);
-                    
-                    //window.alert("The user's major is : " + majorStuff.major);
-                    
-                    //Template Literal to Add all Majors into HTML Dynamically
-                    //document.getElementById('combo').innerHTML = `<option value='nah'>${majorStuff.major_id} - ${majorStuff.major}</option>$`;
                 }
             };
             
@@ -412,57 +368,25 @@ function loadCourses()
                     if (majorId != "nah")
                     //if (true)
                     {
+	
+						index = 0;
+						
+						//Show "Select Completed Courses Table"
 						document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(realCourseTemplate).join('')}`
-						//create the course list. This will be appended in each pre-req method
-						//coursesList = "<tr><th>Courses Needed</th></tr>";
 						
-						//displayAllCourses();
-						
-						//call function to display courses with pre reqs met
-						//displayCoursesWithPreReqMet();
-						//call function to display courses with pre reqs not met
-						
-						//having a window alert fixes the load errors
-						//window.alert("does pausing fix the issue?");
-						
-						//displayCoursesWithPreReqNotMet();
-						//window.alert("does pausing fix the issue?");
-						
-						
-						//Generate Table of Eligible courses dynamically into HTML page
-						//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
-						//USE FOR PRE REQ for (i=0;i<4;i++)
-						//for (i=0;i<1;i++)
-						//{
-						//USE FOR PRE REQ  getPreReqStatus(courses,i);
-						////}
-						
-						//let frank = getPreReqStatus();
-						//document.getElementById('sezmiFooter').innerHTML = (frank).fontcolor("black").fontsize(2.1);
-						//slowSetOfPreReq();
-                    	/*if (preReqStatus == true)
-                    	{
-							document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-						}
-						else
-						{
-							document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplateIfFalse).join('')}`
-						}*/
-                    	//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-                    	//document.getElementById('courses').innerHTML = coursesList;
-                    	
+						//Show Array of New Buttons
                     	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
 						document.getElementById('showChosenSections').innerHTML = '<button id="btnChosenSections">Chosen Sections</button>'
+						
+						//Add Appropriate Event Listeners
 						document.getElementById('btnCompletedCourses').addEventListener('click', loadCompletedCourses, false);
 						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
-						document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
 						document.getElementById('btnSubmit').innerHTML = 'Change Major';
-						document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn"">Courses Needed</button>'
-            
+						document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn"">Courses Needed</button>';
 					}
 					//Clear Table from Page
 					else
@@ -495,15 +419,11 @@ function displayAllCourses()
                 {
                     //Parse into JSON
                     const allCourses = jQuery.parseJSON(xhr.responseText);
-                    //document.getElementById('courses').innerHTML = `<tr><th>Courses</th></tr>${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`
-                    //coursesList += courseTemplateAvailable(coursesWithPreReqMet);
-                   
-                   
-                   coursesList += `${allCourses.map(realCourseTemplate).join('')}`;
+
+					index = 0;
+                    coursesList += `${allCourses.map(realCourseTemplate).join('')}`;
                     
                  }
-                 
-                 
              }
              
             //Create API Call 											//this might be the culprit 11/4/2021
@@ -587,22 +507,24 @@ function loadCompletedCourses()
             
             //Send API Call
             xmlhttp.send();
+            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 }
 //Loads all sections for student to choose from
 function loadSections()
 {
 	xmlhttp = new XMLHttpRequest();
 	let words = "";
-            
+    let corLength;       
             //Get Status
              xmlhttp.onreadystatechange = function() 
             {
                 //Check if Status is Ready
                if (this.readyState == 4 && this.status==200) 
                 {
-					words = "<tr><th>Remaining Courses</th></tr>";
+					words = "<div id='sectionPage'><tr><th>Remaining Courses</th></tr>";
                     //Parse into JSON
                     const courseSection = jQuery.parseJSON(xmlhttp.responseText);
+                    corLength = courseSection.length;
                     for (i=0;i<courseSection.length ;i++)
                     {
 	     				let preReqNotMet = "";
@@ -688,8 +610,9 @@ function loadSections()
 							
 							if (courseSection[i].availabilty == "True")
 							{
-								radioButton = "input type='radio' name = 'newRadioBtn' ";
-								
+								//radioButton = "input type='radio' name = 'newRadioBtn[ " + i + "]' ";
+								//radioButton = "input type='radio' name = 'newRadioBtn' ";
+								radioButton = "input type='radio' name = 'newRadioBtn" + i + "' ";
 							}
 							
 							else
@@ -700,11 +623,13 @@ function loadSections()
 			
 							if (z == courseSection[i].availableSections.length -1)
 							{
-								words += "</td></tr>";
+								words += "</td></tr></div>";
 							}
 						}
+						
 					}
                     document.getElementById('courses').innerHTML = words.fontcolor("white");	
+                    document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
                 }
             };
             
@@ -716,7 +641,7 @@ function loadSections()
             xmlhttp.send();
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
-            document.getElementById('completedBtn').addEventListener('click', setSectionSelection, false);
+            //document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
             document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
             
 }
@@ -797,10 +722,8 @@ function loadChosenSections()
 								instructor += formatSpacing;
 							}
 							
-							//<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br>
-							
-							
-							sectionTableInfo += `<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre><input type = 'radio' name = 'testingName' id = 'deleteSection' value ='${section}'>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}`
+							//<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration               Schedule           Time                   Instructor              Remaining Seats</b></div><br>
+							sectionTableInfo += `<pre><div style="height:1px;color:blue"><b>     Section                Term                Format           Duration                Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre><input type = 'radio' name = 'testingName' id = 'deleteSection' value ='${section}'>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}`
 							
 							if (i == chosenSections.length -1)
 							
@@ -808,9 +731,8 @@ function loadChosenSections()
 								sectionTableInfo += "</td></tr>";
 							}
 					}
-					document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
-					
-					
+					//document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
+					//document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
                 }
             };
             
@@ -819,6 +741,9 @@ function loadChosenSections()
             
             //Send API Call
             xmlhttp.send();
+            document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
+			document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
+            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 	
 }
 
@@ -826,68 +751,68 @@ function loadChosenSections()
 //Get Major Selection and Store as a Variable
 function selectMajor()
 {
-	//use a get request the get the user name 
-	/*xmlhttp.open("GET", "/student/" + userEmail.user, true);
-		
-		xmlhttp.setRequestHeader("Content-Type", "application/json");
-		
-		xmlhttp.send(JSON.stringify({"major_id": majorId}));*/
     var majorSelection = document.querySelector('#combo');
     majorId = majorSelection.value;
     
     setTimeout(patchMajorSelection,500);
-    setTimeout(loadCourses,750);
-    
+    setTimeout(loadCourses,750); 
 }
 
 function setCourseSelection()
     {
-		
-		//var checkboxArray = [];
-		
-        var checkbox = document.querySelector('input[type="radio"]:checked');
-        //const checkboxArray = document.querySelectorAll("td[value]");
-        /*for (var i= 0; i < checkbox.length; i++){
-			checkboxArray.push(checkbox[i].value)
-		}*/
-        var checkboxSelection = checkbox.value;
-	    //checkboxSelection = checkbox.parentElement.textContent;
-        //alert(checkboxSelection);
-        patchCompletedCourses(checkboxSelection);
-        //postCourses();
-        setTimout(loadCourses, 500);
+		let checkBoxSelectionString = "";
+		let commaDelimiter = "";
+			for (i=0;i<index;i++)
+			{
+				let checkbox = document.querySelector(`input[name="checkBox${i}"]:checked`);
+				if(checkbox != null)
+				{
+					if (checkBoxSelectionString.length > 0)
+					{
+						commaDelimiter = ",";
+					}
+					checkBoxSelectionString += commaDelimiter + checkbox.value;
+				}
+			}
+		document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1)
+		//window.Alert('hi');
         
-        //document.getElementById("completedBtn").style.display = "none";
+        patchCompletedCourses(checkBoxSelectionString);
+        setTimeout(loadCourses,500);
     }
     
-function setSectionSelection()
+    
+    
+function setSectionSelection(numberOfCourses)
     {
-		
-		//var checkboxArray = [];
-		
-        var checkbox = document.querySelector('input[type="radio"]:checked');
-        //const checkboxArray = document.querySelectorAll("td[value]");
-        /*for (var i= 0; i < checkbox.length; i++){
-			checkboxArray.push(checkbox[i].value)
-		}*/
-        var checkboxSelection = checkbox.value;
-	    //checkboxSelection = checkbox.parentElement.textContent;
-        //alert(checkboxSelection);
-        patchSectionSelection(checkboxSelection);
-        loadSections();
-        
-        //document.getElementById("completedBtn").style.display = "none";
+		return function()
+		{
+			let checkBoxSelectionString = "";
+			let commaDelimiter = "";
+			for (i=0;i<=numberOfCourses;i++)
+			{
+				let checkbox = document.querySelector(`input[name = "newRadioBtn${i}"]:checked`);
+				if(checkbox != null)
+				{
+					if (checkBoxSelectionString.length > 0)
+					{
+						commaDelimiter = ",";
+					}
+					checkBoxSelectionString += commaDelimiter + checkbox.value;
+				}
+			}
+        	patchSectionSelection(checkBoxSelectionString);
+        	setTimeout(loadChosenSections, 950);
+		}
     }
   
-  //sets up the section selection to be deleted
-  //BRAND NEW added 12/2 
-function removeSectionSelection(){
-	
-	var checkbox = document.querySelector('input[type="radio"]:checked');
-	var checkboxSelection = checkbox.value;
+//Sets up the section selection to be deleted
+function removeSectionSelection()
+{
+	let checkbox = document.querySelector('input[type="radio"]:checked');
+	let checkboxSelection = checkbox.value;
 	deleteSectionSelection(checkboxSelection);
-	loadChosenSections();
-	
+	setTimeout(loadChosenSections,950);
 }
 
 //BRAND NEW added 12/2
@@ -949,7 +874,6 @@ function loadNewCourses()
                     {
 						//Generate Table of Eligible courses dynamically into HTML page
                     	document.getElementById('courses').innerHTML = `<tr><th>Remaining Courses</th></tr>${newCourses.map(newCourseTemplate).join('')}`
-                        
 					}
 					//Clear Table from Page
 					else

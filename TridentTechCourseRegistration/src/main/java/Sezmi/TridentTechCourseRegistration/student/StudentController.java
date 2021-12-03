@@ -1,5 +1,7 @@
 package Sezmi.TridentTechCourseRegistration.student;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -38,7 +40,7 @@ public class StudentController {
 
 	@Autowired 
 	private MajorService majorService;
-	
+
 
 
 	@GetMapping("/student")
@@ -123,7 +125,7 @@ public class StudentController {
 					coursesWithPrereq.add(majorCourse);
 				}
 			}//end for loop cycling the list of courses the student has taken
-			
+
 			//return the list of courses from the major that the student has pre-reqs for
 			return new ResponseEntity<TreeSet<Course>>(coursesWithPrereq, HttpStatus.OK);
 
@@ -135,160 +137,160 @@ public class StudentController {
 		}
 
 	}//end getCoursesWithPrereq
-	
+
 	//getCoursesWithoutPrereqs returns the list of courses the student DOES NOT HAVE prereqs for (same logic as above, just returning the inverse)
-		@GetMapping("/student/{email}/course_prereq_false")
-		public ResponseEntity<TreeSet<Course>> getCoursesWithoutPrereqs(@PathVariable String email)
+	@GetMapping("/student/{email}/course_prereq_false")
+	public ResponseEntity<TreeSet<Course>> getCoursesWithoutPrereqs(@PathVariable String email)
+	{
+		try 
 		{
-			try 
+			//create a set of courses
+			TreeSet<Course> coursesWOPrereq = new TreeSet<Course>();
+
+			//get the student based on the id
+			Student student = service.getEmail(email);
+
+			//get the student's major based off of the major id
+			Major studentMajor = majorService.get(student.getMajor_id());
+
+			//get the list of courses within the student's major
+			Set<Course> majorCourses = studentMajor.getRequiredCourses();
+
+			//get the list of courses the student has 
+			Set<Course> coursesStudentTaken = student.getCoursesTaken();
+
+			//for each course in the major, compare the pre-reqs to the courses the student has taken
+			for(Course majorCourse : majorCourses)
 			{
-				//create a set of courses
-				TreeSet<Course> coursesWOPrereq = new TreeSet<Course>();
+				//get the list of pre-reqs needed for the course
+				Set<Course> coursePrereqs = majorCourse.getPreReqCourses();
 
-				//get the student based on the id
-				Student student = service.getEmail(email);
+				//define the preReqStatus as false until the list is cycled through
+				boolean preReqStatus = false;
 
-				//get the student's major based off of the major id
-				Major studentMajor = majorService.get(student.getMajor_id());
-
-				//get the list of courses within the student's major
-				Set<Course> majorCourses = studentMajor.getRequiredCourses();
-
-				//get the list of courses the student has 
-				Set<Course> coursesStudentTaken = student.getCoursesTaken();
-
-				//for each course in the major, compare the pre-reqs to the courses the student has taken
-				for(Course majorCourse : majorCourses)
+				//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
+				if(coursePrereqs.isEmpty())
 				{
-					//get the list of pre-reqs needed for the course
-					Set<Course> coursePrereqs = majorCourse.getPreReqCourses();
-
-					//define the preReqStatus as false until the list is cycled through
-					boolean preReqStatus = false;
-
-					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
-					if(coursePrereqs.isEmpty())
+					preReqStatus = true;
+				}//end no pre-reqs, so the student can take it
+				//else there are courses needed, so we need to compare to the student's courses taken
+				else 
+				{
+					//compare the course pre-reqs of the single course to the courses the student has taken
+					for(Course prereq : coursePrereqs)
 					{
-						preReqStatus = true;
-					}//end no pre-reqs, so the student can take it
-					//else there are courses needed, so we need to compare to the student's courses taken
-					else 
-					{
-						//compare the course pre-reqs of the single course to the courses the student has taken
-						for(Course prereq : coursePrereqs)
+						//if the student hasn't taken the course, the status is false
+						if(!coursesStudentTaken.contains(prereq))
 						{
-							//if the student hasn't taken the course, the status is false
-							if(!coursesStudentTaken.contains(prereq))
-							{
-								preReqStatus=false;
-							}
-							//else the student has all the courses, so the status is true
-							else {
-								preReqStatus = true;
-							}
+							preReqStatus=false;
+						}
+						//else the student has all the courses, so the status is true
+						else {
+							preReqStatus = true;
+						}
 
-						}//end for loop cycling the list of pre-reqs needed for a course
+					}//end for loop cycling the list of pre-reqs needed for a course
 
-					}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
+				}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
 
-					//if the prereq status is true after comparing ALL the courses in the coursePrereqs, add the course to the coursesWithPrereq
-					if(preReqStatus == false)
-					{
-						coursesWOPrereq.add(majorCourse);
-					}
-				}//end for loop cycling the list of courses the student has taken
-				
-				//return the list of courses from the major that the student has pre-reqs for
-				return new ResponseEntity<TreeSet<Course>>(coursesWOPrereq, HttpStatus.OK);
+				//if the prereq status is true after comparing ALL the courses in the coursePrereqs, add the course to the coursesWithPrereq
+				if(preReqStatus == false)
+				{
+					coursesWOPrereq.add(majorCourse);
+				}
+			}//end for loop cycling the list of courses the student has taken
 
-			} 
-			catch (NoSuchElementException e) 
-			{
-				//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
-				return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
-			}
+			//return the list of courses from the major that the student has pre-reqs for
+			return new ResponseEntity<TreeSet<Course>>(coursesWOPrereq, HttpStatus.OK);
 
-		}//end getCoursesWithPrereq
-		
-		//getAllCourses
-		@GetMapping("/student/{email}/all_courses")
-		public ResponseEntity<TreeSet<Course>> getAllCourses(@PathVariable String email)
+		} 
+		catch (NoSuchElementException e) 
 		{
-			try 
+			//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
+		}
+
+	}//end getCoursesWithPrereq
+
+	//getAllCourses
+	@GetMapping("/student/{email}/all_courses")
+	public ResponseEntity<TreeSet<Course>> getAllCourses(@PathVariable String email)
+	{
+		try 
+		{
+			//create a set of courses
+			TreeSet<Course> courseList = new TreeSet<Course>();
+
+			//get the student based on the id
+			Student student = service.getEmail(email);
+
+			//get the student's major based off of the major id
+			Major studentMajor = majorService.get(student.getMajor_id());
+
+			//get the list of courses within the student's major
+			Set<Course> majorCourses = studentMajor.getRequiredCourses();
+
+			//get the list of courses the student has 
+			Set<Course> coursesStudentTaken = student.getCoursesTaken();
+
+			//for each course in the major, compare the pre-reqs to the courses the student has taken
+			for(Course course : majorCourses)
 			{
-				//create a set of courses
-				TreeSet<Course> courseList = new TreeSet<Course>();
+				//get the list of pre-reqs needed for the course
+				Set<Course> coursePrereqs = course.getPreReqCourses();
 
-				//get the student based on the id
-				Student student = service.getEmail(email);
+				//define the preReqStatus as false until the list is cycled through
+				course.setAvailability("False");
 
-				//get the student's major based off of the major id
-				Major studentMajor = majorService.get(student.getMajor_id());
-
-				//get the list of courses within the student's major
-				Set<Course> majorCourses = studentMajor.getRequiredCourses();
-
-				//get the list of courses the student has 
-				Set<Course> coursesStudentTaken = student.getCoursesTaken();
-
-				//for each course in the major, compare the pre-reqs to the courses the student has taken
-				for(Course course : majorCourses)
+				//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
+				if(coursePrereqs.isEmpty() && !coursesStudentTaken.contains(course))
 				{
-					//get the list of pre-reqs needed for the course
-					Set<Course> coursePrereqs = course.getPreReqCourses();
-
-					//define the preReqStatus as false until the list is cycled through
-					course.setAvailability("False");
-
-					//if the coursePrereqs is null, there are no pre-reqs needed, so the status is true
-					if(coursePrereqs.isEmpty() && !coursesStudentTaken.contains(course))
+					course.setAvailability("True");
+					//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
+				}//end no pre-reqs, so the student can take it
+				//else there are courses needed, so we need to compare to the student's courses taken
+				else 
+				{
+					//compare the course pre-reqs of the single course to the courses the student has taken
+					for(Course prereq : coursePrereqs)
 					{
-						course.setAvailability("True");
-						//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
-					}//end no pre-reqs, so the student can take it
-					//else there are courses needed, so we need to compare to the student's courses taken
-					else 
-					{
-						//compare the course pre-reqs of the single course to the courses the student has taken
-						for(Course prereq : coursePrereqs)
+						//if the student hasn't taken the course, the status is false
+						if(!coursesStudentTaken.contains(prereq))
 						{
-							//if the student hasn't taken the course, the status is false
-							if(!coursesStudentTaken.contains(prereq))
-							{
-								course.setAvailability("False");
-								//course.setRadioButton("");
-							}
-							//else the student has all the courses, so the status is true
-							else 
-							{
-								course.setAvailability("True");
-								//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
-							}
+							course.setAvailability("False");
+							//course.setRadioButton("");
+						}
+						//else the student has all the courses, so the status is true
+						else 
+						{
+							course.setAvailability("True");
+							//course.setRadioButton("input type='radio' name = 'newRadioBtn' ");
+						}
 
-						}//end for loop cycling the list of pre-reqs needed for a course
+					}//end for loop cycling the list of pre-reqs needed for a course
 
-					}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
-					
-					//Add Course to List if Student has not taken the course
-					if(!coursesStudentTaken.contains(course))
-					{
-						courseList.add(course);
-					}
+				}//end else the pre-reqs are not null, so compare pre-reqs to the student courses taken
 
-					
-				}//end for loop cycling the list of courses the student has taken
-				
-				//return the list of courses from the major that the student has pre-reqs for
-				return new ResponseEntity<TreeSet<Course>>(courseList, HttpStatus.OK);
+				//Add Course to List if Student has not taken the course
+				if(!coursesStudentTaken.contains(course))
+				{
+					courseList.add(course);
+				}
 
-			} 
-			catch (NoSuchElementException e) 
-			{
-				//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
-				return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
-			}
-		}//end getAllCourses
-	
+
+			}//end for loop cycling the list of courses the student has taken
+
+			//return the list of courses from the major that the student has pre-reqs for
+			return new ResponseEntity<TreeSet<Course>>(courseList, HttpStatus.OK);
+
+		} 
+		catch (NoSuchElementException e) 
+		{
+			//return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<TreeSet<Course>>(HttpStatus.NOT_FOUND);
+		}
+	}//end getAllCourses
+
 
 
 	//getStudentCourses returns the list of courses the student has taken
@@ -352,7 +354,6 @@ public class StudentController {
 			existingStudent.setEmail(student.getEmail());
 			existingStudent.setLast_name(student.getLast_name());
 			existingStudent.setFirst_name(student.getFirst_name());
-			//existingStudent.setCompleted_courses(student.getCompleted_courses());
 			service.save(existingStudent);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} 
@@ -363,86 +364,95 @@ public class StudentController {
 	}//end update method
 
 	//Jackson Patch logic for adding a course taken to the student
-	@PatchMapping("/student/{id}/{course_id}")
-	public ResponseEntity<Student> addCourseTaken(@PathVariable Long id, @PathVariable String course_id) 
+	@PatchMapping("/student/{id}/{string_of_selected_courses}")
+	public ResponseEntity<Student> addCourseTaken(@PathVariable Long id, @PathVariable String string_of_selected_courses) 
 	{
 		try {
 			//get the student by their id
 			Student student = service.get(id);
-			//get the course completed by its course_id
-			Course course = courseService.get(course_id);
-			//call the addCompletedCourse method in the student to add the completed course to the set
-			student.addCompletedCourse(course);
-
+			//Create an Array from String of Course IDs using a comma delimiter
+			String [] course_ids = null;
+			course_ids = string_of_selected_courses.split(",");
+			//Loop through every course id in the Array
+			for (String course_id : course_ids)
+			{
+				//Find Course by Course ID
+				Course course = courseService.get(course_id);
+				//Check to make sure course exists
+				if (course != null)
+				{
+					//Add completed course to student object
+					student.addCompletedCourse(course);
+				}
+			}
 			//save the student object 
 			service.save(student);
-			//return the student
+
 			return new ResponseEntity<Student>(HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
-
 	//adds section selection to the student
-	@PatchMapping("/students/{id}/{section_id}") 
-	public ResponseEntity<Student> addSectionSelection(@PathVariable Long id, @PathVariable String section_id) 
+	@PatchMapping("/students/{id}/{string_of_section_ids}") 
+	public ResponseEntity<Student> addSectionSelection(@PathVariable Long id, @PathVariable String string_of_section_ids) 
 	{
 		try { 
 			//get the student by their id 
 			Student student = service.get(id); 
-			//get the section selected by it's section_id 
-			Section section = sectionService.get(section_id); 
-			//call the addSectionSelection method in the student to add the completed course to the set
-			student.addSectionSelection(section);
+			//Create an Array of Strings from section ids split by a comma delimiter
+			String [] sectionStrings = null;
+			sectionStrings = string_of_section_ids.split(",");
+			//Loop through every section id in the Array
+			for (String sectionAsString : sectionStrings)
+			{
+				//Find the section object with the section id
+				Section section = sectionService.get(sectionAsString);
+				//If the section object is not null add it to the student object
+				if (section != null)
+				{
+					student.addSectionSelection(section);
+				}
+			}
+			//Save the Student Object
+			service.save(student);
 
-			//save the student object 
-			service.save(student); 
-
-			//add the corresponding course to the courses taken for the student								Removed by Jeremy 11/23/21 since we don't want it to add a course when you add the section
-			//addCourseTaken(id, section.getCourse_id());
-
-			//return the student http status
 			return new ResponseEntity<Student>(HttpStatus.OK);
 
-		} catch (Exception e) { 
+		} catch (Exception e) 
+		{ 
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
 		}
 
 	}
-	
-	//BRAND NEW ADDED 12/2
+
 	//the delete method to delete a section from a student
-		@DeleteMapping("/students/{id}/{section_id}")
-		public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+	@DeleteMapping("/students/{id}/{section_id}")
+	public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+	{
+		try 
 		{
-			try 
-			{
-				//get the student by their id 
-				Student student = service.get(id); 
-				//get the section selected by it's section_id 
-				Section section = sectionService.get(section_id); 
-				student.deleteSectionSelection(section);
-				
-				//save the student object 
-				service.save(student); 
-				
-				//service.delete(section_id);
-				//call the addSectionSelection method in the student to add the completed course to the set
-				//student.addSectionSelection(section)
-				return new ResponseEntity<Student>(HttpStatus.OK);
-			}
-			
-			catch (Exception e)
-			{
-				return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
-			}
-				
-			
+			//get the student by their id 
+			Student student = service.get(id); 
+			//get the section selected by it's section_id 
+			Section section = sectionService.get(section_id); 
+			//Delete the Section
+			student.deleteSectionSelection(section);
+			//save the student object 
+			service.save(student); 
+
+			return new ResponseEntity<Student>(HttpStatus.OK);
 		}
 
+		catch (Exception e)
+		{
+			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
+		}
+	}
+
+	
 	//was original patch method
 	@PatchMapping("/student/{email}")
 	public ResponseEntity<Student> updateStudentPartially(@RequestBody Student student, @PathVariable String email)
@@ -457,12 +467,12 @@ public class StudentController {
 
 		catch (Exception e) 
 		{
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Student>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	} 
 
 	//the delete method allows an admin to delete a Student by email
-	@DeleteMapping("/student/{id}")
+	@DeleteMapping("/studentToDelete/{id}")
 	public void delete(@PathVariable Long id)
 	{
 		service.delete(id);
