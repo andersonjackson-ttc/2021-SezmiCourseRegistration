@@ -429,7 +429,7 @@ public class StudentController {
 	}
 
 	//the delete method to delete a section from a student
-	@DeleteMapping("/students/{id}/{section_id}")
+	@PatchMapping("/students/{id}/{section_id}")
 	public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
 	{
 		try 

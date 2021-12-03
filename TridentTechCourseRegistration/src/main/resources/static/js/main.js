@@ -379,6 +379,7 @@ function loadCourses()
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
 						document.getElementById('showChosenSections').innerHTML = '<button id="btnChosenSections">Chosen Sections</button>'
+						document.getElementById('removeSelection').innerHTML = '<button id="removeBtn">Remove</button>'
 						
 						//Add Appropriate Event Listeners
 						document.getElementById('btnCompletedCourses').addEventListener('click', loadCompletedCourses, false);
@@ -742,7 +743,7 @@ function loadChosenSections()
             //Send API Call
             xmlhttp.send();
             document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
-			document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
+			document.getElementById('removeBtn').addEventListener('click', removeSectionSelection, false);
             document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 	
 }
