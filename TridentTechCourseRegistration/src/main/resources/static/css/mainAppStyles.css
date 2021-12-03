@@ -232,8 +232,11 @@ div.ui-page #logoutBtn{
     table
     {
         border-collapse: collapse;
+        /*margin-left: auto;
+		margin-right: auto;*/
         margin: 20px 0px 190px 0px;
     }
+    
     
     table:hover
     {
@@ -257,7 +260,7 @@ div.ui-page #logoutBtn{
     
     tr:nth-child(even)
     {
-		background-color: lightgreen;
+		background-color: #E8E8E8;
 }
 
     #address

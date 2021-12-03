@@ -451,12 +451,13 @@ function loadCourses()
                     	//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
                     	//document.getElementById('courses').innerHTML = coursesList;
                     	
-                    	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit Selection</button>'
+                    	document.getElementById('submitClasses').innerHTML = '<button id="completedBtn">Submit</button>'
 						document.getElementById('showSections').innerHTML = '<button id="btnSection">Display Sections</button>'
 						document.getElementById('showCompCourses').innerHTML = '<button id="btnCompletedCourses">Completed Courses</button>'
 						document.getElementById('showChosenSections').innerHTML = '<button id="btnChosenSections">Chosen Sections</button>'
 						document.getElementById('btnCompletedCourses').addEventListener('click', loadCompletedCourses, false);
 						document.getElementById('completedBtn').addEventListener('click', setCourseSelection, false);
+						document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
 						document.getElementById('btnSubmit').innerHTML = 'Change Major';
@@ -513,142 +514,6 @@ function displayAllCourses()
             //Send API Call
             xhr.send();
  }//End of function to display courses with pre req met
-
-
-//Function to print to table set of courses with pre-reqs met
-function displayCoursesWithPreReqMet()
-{
-	  //Make a new API Request
-            xmlhttp = new XMLHttpRequest();
-            
-            //Get Status
-             xmlhttp.onreadystatechange = function() 
-            {
-                //Check if Status is Ready
-                if (this.readyState == 4 && this.status==200) 
-                {
-                    //Parse into JSON
-                    const coursesWithPreReqMet = jQuery.parseJSON(xmlhttp.responseText);
-                    //document.getElementById('courses').innerHTML = `<tr><th>Courses</th></tr>${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`
-                    //coursesList += courseTemplateAvailable(coursesWithPreReqMet);
-                   
-                   
-                   coursesList += `${coursesWithPreReqMet.map(courseTemplateAvailable).join('')}`;
-                    
-                 }
-                 
-                 
-             }
-             
-            //Create API Call 											//this might be the culprit 11/4/2021
-            xmlhttp.open("GET", '/student/' + userEmail.user + '/course_prereq_true');
-            
-            xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
-            
-            //Send API Call
-            xmlhttp.send();
- }//End of function to display courses with pre req met
-
-//Function to print to table set of courses with pre-reqs met
-function displayCoursesWithPreReqNotMet()
-{
-	let courses = "";
-	//Make a new API Request
-            xmlhttp = new XMLHttpRequest();
-            
-            //Get Status
-             xmlhttp.onreadystatechange = function() 
-            {
-                //Check if Status is Ready
-                if (this.readyState == 4 && this.status==200) 
-                {
-					//declare header by editing coursesList
-					coursesList += "<tr><th>Courses Without Prerequisites Met</th></tr>";
-                    //Parse into JSON
-                    const coursesWithPreReqNotMet = jQuery.parseJSON(xmlhttp.responseText);
-                    //document.getElementById('courses').innerHTML = `${coursesWithPreReqNotMet.map(courseTemplateUnavailable).join('')}`
-                    coursesList += `${coursesWithPreReqNotMet.map(courseTemplateUnavailable).join('')}`
-                   
-                 }
-             }
-            //Create API Call 											//this might be the culprit 11/4/2021
-            xmlhttp.open("GET", '/student/' + userEmail.user + '/course_prereq_false');
-            
-            xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
-            
-            //Send API Call
-            xmlhttp.send();
-            
-}//End of function to display courses with pre req met
-  
-
-//Function to change course availability based on preReqStatus
-function getPreReqStatus(courses, i)
-{
-//Make API Request for Boolean value to check Pre Req status
-			//var preReqStatus;
-			//var coursesList = `<tr><th>Select Completed Courses</th></tr>`;
-           	var tOrF = new XMLHttpRequest();
-           	//Get Status
-             tOrF.onreadystatechange = function() 
-             {
-					
-                //Check if Status is Ready
-                if (true) 
-                {
-                    //Parse into JSON
-                    const preReqStatus = tOrF.responseText;
-                     //const newCourses = jQuery.parseJSON(xmlhttp.responseText);
-                    //document.getElementById('sezmiFooter').innerHTML = (`${courses[i].course_id}`).fontcolor("blue").fontsize(2.1);
-                    document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("red").fontsize(2.1);
-                    //coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />TRUE-${tOrF.responseText}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
-                    
-                    if (preReqStatus)
-                    //if(true)
-                    
-                    {
-						window.alert("the pre-req status is " + preReqStatus);
-						 document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("orange").fontsize(2.1);
-						//document.getElementById('sezmiFooter').innerHTML = (`${courses[i].course_id}`).fontcolor("black").fontsize(2.1);
-						//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplate).join('')}`
-						//document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("red").fontsize(2.1);
-						//coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />TRUE-${preReqStatus}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
-						coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />YES-${preReqStatus}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
-						//coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${preReqStatus}</td></tr>`;
-						window.alert("is this line ever read?");
-					}
-					else 
-					{
-						 document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("blue").fontsize(2.1);
-						//document.getElementById('sezmiFooter').innerHTML = (`${courses[i].course_id}`).fontcolor("black").fontsize(2.1);
-						//document.getElementById('courses').innerHTML = `<tr><th>Select Completed Courses</th></tr>${courses.map(courseTemplateIfFalse).join('')}`
-						coursesList += `<tr><td><input type='radio' name = 'radioBtn' value =${courses[i].course_id} />NO-${preReqStatus}${courses[i].course_id} - ${courses[i].course_name}</td></tr>`;
-						window.alert("Is this line read first?");
-					}
-                    //preReqStatus = "hi billy";
-                    //document.getElementById('sezmiFooter').innerHTML = (preReqStatus).fontcolor("black").fontsize(2.1);
-                    //document.getElementById('courses').innerHTML = coursesList;
-                }
-             }
-                 
-                //Create API Call to get boolean value for Pre Req Status	-PLEASE DONT DELETE!										
-            
-           		
-           		tOrF.open("GET", '/student/'+ student_id + "/" + courses[i].course_id +   '/course_prereq');          
-                tOrF.setRequestHeader("Content-Type", "application/json"); 
-            
-            	//Send API Call
-            	tOrF.send();
-            	//return preReqStatus;
-            	//END of preReqStatus
-}
-
-
-
-function returnTest()
-{
-	return "hi billy";
-}
 
 //getStudentMajor returns a String with the student major from the database
 function getStudentMajor()
@@ -864,7 +729,7 @@ function loadChosenSections()
 	{
 		if (this.readyState == 4 && this.status==200) 
 		    {
-					sectionTableInfo = "<tr><th>Chosen Sections<br></th></tr>";
+					sectionTableInfo = "<tr><th>Chosen Sections<br></th></tr><tr><td>";
 				   //Parse into JSON
                     const chosenSections = jQuery.parseJSON(xmlhttp.responseText);
                    for (i=0;i<chosenSections.length ;i++)
@@ -932,13 +797,15 @@ function loadChosenSections()
 								instructor += formatSpacing;
 							}
 							
+							//<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br>
 							
-							sectionTableInfo += `<tr><td><pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}</tr></td>`
+							
+							sectionTableInfo += `<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration             Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre><input type = 'radio' name = 'testingName' id = 'deleteSection' value ='${section}'>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}`
 							
 							if (i == chosenSections.length -1)
 							
 							{
-								sectionTableInfo += "</tr></td>";
+								sectionTableInfo += "</td></tr>";
 							}
 					}
 					document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
@@ -1011,6 +878,38 @@ function setSectionSelection()
         
         //document.getElementById("completedBtn").style.display = "none";
     }
+  
+  //sets up the section selection to be deleted
+  //BRAND NEW added 12/2 
+function removeSectionSelection(){
+	
+	var checkbox = document.querySelector('input[type="radio"]:checked');
+	var checkboxSelection = checkbox.value;
+	deleteSectionSelection(checkboxSelection);
+	loadChosenSections();
+	
+}
+
+//BRAND NEW added 12/2
+//template of patch mapping used to delete selected section
+function deleteSectionSelection(checkboxSelection)
+ {
+	xmlhttp = new XMLHttpRequest();
+        
+        xmlhttp.onreadystatechange = function()
+        	{
+				if(true)
+				{
+					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+				}
+			}
+			
+		xmlhttp.open("DELETE", "/students/" + student_id + "/" + checkboxSelection, true);
+		
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send();
+}
     
  function postCourses()
  {

@@ -34,8 +34,8 @@ public class SectionService
 	}
 
 	//the delete method deletes a section by the SectionID
-	public void delete(String courseID)
+	public void delete(String section_id)
 	{
-		repository.deleteById(courseID);
+		repository.deleteById(section_id);
 	}
 }

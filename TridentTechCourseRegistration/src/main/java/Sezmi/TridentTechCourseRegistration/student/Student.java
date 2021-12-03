@@ -173,6 +173,13 @@ public class Student{
 	public void addSectionSelection(Section sectionChosen) {
 		sectionSelection.add(sectionChosen);
 	}
+	
+	public void deleteSectionSelection(Section sectionToDelete)
+	{
+		sectionSelection.remove(sectionToDelete);
+	}
+	
+	
 	public Set<Section> getSectionsChosen() {
 		return sectionSelection;
 	}

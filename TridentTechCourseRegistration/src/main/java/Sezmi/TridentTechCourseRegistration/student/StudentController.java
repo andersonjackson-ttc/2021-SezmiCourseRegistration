@@ -412,6 +412,36 @@ public class StudentController {
 		}
 
 	}
+	
+	//BRAND NEW ADDED 12/2
+	//the delete method to delete a section from a student
+		@DeleteMapping("/students/{id}/{section_id}")
+		public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+		{
+			try 
+			{
+				//get the student by their id 
+				Student student = service.get(id); 
+				//get the section selected by it's section_id 
+				Section section = sectionService.get(section_id); 
+				student.deleteSectionSelection(section);
+				
+				//save the student object 
+				service.save(student); 
+				
+				//service.delete(section_id);
+				//call the addSectionSelection method in the student to add the completed course to the set
+				//student.addSectionSelection(section)
+				return new ResponseEntity<Student>(HttpStatus.OK);
+			}
+			
+			catch (Exception e)
+			{
+				return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
+			}
+				
+			
+		}
 
 	//was original patch method
 	@PatchMapping("/student/{email}")

@@ -50,4 +50,11 @@ public class StudentService {
 	{
 		repository.deleteById(id);;
 	}
+	
+	//NEW added 12/2
+	//the delete method deletes a student section selection by section id
+	public void delete(String section_id)
+	{
+		//repository.deleteAllInBatch(section_id);
+	}
 }
