@@ -752,7 +752,7 @@ function loadChosenSections()
             //Send API Call
             xmlhttp.send();
             document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
-			document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
+			document.getElementById('removeBtn').addEventListener('click', removeSectionSelection, false);
             //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
             document.getElementById('completedBtn').disabled = true;
             document.getElementById('removeBtn').disabled = false;
@@ -867,12 +867,16 @@ function deleteSectionSelection(checkboxSelection)
 					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
 				}
 			}
-			
-		xmlhttp.open("DELETE", "/students/" + student_id + "/" + "ACM-125-001-S1" + "/remove_section", true);
+		
+		
+		xmlhttp.open("PATCH", "/students/" + student_id + "/" + checkboxSelection + "/remove_section", true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
 		xmlhttp.send();
+		
+		//window alert for testing
+		window.alert(checkboxSelection);
 }
     
  function postCourses()

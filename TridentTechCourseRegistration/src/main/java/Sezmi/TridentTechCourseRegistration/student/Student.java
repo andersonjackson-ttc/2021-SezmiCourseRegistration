@@ -180,7 +180,7 @@ public class Student{
 	 * sectionSelection.remove(sectionToDelete); }
 	 */
 	
-
+	
 	
 	
 	public Set<Section> getSectionsChosen() {

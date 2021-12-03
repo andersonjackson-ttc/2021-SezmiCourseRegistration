@@ -1,11 +1,17 @@
 package Sezmi.TridentTechCourseRegistration.section;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import Sezmi.TridentTechCourseRegistration.student.Student;
 
 @Entity
 @Table(name = "section")
@@ -21,7 +27,12 @@ public class Section implements Comparable<Section>
 	private String course_format;
 	private String remaining_spaces;
 	private String course_id;
-	
+
+
+	//mapping of many to many to map sections to student in student_section table
+	@ManyToMany(mappedBy = "sectionSelection")
+	private Set<Student> students = new HashSet<>();
+
 	public Section()
 	{}
 
@@ -38,7 +49,7 @@ public class Section implements Comparable<Section>
 		this.remaining_spaces = remaining_spaces;
 		this.course_id = course_id;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "section_id", nullable = false, updatable = false)
@@ -123,17 +134,36 @@ public class Section implements Comparable<Section>
 		this.section_id = section_id;
 	}
 
+	//utility method to add a student to the section
+	public void addStudent(Student student)
+	{
+		//add the student to this section set of students
+		this.students.add(student);
+		//add this section to this student to complete both sides of the many-2-many relationship
+		student.getSectionsChosen().add(this);
+
+	}//end addSection method
+
+	//the removeStudent utility method removes a student from the section and vise versa (for many to many relationship)
+	public void removeStudent(Student student)
+	{
+		//remove the student from this section set of students
+		this.students.remove(student);
+		//remove this section from the student to complete both sides of the many-2-many relationship
+		student.getSectionsChosen().remove(this);
+	}
+
 	@Override
 	public int compareTo(Section o) {
 		int order = getSection_id().compareToIgnoreCase(o.getSection_id());// TODO Auto-generated method stub
 		return order;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 
 }

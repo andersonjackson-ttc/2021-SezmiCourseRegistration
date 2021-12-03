@@ -398,8 +398,8 @@ public class StudentController {
 		}
 	}
 
-	//adds section selection to the student
-	@PatchMapping("/students/{id}/{string_of_section_ids}") 
+	//deletes all sections from the student
+	@DeleteMapping("/students/{id}/{string_of_section_ids}") 
 	public ResponseEntity<Student> addSectionSelection(@PathVariable Long id, @PathVariable String string_of_section_ids) 
 	{
 		try { 
@@ -441,12 +441,41 @@ public class StudentController {
 			Student student = service.get(id); 
 			//get the course selected by it's course_id 
 			Course course = courseService.get(course_id); 
-			
+
 			//list of courses the student has taken
 			Set<Course> coursesTaken = student.getCoursesTaken();
-			
+
 			//remove the course from the courses the student has taken
 			coursesTaken.remove(course);
+
+			//assign the updated courses taken to the student 
+			student.setCoursesTaken(coursesTaken);
+
+			//save the student object 
+			service.save(student); 
+
+			return new ResponseEntity<Student>(HttpStatus.OK);
+		}
+
+		catch (Exception e)
+		{
+			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
+		}
+	}
+
+	//the delete method to delete a section from a student
+	@PatchMapping("/students/{id}/{section_id}/remove_section")
+	public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+	{
+		try 
+		{
+			//get the student by their id 
+			Student student = service.get(id); 
+			//get the section selected by it's section_id 
+			Section section = sectionService.get(section_id); 
+
+			//call the remove student method 
+			section.removeStudent(student);
 			
 			//save the student object 
 			service.save(student); 
@@ -459,39 +488,6 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
 		}
 	}
-	
-	//the delete method to delete a section from a student
-		@DeleteMapping("/students/{id}/{section_id}/remove_section")
-		public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
-		{
-			try 
-			{
-				//get the student by their id 
-				Student student = service.get(id); 
-				//get the section selected by it's section_id 
-				Section section = sectionService.get(section_id); 
-				
-				//list of sections the student has taken
-				Set<Section> sectionSelection = student.getSectionsChosen();
-				
-				//remove the section from the set
-				sectionSelection.remove(section);
-				
-				//Delete the Section
-				//student.deleteSectionSelection(section);
-				
-				//save the student object 
-				service.save(student); 
-
-				return new ResponseEntity<Student>(HttpStatus.OK);
-			}
-
-			catch (Exception e)
-			{
-				return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
-			}
-		}
-
 	
 	//was original patch method
 	@PatchMapping("/student/{email}")
