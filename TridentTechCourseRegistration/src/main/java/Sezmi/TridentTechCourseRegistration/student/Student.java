@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import Sezmi.TridentTechCourseRegistration.completedCourses.CompletedCourses;
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.section.Section;
 
@@ -174,10 +175,12 @@ public class Student{
 		sectionSelection.add(sectionChosen);
 	}
 	
-	public void deleteSectionSelection(Section sectionToDelete)
-	{
-		sectionSelection.remove(sectionToDelete);
-	}
+	/*
+	 * public void deleteSectionSelection(Section sectionToDelete) {
+	 * sectionSelection.remove(sectionToDelete); }
+	 */
+	
+
 	
 	
 	public Set<Section> getSectionsChosen() {

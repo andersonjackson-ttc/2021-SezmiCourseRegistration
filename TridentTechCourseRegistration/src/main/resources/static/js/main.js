@@ -387,7 +387,8 @@ function loadCourses()
 						document.getElementById('btnSection').addEventListener('click', loadSections, false);
 						document.getElementById('btnChosenSections').addEventListener('click', loadChosenSections, false);
 						document.getElementById('btnSubmit').innerHTML = 'Change Major';
-						document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn"">Courses Needed</button>';
+						document.getElementById('loadCourses').innerHTML = '<button id="loadCoursesBtn">Courses Needed</button>';
+						document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
 					}
 					//Clear Table from Page
 					else
@@ -405,6 +406,9 @@ function loadCourses()
             
             //Send API Call
             xmlhttp.send();
+            
+            document.getElementById('completedBtn').disabled = false;
+            document.getElementById('removeBtn').disabled = true;
 }
 //Function to print to table set of courses with pre-reqs met
 function displayAllCourses()
@@ -492,7 +496,7 @@ function loadCompletedCourses()
 							{
 								words += `<br>`;
 							}
-							words += `<tr><td>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
+							words += `<tr><td><input type = 'radio' name = 'courseDeletion' id = 'deleteCourse' value ='${completedCourses[i].course_id}'>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
 							if (i == completedCourses.length -1)
 							{
 								words += "</tr></td>";
@@ -508,7 +512,10 @@ function loadCompletedCourses()
             
             //Send API Call
             xmlhttp.send();
-            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            document.getElementById('completedBtn').disabled = true;
+            document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
+            document.getElementById('removeBtn').disabled = false;
 }
 //Loads all sections for student to choose from
 function loadSections()
@@ -643,7 +650,9 @@ function loadSections()
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
             //document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
-            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            document.getElementById('completedBtn').disabled = false;
+            document.getElementById('removeBtn').disabled = true;
             
 }
 //Loads sections from the student_section table that student has chosen
@@ -743,8 +752,10 @@ function loadChosenSections()
             //Send API Call
             xmlhttp.send();
             document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
-			document.getElementById('removeBtn').addEventListener('click', removeSectionSelection, false);
-            document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+			document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
+            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            document.getElementById('completedBtn').disabled = true;
+            document.getElementById('removeBtn').disabled = false;
 	
 }
 
@@ -806,7 +817,34 @@ function setSectionSelection(numberOfCourses)
         	setTimeout(loadChosenSections, 950);
 		}
     }
-  
+
+//Sets up the course selection to be deleted
+function removeCourseSelection()
+{
+	let checkbox = document.querySelector('input[type="radio"]:checked');
+	let checkboxSelection = checkbox.value;
+	deleteCourseSelection(checkboxSelection);
+	
+}  
+
+//template patch mapping used to delete selected course from a student saying they already have taken that course
+function deleteCourseSelection(checkboxSelection)
+{
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function()
+	{
+		if (true)
+		{
+			document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+		}
+	}
+	
+	xmlhttp.open("DELETE", "/student/" + student_id + "/" + checkboxSelection + "/remove_course", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send();
+}
+
+
 //Sets up the section selection to be deleted
 function removeSectionSelection()
 {
@@ -830,7 +868,7 @@ function deleteSectionSelection(checkboxSelection)
 				}
 			}
 			
-		xmlhttp.open("DELETE", "/students/" + student_id + "/" + checkboxSelection, true);
+		xmlhttp.open("DELETE", "/students/" + student_id + "/" + "ACM-125-001-S1" + "/remove_section", true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		

@@ -2,6 +2,7 @@ package Sezmi.TridentTechCourseRegistration.student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import Sezmi.TridentTechCourseRegistration.completedCourses.CompletedCourses;
+import Sezmi.TridentTechCourseRegistration.completedCourses.CompletedCoursesService;
 import Sezmi.TridentTechCourseRegistration.course.Course;
 import Sezmi.TridentTechCourseRegistration.course.CourseService;
 import Sezmi.TridentTechCourseRegistration.major.Major;
@@ -428,18 +431,23 @@ public class StudentController {
 
 	}
 
-	//the delete method to delete a section from a student
-	@PatchMapping("/students/{id}/{section_id}")
-	public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+	//the delete method to delete completed course from a student
+	@DeleteMapping("/student/{id}/{course_id}/remove_course")
+	public ResponseEntity<Student> deleteCourseSelection(@PathVariable Long id, @PathVariable String course_id)
 	{
 		try 
 		{
 			//get the student by their id 
 			Student student = service.get(id); 
-			//get the section selected by it's section_id 
-			Section section = sectionService.get(section_id); 
-			//Delete the Section
-			student.deleteSectionSelection(section);
+			//get the course selected by it's course_id 
+			Course course = courseService.get(course_id); 
+			
+			//list of courses the student has taken
+			Set<Course> coursesTaken = student.getCoursesTaken();
+			
+			//remove the course from the courses the student has taken
+			coursesTaken.remove(course);
+			
 			//save the student object 
 			service.save(student); 
 
@@ -451,6 +459,38 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
 		}
 	}
+	
+	//the delete method to delete a section from a student
+		@DeleteMapping("/students/{id}/{section_id}/remove_section")
+		public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
+		{
+			try 
+			{
+				//get the student by their id 
+				Student student = service.get(id); 
+				//get the section selected by it's section_id 
+				Section section = sectionService.get(section_id); 
+				
+				//list of sections the student has taken
+				Set<Section> sectionSelection = student.getSectionsChosen();
+				
+				//remove the section from the set
+				sectionSelection.remove(section);
+				
+				//Delete the Section
+				//student.deleteSectionSelection(section);
+				
+				//save the student object 
+				service.save(student); 
+
+				return new ResponseEntity<Student>(HttpStatus.OK);
+			}
+
+			catch (Exception e)
+			{
+				return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
+			}
+		}
 
 	
 	//was original patch method
