@@ -398,8 +398,8 @@ public class StudentController {
 		}
 	}
 
-	//deletes all sections from the student
-	@DeleteMapping("/students/{id}/{string_of_section_ids}") 
+	//Adds all selected sections to the Student_Section Table
+	@PatchMapping("/students/{id}/{string_of_section_ids}") 
 	public ResponseEntity<Student> addSectionSelection(@PathVariable Long id, @PathVariable String string_of_section_ids) 
 	{
 		try { 
@@ -432,15 +432,32 @@ public class StudentController {
 	}
 
 	//the delete method to delete completed course from a student
-	@DeleteMapping("/student/{id}/{course_id}/remove_course")
-	public ResponseEntity<Student> deleteCourseSelection(@PathVariable Long id, @PathVariable String course_id)
+	@DeleteMapping("/student/{id}/{course_ids}")
+	public ResponseEntity<Student> deleteCourseSelection(@PathVariable Long id, @PathVariable String course_ids)
 	{
 		try 
 		{
 			//get the student by their id 
 			Student student = service.get(id); 
+			//Create an Array of Strings from course ids split by a comma delimiter
+			String [] arrayOfCourseStrings = null;
+			arrayOfCourseStrings = course_ids.split(",");
+			//Loop through every course id in the array
+			for (String course_id : arrayOfCourseStrings)
+			{
+				//Find the Course Object with the course_id
+				Course course = courseService.get(course_id); 
+				//If the course exists, remove it from the completed courses table
+				if (course != null)
+				{
+					student.removeCompletedCourse(course);
+					service.save(student); 
+				}
+
+			}
+			/*
 			//get the course selected by it's course_id 
-			Course course = courseService.get(course_id); 
+			//Course course = courseService.get(course_id); 
 
 			//list of courses the student has taken
 			Set<Course> coursesTaken = student.getCoursesTaken();
@@ -452,7 +469,7 @@ public class StudentController {
 			student.setCoursesTaken(coursesTaken);
 
 			//save the student object 
-			service.save(student); 
+			service.save(student); */
 
 			return new ResponseEntity<Student>(HttpStatus.OK);
 		}
@@ -464,7 +481,9 @@ public class StudentController {
 	}
 
 	//the delete method to delete a section from a student
-	@PatchMapping("/students/{id}/{section_id}/remove_section")
+	//@PatchMapping("/students/{id}/{section_id}/remove_section")
+	
+	@DeleteMapping("/students/{id}/{section_id}")
 	public ResponseEntity<Student> deleteSectionSelection(@PathVariable Long id, @PathVariable String section_id)
 	{
 		try 
@@ -473,9 +492,11 @@ public class StudentController {
 			Student student = service.get(id); 
 			//get the section selected by it's section_id 
 			Section section = sectionService.get(section_id); 
+			//Remove Section From Student_Section Table
+			student.deleteSectionSelection(section);
 
 			//call the remove student method 
-			section.removeStudent(student);
+			//section.removeStudent(student);
 			
 			//save the student object 
 			service.save(student); 
@@ -488,6 +509,7 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND); 
 		}
 	}
+	
 	
 	//was original patch method
 	@PatchMapping("/student/{email}")

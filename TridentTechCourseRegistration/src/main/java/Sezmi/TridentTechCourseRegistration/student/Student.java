@@ -162,6 +162,11 @@ public class Student{
 		//add the courseTaken to the set of coursesTaken
 		coursesTaken.add(completed_course);
 	}
+	
+	public void removeCompletedCourse(Course completed_course)
+	{
+		coursesTaken.remove(completed_course);
+	}
 
 	public Set<Course> getCoursesTaken() {
 		return coursesTaken;
@@ -175,14 +180,12 @@ public class Student{
 		sectionSelection.add(sectionChosen);
 	}
 	
-	/*
-	 * public void deleteSectionSelection(Section sectionToDelete) {
-	 * sectionSelection.remove(sectionToDelete); }
-	 */
 	
-	
-	
-	
+	 public void deleteSectionSelection(Section sectionToDelete) 
+	 {
+		 sectionSelection.remove(sectionToDelete); 
+	 }
+	 
 	public Set<Section> getSectionsChosen() {
 		return sectionSelection;
 	}

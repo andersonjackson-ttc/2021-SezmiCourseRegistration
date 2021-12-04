@@ -50,6 +50,4 @@ public class StudentService {
 	{
 		repository.deleteById(id);;
 	}
-	
-
 }

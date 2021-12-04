@@ -70,7 +70,8 @@ function init()
         	{
 				if(true)
 				{
-					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+					;
+					//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
 				}
 			}
 			
@@ -204,7 +205,7 @@ function setPreReqStatus()
 
 function sectionTemplate(course)
 {
-	document.getElementById('sezmiFooter').innerHTML = course[0].course_id;
+	//document.getElementById('sezmiFooter').innerHTML = course[0].course_id;
 	return `course.availableSections[0].section_id`;
 }
 
@@ -496,14 +497,14 @@ function loadCompletedCourses()
 							{
 								words += `<br>`;
 							}
-							words += `<tr><td><input type = 'radio' name = 'courseDeletion' id = 'deleteCourse' value ='${completedCourses[i].course_id}'>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
+							words += `<tr><td><input type = 'checkbox' name = 'courseDeletion${i}' id = 'deleteCourse' value ='${completedCourses[i].course_id}'>${completedCourses[i].course_id}, ${completedCourses[i].course_name}</tr></td>`
 							if (i == completedCourses.length -1)
 							{
 								words += "</tr></td>";
 							}
 					}
 					document.getElementById('courses').innerHTML = words.fontcolor("white");
-					
+					document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
                 }
             };
             
@@ -514,7 +515,7 @@ function loadCompletedCourses()
             xmlhttp.send();
             //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
             document.getElementById('completedBtn').disabled = true;
-            document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
+            //document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
             document.getElementById('removeBtn').disabled = false;
 }
 //Loads all sections for student to choose from
@@ -538,7 +539,7 @@ function loadSections()
 	     				let preReqNotMet = "";
 						if (courseSection[i].availabilty == "False")
 						{
-							preReqNotMet = "Pre Reqs Not Met Scrub";		
+							preReqNotMet = "Pre Reqs Not Met";		
 						}
 						
 						
@@ -649,7 +650,7 @@ function loadSections()
             xmlhttp.send();
             
             //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
-            //document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
+            document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
             //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
             document.getElementById('completedBtn').disabled = false;
             document.getElementById('removeBtn').disabled = true;
@@ -786,11 +787,34 @@ function setCourseSelection()
 					checkBoxSelectionString += commaDelimiter + checkbox.value;
 				}
 			}
-		document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1)
+		//document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1)
 		//window.Alert('hi');
         
         patchCompletedCourses(checkBoxSelectionString);
         setTimeout(loadCourses,500);
+    }
+
+function removeCourseSelection()
+    {
+		let checkBoxSelectionString = "";
+		let commaDelimiter = "";
+			for (i=0;i<15;i++)
+			{
+				let checkbox = document.querySelector(`input[name="courseDeletion${i}"]:checked`);
+				if(checkbox != null)
+				{
+					if (checkBoxSelectionString.length > 0)
+					{
+						commaDelimiter = ",";
+					}
+					checkBoxSelectionString += commaDelimiter + checkbox.value;
+				}
+			}
+		//document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1);
+        
+        //patchCompletedCourses(checkBoxSelectionString);
+        deleteCourseSelection(checkBoxSelectionString);
+        setTimeout(loadCompletedCourses,500);
     }
     
     
@@ -818,14 +842,14 @@ function setSectionSelection(numberOfCourses)
 		}
     }
 
+/*
 //Sets up the course selection to be deleted
 function removeCourseSelection()
 {
 	let checkbox = document.querySelector('input[type="radio"]:checked');
 	let checkboxSelection = checkbox.value;
 	deleteCourseSelection(checkboxSelection);
-	
-}  
+}  */
 
 //template patch mapping used to delete selected course from a student saying they already have taken that course
 function deleteCourseSelection(checkboxSelection)
@@ -835,11 +859,12 @@ function deleteCourseSelection(checkboxSelection)
 	{
 		if (true)
 		{
-			document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+			window.alert(`You have successfully removed ${checkboxSelection}`);
+			//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
 		}
 	}
 	
-	xmlhttp.open("DELETE", "/student/" + student_id + "/" + checkboxSelection + "/remove_course", true);
+	xmlhttp.open("DELETE", "/student/" + student_id + "/" + checkboxSelection, true);
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send();
 }
@@ -851,7 +876,9 @@ function removeSectionSelection()
 	let checkbox = document.querySelector('input[type="radio"]:checked');
 	let checkboxSelection = checkbox.value;
 	deleteSectionSelection(checkboxSelection);
-	setTimeout(loadChosenSections,950);
+	
+	//setTimeout(loadChosenSections,750);
+	//loadChosenSections;
 }
 
 //BRAND NEW added 12/2
@@ -862,21 +889,28 @@ function deleteSectionSelection(checkboxSelection)
         
         xmlhttp.onreadystatechange = function()
         	{
-				if(true)
+				if(this.status==200)
 				{
-					document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+					window.alert(`${checkboxSelection}has been removed successfully!`);
+					loadChosenSections();
+					//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+					//window.alert(`${checkboxSelection}has been removed!`);
+					//setTimout(loadChosenSections,500);
+					//loadChosenSections();
+					
 				}
 			}
 		
 		
-		xmlhttp.open("PATCH", "/students/" + student_id + "/" + checkboxSelection + "/remove_section", true);
+		xmlhttp.open("DELETE", "/students/" + student_id + "/" + checkboxSelection, true);
 		
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
 		xmlhttp.send();
-		
+		//window.alert('success');
+		//setTimeout(loadChosenSections,1000);
 		//window alert for testing
-		window.alert(checkboxSelection);
+		//window.alert(checkboxSelection);
 }
     
  function postCourses()
