@@ -173,16 +173,19 @@ function courseTemplateAvailable(course)
 function realCourseTemplate(course) 
 {
 	let radioButtonText = "";
+	let returnText = "";
 	if (course.availabilty == "True")
 	{
 		radioButtonText = `input type='checkbox' name = 'checkBox${index}' `;
+		returnText = `<tr><td><${radioButtonText}value =${course.course_id}>${course.course_id} - ${course.course_name}</td></tr>`;	
 	}
 	else
 	{
 		radioButtonText = `input type='checkbox' disabled = true name = 'checkBox${index}' `;
+		returnText = `<tr><td><${radioButtonText}value =${course.course_id}>${course.course_id} - ${course.course_name} - <font color = red>Pre Reqs Not Met</td></tr>`;	
 	}
 	index++;
-	return `<tr><td><${radioButtonText}value =${course.course_id}>${course.course_id} - ${course.course_name} - ${course.availabilty}</td></tr>`;	
+	return returnText;
 }
 
 function courseTemplateUnavailable(course) 
