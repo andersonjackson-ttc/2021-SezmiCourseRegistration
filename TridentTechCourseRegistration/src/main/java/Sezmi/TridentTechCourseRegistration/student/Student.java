@@ -78,19 +78,9 @@ public class Student{
 		this.first_name = first_name;
 		this.salt = salt;
 		this.password = password;
-		this.major_id = major_id;
-		//this.completed_courses = completed_courses;
+		this.major_id = major_id;		
 	}
-
-	/*	
-	public Set<Courses> getCoursesTaken() {
-		return coursesTaken;
-	}
-
-	public void setCoursesTaken(Set<Courses> coursesTaken) {
-		this.coursesTaken = coursesTaken;
-	}
-	 */
+ 
 	public Long getId() {
 		return id;
 	}
@@ -146,16 +136,6 @@ public class Student{
 	public void setMajor_id(String major_id) {
 		this.major_id = major_id;
 	}
-
-	/*
-	public String getCompleted_courses() {
-		return completed_courses;
-	}*/
-
-	/*
-	public void setCompleted_courses(String completed_courses) {
-		this.completed_courses = completed_courses;
-	}  */
 
 	public void addCompletedCourse(Course completed_course)
 	{	

@@ -5,7 +5,7 @@
 
 #header
 {
-/*    margin: 150px 0px 0px 0px;*/
+
     text-align: center;
     
 }
@@ -56,13 +56,7 @@ table
     margin: 10px 0px 160px 0px;
 }
 
-/*#logout-link
-    {
-        color: #ff6c00;
-        text-decoration: none;
-        font-size: 70%;
-        margin-left: -215px;
-    }*/
+
     
 th
 {
@@ -129,7 +123,7 @@ div.ui-page #logoutBtn{
     min-height: 38px;
     text-align: center;
     font-size: 10px;
-    /*z-index: 99999;*/
+    
 }
 
 @media screen and (min-width: 900px)
@@ -137,7 +131,7 @@ div.ui-page #logoutBtn{
 	#bigPic
     {
         display: block;
-/*        margin: 90px 0px 0px 0px;*/
+
 		margin: -40px 0px 0px 0px;
         position: fixed;
         width: 100%;
@@ -200,7 +194,7 @@ div.ui-page #logoutBtn{
         text-align: center;
         margin: 100px;
         position: relative;
-/*        max-width: 400px;*/
+
     }
     
     #combobox:hover
@@ -232,8 +226,7 @@ div.ui-page #logoutBtn{
     table
     {
         border-collapse: collapse;
-        /*margin-left: auto;
-		margin-right: auto;*/
+        
         margin: 20px 0px 190px 0px;
     }
     
@@ -289,12 +282,9 @@ div.ui-page #logoutBtn{
     }
     footer 
     {
-/*        font-size: 0.5em;*/
-/*        font-family: helvetica;*/
+
         background-color: #cfde46;
-/*        color:white;*/
-/*        clear: both;*/
-/*        text-align: center;*/
+
         width: 100%;
         position: fixed;
         bottom: 0px;

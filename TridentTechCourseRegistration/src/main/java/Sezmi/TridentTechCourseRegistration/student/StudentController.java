@@ -455,22 +455,7 @@ public class StudentController {
 				}
 
 			}
-			/*
-			//get the course selected by it's course_id 
-			//Course course = courseService.get(course_id); 
-
-			//list of courses the student has taken
-			Set<Course> coursesTaken = student.getCoursesTaken();
-
-			//remove the course from the courses the student has taken
-			coursesTaken.remove(course);
-
-			//assign the updated courses taken to the student 
-			student.setCoursesTaken(coursesTaken);
-
-			//save the student object 
-			service.save(student); */
-
+			
 			return new ResponseEntity<Student>(HttpStatus.OK);
 		}
 
@@ -495,9 +480,6 @@ public class StudentController {
 			//Remove Section From Student_Section Table
 			student.deleteSectionSelection(section);
 
-			//call the remove student method 
-			//section.removeStudent(student);
-			
 			//save the student object 
 			service.save(student); 
 
