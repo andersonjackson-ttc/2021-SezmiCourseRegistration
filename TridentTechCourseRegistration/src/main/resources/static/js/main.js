@@ -142,10 +142,7 @@ function getMajorIdFromStudent()
 		if (userName.major_id != "null")
 		{
 			loadMajorWithId();
-			//setTimeout(loadOverLoadMajors(currentMajor), 5000);
-			//loadCourses only and skip the rest (no major drop down list anymore)
-			//loadCourses();
-			//document.getElementById('btnSubmit').addEventListener('click', selectMajor, false); //if the major isn't selected, add the new major
+			
 		}
 		//else they haven't signed up for a major so they need to do that. 
 		else
@@ -208,7 +205,7 @@ function setPreReqStatus()
 
 function sectionTemplate(course)
 {
-	//document.getElementById('sezmiFooter').innerHTML = course[0].course_id;
+	
 	return `course.availableSections[0].section_id`;
 }
 
@@ -402,11 +399,11 @@ function loadCourses()
                 }
             };
             
-            //Create API Call 											//this might be the culprit 11/4/2021
-            //xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
+            //Create API Call 											
+            
             xmlhttp.open("GET", '/student/' + userEmail.user + '/all_courses');
             
-            xmlhttp.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
+            xmlhttp.setRequestHeader("Content-Type", "application/json"); 
             
             //Send API Call
             xmlhttp.send();
@@ -435,10 +432,10 @@ function displayAllCourses()
                  }
              }
              
-            //Create API Call 											//this might be the culprit 11/4/2021
+            //Create API Call 											
             xhr.open("GET", '/student/' + userEmail.user + '/all_courses');
             
-            xhr.setRequestHeader("Content-Type", "application/json"); //jeremy edit delete if not working
+            xhr.setRequestHeader("Content-Type", "application/json"); 
             
             //Send API Call
             xhr.send();
@@ -516,9 +513,9 @@ function loadCompletedCourses()
             
             //Send API Call
             xmlhttp.send();
-            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            
             document.getElementById('completedBtn').disabled = true;
-            //document.getElementById('removeBtn').addEventListener('click', removeCourseSelection, false);
+            
             document.getElementById('removeBtn').disabled = false;
 }
 //Loads all sections for student to choose from
@@ -546,9 +543,9 @@ function loadSections()
 						}
 						
 						
-						//words +=`Course ID of ${courseSection[i].course_id}: `;
+						
 						words += `<tr><td><a><font color = black>${courseSection[i].course_id} - ${courseSection[i].course_name}</font>&nbsp;&nbsp;&nbsp;&nbsp;<font color = red>${preReqNotMet}</font></a></td></tr><tr><td><pre><div style="color:blue"><b>      Section            Term        Format         Duration        Schedule       Time              Instructor       Remaining Seats</b></div>`;
-						//document.getElementById("openUp").addEventListener('click',alert("hi"), false);
+						
 					
 						for (z=0;z<courseSection[i].availableSections.length;z++)
 						{
@@ -622,8 +619,7 @@ function loadSections()
 							
 							if (courseSection[i].availabilty == "True")
 							{
-								//radioButton = "input type='radio' name = 'newRadioBtn[ " + i + "]' ";
-								//radioButton = "input type='radio' name = 'newRadioBtn' ";
+								
 								radioButton = "input type='radio' name = 'newRadioBtn" + i + "' ";
 							}
 							
@@ -647,14 +643,14 @@ function loadSections()
             
             //Create API Call
             xmlhttp.open("GET", '/majors/' + userEmail.user + '/courses');
-            //xmlhttp.open("GET", '/courses/ENG-260/sections');
+            
             
             //Send API Call
             xmlhttp.send();
             
-            //document.getElementById('submitClasses').innerHTML = '<button id="">Submit Selection</button>'
-            document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
-            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            
+            //document.getElementById('completedBtn').addEventListener('click', setSectionSelection(corLength), false);
+            
             document.getElementById('completedBtn').disabled = false;
             document.getElementById('removeBtn').disabled = true;
             
@@ -736,7 +732,7 @@ function loadChosenSections()
 								instructor += formatSpacing;
 							}
 							
-							//<pre><div style="height:1px;color:blue"><b>     Section                Term             Format              Duration               Schedule           Time                   Instructor              Remaining Seats</b></div><br>
+							
 							sectionTableInfo += `<pre><div style="height:1px;color:blue"><b>     Section                Term                Format           Duration                Schedule           Time                   Instructor              Remaining Seats</b></div><br><pre><input type = 'radio' name = 'testingName' id = 'deleteSection' value ='${section}'>${section}   ||   ${term}   ||   ${courseFormat}   ||   ${duration}   ||   ${schedule}   ||   ${time}   ||   ${instructor}   ||   ${remainingSpaces}`
 							
 							if (i == chosenSections.length -1)
@@ -745,8 +741,7 @@ function loadChosenSections()
 								sectionTableInfo += "</td></tr>";
 							}
 					}
-					//document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
-					//document.getElementById('completedBtn').addEventListener('click', removeSectionSelection, false);
+					
                 }
             };
             
@@ -757,7 +752,7 @@ function loadChosenSections()
             xmlhttp.send();
             document.getElementById('courses').innerHTML = sectionTableInfo.fontcolor("white");
 			document.getElementById('removeBtn').addEventListener('click', removeSectionSelection, false);
-            //document.getElementById('loadCoursesBtn').addEventListener('click', loadCourses, false);
+            
             document.getElementById('completedBtn').disabled = true;
             document.getElementById('removeBtn').disabled = false;
 	
@@ -790,8 +785,7 @@ function setCourseSelection()
 					checkBoxSelectionString += commaDelimiter + checkbox.value;
 				}
 			}
-		//document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1)
-		//window.Alert('hi');
+		
         
         patchCompletedCourses(checkBoxSelectionString);
         setTimeout(loadCourses,500);
@@ -813,9 +807,7 @@ function removeCourseSelection()
 					checkBoxSelectionString += commaDelimiter + checkbox.value;
 				}
 			}
-		//document.getElementById('sezmiFooter').innerHTML = (checkBoxSelectionString).fontcolor("black").fontsize(2.1);
-        
-        //patchCompletedCourses(checkBoxSelectionString);
+		
         deleteCourseSelection(checkBoxSelectionString);
         setTimeout(loadCompletedCourses,500);
     }
@@ -845,14 +837,6 @@ function setSectionSelection(numberOfCourses)
 		}
     }
 
-/*
-//Sets up the course selection to be deleted
-function removeCourseSelection()
-{
-	let checkbox = document.querySelector('input[type="radio"]:checked');
-	let checkboxSelection = checkbox.value;
-	deleteCourseSelection(checkboxSelection);
-}  */
 
 //template patch mapping used to delete selected course from a student saying they already have taken that course
 function deleteCourseSelection(checkboxSelection)
@@ -863,7 +847,7 @@ function deleteCourseSelection(checkboxSelection)
 		if (true)
 		{
 			window.alert(`You have successfully removed ${checkboxSelection}`);
-			//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
+			
 		}
 	}
 	
@@ -880,8 +864,7 @@ function removeSectionSelection()
 	let checkboxSelection = checkbox.value;
 	deleteSectionSelection(checkboxSelection);
 	
-	//setTimeout(loadChosenSections,750);
-	//loadChosenSections;
+	
 }
 
 //BRAND NEW added 12/2
@@ -896,10 +879,7 @@ function deleteSectionSelection(checkboxSelection)
 				{
 					window.alert(`${checkboxSelection}has been removed successfully!`);
 					loadChosenSections();
-					//document.getElementById('sezmiFooter').innerHTML = (checkboxSelection).fontcolor("black").fontsize(2.1);
-					//window.alert(`${checkboxSelection}has been removed!`);
-					//setTimout(loadChosenSections,500);
-					//loadChosenSections();
+					
 					
 				}
 			}
@@ -910,105 +890,6 @@ function deleteSectionSelection(checkboxSelection)
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		
 		xmlhttp.send();
-		//window.alert('success');
-		//setTimeout(loadChosenSections,1000);
-		//window alert for testing
-		//window.alert(checkboxSelection);
-}
-    
- function postCourses()
- {
-	xmlhttp = new XMLHttpRequest();
-        
-        xmlhttp.onreadystatechange = function()
-        	{
-				if(true)
-				{
-					;
-				}
-			}
-			
-		xmlhttp.open("POST", "/completedCourses", true);
 		
-		xmlhttp.setRequestHeader("Content-Type", "application/json");
-		
-		xmlhttp.send(JSON.stringify({"email": userEmail.value, "course_id": checkbox.value, "grade": "null", "term": "null"}));
-}  
-
-function loadNewCourses()
-{
-    //Make a new API Request
-            xmlhttp = new XMLHttpRequest();
-            
-            //Get Status
-             xmlhttp.onreadystatechange = function() 
-            {
-                //Check if Status is Ready
-                if (this.readyState == 4 && this.status==200) 
-                {
-                    //Parse into JSON
-                    const newCourses = jQuery.parseJSON(xmlhttp.responseText);
-                    
-                    //test if user selected a REAL major
-                    if (majorId != "nah")
-                    {
-						//Generate Table of Eligible courses dynamically into HTML page
-                    	document.getElementById('courses').innerHTML = `<tr><th>Remaining Courses</th></tr>${newCourses.map(newCourseTemplate).join('')}`
-					}
-					//Clear Table from Page
-					else
-					{
-						document.getElementById('courses').innerHTML = "";
-					}
-                }
-            };
-            
-            //Create API Call
-            xmlhttp.open("GET", '/majors', true);
-            
-            //Send API Call
-            xmlhttp.send();
 }
 
-
-//only fill table with courses that weren't selected
-function newCourseTemplate(major_requirements)
-{
- 
-    //Check if MajorID from User Selection is the same as MajorID in majorRequirements table
-    if ((student/userEmail.majorId).includes(majorId))
-    {
-		//Declare needed local variables
-		let output = "";
-		let courseList = major_requirements.course_id;
-		let courses = "";
-		let test = "";
-		
-		//Create Constant Array from splitting courselist String with comma delimiters
-		const jamesCoursesArray = courseList.split(",");
-		
-		//Sort Array Alphabetically 
-		jamesCoursesArray.sort();
-		
-		//For loop that accumulates output variable with dynamic HTML building of Table 
-		for (i = 0; i < jamesCoursesArray.length; i++)
-		{
-			//Output Accumulator
-			output += "<tr><td>";
-			courses += jamesCoursesArray[i];
-			test = jamesCoursesArray[i].substring(0,7);
-			
-			while (jamesCoursesArray[i+1] != null && jamesCoursesArray[i+1].includes(test))
-			{
-				courses += ", " + jamesCoursesArray[i+1];
-				i++;
-			}
-			output += courses;
-			output += "</td></tr>";
-			courses =  "";
-		}
-		//Return Accumulated Output 
-		return output;
-	}
-
-}
